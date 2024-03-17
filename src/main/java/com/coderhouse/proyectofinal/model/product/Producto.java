@@ -1,24 +1,39 @@
 package com.coderhouse.proyectofinal.model.product;
 
+import jakarta.persistence.*;
+
+@Entity
 public abstract class Producto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int idProd;
+    @Column(name = "codigo_de_producto")
     private int codigoDeProducto;
+    @Column(name = "nombre")
     private String nombre;
+    @Column(name = "descripcion")
     private String descripcion;
+    @Column(name = "stock")
     private int stock;
+    @Column(name = "precio")
     private float precio;
 
     //Constructor
 
 
-    public Producto(int idProd, int codigoDeProducto, String nombre,
+    public Producto( int codigoDeProducto, String nombre,
                     String descripcion, int stock, float precio) {
-        this.idProd = idProd;
         this.codigoDeProducto = codigoDeProducto;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.stock = stock;
         this.precio = precio;
+    }
+
+    //Constructor vacio para la persistencia
+    public Producto() {
+
     }
 
     //Metodos de la clase

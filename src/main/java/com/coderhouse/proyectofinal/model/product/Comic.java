@@ -1,19 +1,33 @@
 package com.coderhouse.proyectofinal.model.product;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "comic")
 public class Comic extends Producto{
 
+    @Column(name = "autor")
     private String autor;
+    @Column(name = "idioma")
     private String idioma;
+    @Column(name = "tapa_dura")
     private boolean tapaDura;
 
     //Constructor
 
-    public Comic(int idProd, int codigoDeProducto, String nombre,
+    public Comic( int codigoDeProducto, String nombre,
                  String descripcion, int stock, float precio, String autor, String idioma, boolean tapaDura) {
-        super(idProd, codigoDeProducto, nombre, descripcion, stock, precio);
+        super(codigoDeProducto, nombre, descripcion, stock, precio);
         this.autor = autor;
         this.idioma = idioma;
         this.tapaDura = tapaDura;
+    }
+
+    //Constructor vacio para la persistencia
+    public Comic() {
+
     }
 
     //Metodos de la clase

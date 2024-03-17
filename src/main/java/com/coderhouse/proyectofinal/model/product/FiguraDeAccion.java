@@ -7,9 +7,9 @@ public class FiguraDeAccion extends Producto {
 
     //Constructor
 
-    public FiguraDeAccion(int idProd,int codigoDeProducto, String nombre, String descripcion, int stock,
+    public FiguraDeAccion(int codigoDeProducto, String nombre, String descripcion, int stock,
                           float precio, String fabricante, boolean esArticulado) {
-        super(idProd,codigoDeProducto, nombre, descripcion, stock, precio);
+        super(codigoDeProducto, nombre, descripcion, stock, precio);
         this.fabricante = fabricante;
         this.esArticulado = esArticulado;
     }

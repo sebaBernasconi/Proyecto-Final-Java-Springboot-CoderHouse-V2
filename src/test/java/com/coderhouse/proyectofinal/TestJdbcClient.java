@@ -15,7 +15,6 @@ public class TestJdbcClient {
         Client client = new Client(2043900195,"Sebastian","bernaseba1@gmail.com","secreta",
                 null,null,null);
 
-
         controller.getConnection();
 
         controller.guardarCliente(client);
@@ -27,17 +26,6 @@ public class TestJdbcClient {
 
         controller.mostrarClientes();
 
-        System.out.println("----------------------------------------------------------------");
-
-
-
         controller.closeConnection();
-
-        /*
-        * tablas intermedias
-        * cliente-compra
-        * cliente-carrito
-        * admin-venta*/
-
     }
 }

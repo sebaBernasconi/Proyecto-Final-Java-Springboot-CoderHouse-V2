@@ -38,7 +38,7 @@ public class ControllerProducto {
                                         int stock, float precio, String fabricante,
                                         boolean esArticulado) throws ProductNotFoundException {
         if (buscarFiguraDeAccion(codigoDeProducto) == null){
-            FiguraDeAccion figuraDeAccion = new FiguraDeAccion( idFiguraDeAccion, codigoDeProducto,nombre,descripcion,
+            FiguraDeAccion figuraDeAccion = new FiguraDeAccion(codigoDeProducto,nombre,descripcion,
                     stock, precio,fabricante,esArticulado);
             listadoDeFigurasDeAccion.add(figuraDeAccion);
             this.idFiguraDeAccion ++;
@@ -53,7 +53,7 @@ public class ControllerProducto {
                                String autor, String idioma, boolean tapaDura)
     throws ProductNotFoundException {
         if (buscarComic(codigoDeProducto) == null){
-            Comic c = new Comic(idComic,codigoDeProducto,nombre,descripcion,
+            Comic c = new Comic(codigoDeProducto,nombre,descripcion,
                     stock,precio,autor,idioma,tapaDura);
             listadoDeComics.add(c);
             this.idComic ++;

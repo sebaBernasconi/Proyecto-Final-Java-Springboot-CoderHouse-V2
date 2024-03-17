@@ -1,5 +1,6 @@
 package com.coderhouse.proyectofinal.dbcontroller;
 
+import com.coderhouse.proyectofinal.model.transactions.Compra;
 import com.coderhouse.proyectofinal.model.user.Client;
 
 import java.sql.*;
@@ -68,6 +69,16 @@ public class JavaDataBaseControllerCliente  extends  JavaDataBaseController{
         }
     }
 
+    //Create
+    private void guarComprasDeUnCliente(Client client){
+        PreparedStatement statement = null;
+
+        for (Compra compra :
+                client.getCompras()) {
+
+        }
+
+    }
     //Update
     public void modificarMailCliente( int cuil, String nuevoMail) throws SQLException {
         PreparedStatement statement = null;
