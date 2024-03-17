@@ -7,7 +7,9 @@ import com.coderhouse.proyectofinal.model.ticket.FacturaB;
 import com.coderhouse.proyectofinal.model.ticket.FacturaC;
 import com.coderhouse.proyectofinal.model.user.Carrito;
 import com.coderhouse.proyectofinal.model.user.Client;
+import org.springframework.cglib.core.Local;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,7 +43,7 @@ public class ControllerFactura {
 
     //Metodos de la clase
 
-    public void generarFacturaA(int nroFactura, int cuilCliente,int idCarrito)
+    public void generarFacturaA(int nroFactura, int cuilCliente, LocalDate fecha, int idCarrito)
             throws UserNotFoundException, FacturaNotFoundException {
         if (buscarFacturaA(nroFactura) == null){
             ControllerUser controllerUser = ControllerUser.getInstancia();
@@ -49,8 +51,9 @@ public class ControllerFactura {
 
             Carrito carrito = cliente.getCarrito();
 
-            FacturaA facturaA = new FacturaA(idFactura,nroFactura,
-                    cliente.getCuil(), new Date(),carrito.getTotal());
+            FacturaA facturaA = new FacturaA(nroFactura,
+                    cliente.getCuil(), LocalDate.of(fecha.getYear(),fecha.getMonthValue(),fecha.getDayOfMonth())
+                    ,carrito.getTotal());
 
             idFactura ++;
 
@@ -58,7 +61,7 @@ public class ControllerFactura {
         }
     }
 
-    public void generarFacturaB(int nroFactura, int cuilCliente,int idCarrito)
+    public void generarFacturaB(int nroFactura, int cuilCliente,LocalDate fecha,int idCarrito)
             throws UserNotFoundException, FacturaNotFoundException {
         if (buscarFacturaB(nroFactura) == null){
             ControllerUser controllerUser = ControllerUser.getInstancia();
@@ -66,15 +69,16 @@ public class ControllerFactura {
 
             Carrito carrito = cliente.getCarrito();
 
-            FacturaB facturaB = new FacturaB(idFactura,nroFactura,
-                    cliente.getCuil(), new Date(),carrito.getTotal());
+            FacturaB facturaB = new FacturaB(nroFactura,
+                    cliente.getCuil(), LocalDate.of(fecha.getYear(),fecha.getMonthValue(),fecha.getDayOfMonth())
+                    ,carrito.getTotal());
 
             idFactura ++;
 
             listadoDeFacturaB.add(facturaB);
         }
     }
-    public void generarFacturaC(int nroFactura, int cuilCliente,int idCarrito)
+    public void generarFacturaC(int nroFactura, int cuilCliente,LocalDate fecha,int idCarrito)
             throws UserNotFoundException, FacturaNotFoundException{
         if (buscarFacturaC(nroFactura) == null){
             ControllerUser controllerUser = ControllerUser.getInstancia();
@@ -82,14 +86,16 @@ public class ControllerFactura {
 
             Carrito carrito = cliente.getCarrito();
 
-            FacturaC facturaC = new FacturaC(idFactura,nroFactura,
-                    cliente.getCuil(), new Date(),carrito.getTotal());
+            FacturaC facturaC = new FacturaC(nroFactura,
+                    cliente.getCuil(), LocalDate.of(fecha.getYear(),fecha.getMonthValue(),fecha.getDayOfMonth())
+                    ,carrito.getTotal());
 
             idFactura ++;
 
             listadoDeFacturaC.add(facturaC);
         }
     }
+
 
     //Metodo privado que devuelve un objeto de negocio que el cliente nunca debe ver
     private FacturaA buscarFacturaA(int nroFactura)

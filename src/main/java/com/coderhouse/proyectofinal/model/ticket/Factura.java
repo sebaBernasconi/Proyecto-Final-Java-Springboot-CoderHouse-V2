@@ -1,29 +1,44 @@
 package com.coderhouse.proyectofinal.model.ticket;
 
+import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.Date;
 
+@Entity
 public abstract class Factura {
     //idFactura es el comprobante interno del sistema
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int idFactura;
 
     //nroFactura es el numero real de la factura que asigna afip
+    @Column(name = "nro_factura")
     private int nroFactura;
 
+    @Column(name = "cuil_cliente")
     private int cuilCliente;
 
-    private Date fecha;
+    @Column(name = "fecha")
+    private LocalDate fecha;
 
+    @Column(name = "total")
     private float total;
 
     //Constructor
 
-    public Factura(int idFactura, int nroFactura,
-                   int cuilCliente, Date fecha, float total) {
-        this.idFactura = idFactura;
+    public Factura(int nroFactura,
+                   int cuilCliente, LocalDate fecha, float total) {
         this.nroFactura = nroFactura;
         this.cuilCliente = cuilCliente;
         this.fecha = fecha;
         this.total = total;
+    }
+
+    //Constructor vacio para persistencia
+    public Factura() {
+
     }
 
     //Getters y Setters
@@ -52,11 +67,11 @@ public abstract class Factura {
         this.cuilCliente = cuilCliente;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
