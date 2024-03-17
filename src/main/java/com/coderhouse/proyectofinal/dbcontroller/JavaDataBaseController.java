@@ -19,8 +19,10 @@ public class JavaDataBaseController {
     public Connection getConnection() throws SQLException {
         if (connection == null){
             connection = DriverManager.getConnection(URL,USER,PASSWORD);
+            System.out.println();
             System.out.println("conexion establecida");
         }else {
+            System.out.println();
             System.out.println("conexion establecida");
             return connection;
 
@@ -33,6 +35,7 @@ public class JavaDataBaseController {
         if (connection != null){
             connection.close();
         }
+        System.out.println();
         System.out.println("conexion cerrada");
     }
 
@@ -42,7 +45,7 @@ public class JavaDataBaseController {
         Statement statement = null;
         ResultSet resultSet = null;
 
-        String query = "SELECT cuil,nombre FROM clientes;";
+        String query = "SELECT cuil, nombre, mail, password FROM clientes;";
 
         statement = connection.createStatement();
         resultSet = statement.executeQuery(query);
@@ -50,9 +53,14 @@ public class JavaDataBaseController {
         while (resultSet.next()){
             int cuil = resultSet.getInt("cuil");
             String nombre = resultSet.getString("nombre");
+            String mail = resultSet.getString("mail");
+            String password = resultSet.getString("password");
 
-            System.out.println("El cliente con cuil: " + cuil +
-                    " es " + nombre);
+
+            System.out.println();
+            System.out.println("El cliente con cuil " + cuil +
+                    " es " + nombre + ". Su mail es " + mail +
+                    " y su contraseña " + password);
         }
 
         if (resultSet != null){
@@ -81,8 +89,53 @@ public class JavaDataBaseController {
         int rowsAffected = statement.executeUpdate();
 
         if (rowsAffected > 0){
+            System.out.println();
             System.out.println("El cliente con cuil " +
-                    client.getCuil() + "fue guardado en la base de datos");
+                    client.getCuil() + " fue guardado en la base de datos");
+        }
+
+        if (statement != null){
+            statement.close();
+        }
+    }
+    public void modificarMailCliente( int cuil, String nuevoMail) throws SQLException {
+        PreparedStatement statement = null;
+
+        String query =("UPDATE clientes SET mail = ? WHERE cuil = ?;");
+
+        statement = connection.prepareStatement(query);
+        statement.setString(1,nuevoMail);
+        statement.setInt(2,cuil);
+
+        int rowsAffected = statement.executeUpdate();
+
+        if (rowsAffected > 0){
+            System.out.println();
+            System.out.printf("Mail del cleinte con cuil " + cuil +
+                    " modificado con exito");
+        }
+
+        if (statement != null){
+            statement.close();
+        }
+
+    }
+
+    public void modificarPasswordCliente(int cuil,String nuevaPassword) throws SQLException {
+        PreparedStatement statement = null;
+
+        String query = ("UPDATE clientes SET password = ? WHERE cuil = ?;");
+
+        statement = connection.prepareStatement(query);
+        statement.setString(1,nuevaPassword);
+        statement.setInt(2,cuil);
+
+        int rowsAffected = statement.executeUpdate();
+
+        if (rowsAffected > 0){
+            System.out.println();
+            System.out.println("Password del usuario con cuil " +
+                    cuil + " modificada con exito");
         }
 
         if (statement != null){
@@ -100,6 +153,7 @@ public class JavaDataBaseController {
 
         int rowsAffected = statement.executeUpdate();
         if (rowsAffected > 0){
+            System.out.println();
             System.out.println("El cliente con cuil: " + cuil +
                     " fue eliminado correctamente");
         }

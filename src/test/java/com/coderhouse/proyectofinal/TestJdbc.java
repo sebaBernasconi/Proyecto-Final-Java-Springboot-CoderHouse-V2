@@ -16,7 +16,14 @@ public class TestJdbc {
 
         controller.getConnection();
 
+        controller.borrarCliente(2043900195);
+
         controller.guardarCliente(client);
+
+        controller.mostrarClientes();
+
+        controller.modificarMailCliente(2043900195,"sebernasconi@uade.edu.ar");
+        controller.modificarPasswordCliente(2043900195,"nueva pass");
 
         controller.mostrarClientes();
 
