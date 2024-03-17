@@ -1,19 +1,35 @@
 package com.coderhouse.proyectofinal.model.user;
 
+import jakarta.persistence.*;
+
+@Entity
 public abstract class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int idUsr;
+    @Column(name = "cuil")
     private int cuil;
+    @Column(name = "nombre")
     private  String nombre;
+    @Column(name = "mail")
     private String mail;
+    @Column(name = "password")
     private String password;
 
     //Constructor
-    public User(int idUsr, int cuil, String nombre, String mail, String password) {
-        this.idUsr = idUsr;
+    public User( int cuil, String nombre, String mail, String password) {
+
         this.cuil = cuil;
         this.nombre = nombre;
         this.mail = mail;
         this.password = password;
+    }
+
+    //constructor vacio para poder persistir
+    public User() {
+
     }
 
     //Getters y Setters

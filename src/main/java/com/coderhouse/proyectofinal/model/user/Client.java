@@ -3,10 +3,16 @@ package com.coderhouse.proyectofinal.model.user;
 import com.coderhouse.proyectofinal.model.product.Producto;
 import com.coderhouse.proyectofinal.model.transactions.Compra;
 import com.coderhouse.proyectofinal.model.payment.MedioDePago;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.util.List;
 
+@Entity
+@Table(name = "clientes")
 public class Client extends User {
+
 
     private MedioDePago medioDePago;
     private Carrito carrito;
@@ -14,12 +20,18 @@ public class Client extends User {
 
     //Constructor
 
-    public Client(int idUsr, int cuil, String nombre, String mail, String password,
+    public Client(int cuil, String nombre, String mail, String password,
                   MedioDePago medioDePago, Carrito carrito, List<Compra> compras) {
-        super(idUsr, cuil, nombre, mail, password);
+        super(cuil, nombre, mail, password);
         this.medioDePago = medioDePago;
         this.carrito = carrito;
         this.compras = compras;
+    }
+
+    //Constructor vacio para poder persistir
+    public Client(){
+        super();
+
     }
 
     //Metodos de la clase

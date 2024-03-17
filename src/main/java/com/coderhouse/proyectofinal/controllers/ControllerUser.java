@@ -46,7 +46,7 @@ public class ControllerUser {
                                  String password)
             throws UserNotFoundException, CarritoNotFoundException {
         if (buscarCliente(cuil) == null){
-            Client c = new Client(idClient,cuil,nombre,mail,password,
+            Client c = new Client(cuil,nombre,mail,password,
                     null,null,null);
             idClient ++;
 
@@ -64,7 +64,7 @@ public class ControllerUser {
     public void registrarAdmin(int cuil, String nombre, String mail,
                                String password) throws UserNotFoundException {
         if (buscarAdmin(cuil) == null){
-            Admin a = new Admin(idAdmin,cuil,nombre,mail,password,null);
+            Admin a = new Admin(cuil,nombre,mail,password,null);
             idAdmin ++;
             listadoDeAdmins.add(a);
         }else {

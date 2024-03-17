@@ -10,9 +10,9 @@ public class Admin extends User {
 
     //Constructor
 
-    public Admin(int idUsr, int cuil, String nombre,
+    public Admin(int cuil, String nombre,
                  String mail, String password, List<Venta> ventas) {
-        super(idUsr, cuil, nombre, mail, password);
+        super(cuil, nombre, mail, password);
         this.ventas = ventas;
     }
 
