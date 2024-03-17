@@ -10,9 +10,9 @@ public class Compra extends Transaccion {
 
     //Constructor
 
-    public Compra(int idTransaccion, Date fecha,
+    public Compra(Date fecha,
                   MedioDePago medioDePago, float total, Admin vendedor) {
-        super(idTransaccion, fecha, medioDePago, total);
+        super( fecha, medioDePago, total);
         this.vendedor = vendedor;
     }
 
