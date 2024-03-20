@@ -3,6 +3,7 @@ package com.coderhouse.proyectofinal.controllers;
 import com.coderhouse.proyectofinal.exception.CarritoNotFoundException;
 import com.coderhouse.proyectofinal.exception.ProductNotFoundException;
 import com.coderhouse.proyectofinal.exception.UserNotFoundException;
+import com.coderhouse.proyectofinal.model.payment.Debito;
 import com.coderhouse.proyectofinal.model.payment.MedioDePago;
 import com.coderhouse.proyectofinal.model.product.Comic;
 import com.coderhouse.proyectofinal.model.product.FiguraDeAccion;
@@ -72,10 +73,10 @@ public class ControllerUser {
         }
     }
 
-    public void agregarMedioDePagoAlCliente(int cuil, MedioDePago medioDePago)
+    public void agregarMedioDePagoAlCliente(int cuil, Debito tDebito)
         throws UserNotFoundException{
         Client c = buscarCliente(cuil);
-        c.setMedioDePago(medioDePago);
+        c.settDebito(tDebito);
     }
 
     public void agregarFiguraDeAccionAlCarrito(int cuil, int codigoDeProducto) throws UserNotFoundException,
