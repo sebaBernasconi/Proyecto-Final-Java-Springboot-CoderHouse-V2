@@ -1,6 +1,7 @@
 package com.coderhouse.proyectofinal.dbcontroller;
 
 import com.coderhouse.proyectofinal.model.product.Comic;
+import com.coderhouse.proyectofinal.model.product.FiguraDeAccion;
 
 import java.sql.*;
 
@@ -123,6 +124,115 @@ public class JavaDataBaseControllerProductos extends JavaDataBaseController{
             System.out.println();
             System.out.println("Comic con codigo " + codigo +
                     " borrado de forma exitosa");
+        }
+
+        if (statement != null){
+            statement.close();
+        }
+    }
+
+
+    //Crud figura de accion
+
+    //Read
+    public void mostrarFigurasDeAccion() throws SQLException {
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        String query = "SELECET * FROM figura_de_accion ;";
+
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(query);
+
+        while (resultSet.next()){
+
+            int codigoDeProducto = resultSet.getInt("codigo_de_producto");
+            String nombre = resultSet.getString("nombre");
+            int stock = resultSet.getInt("stock");
+            float precio = resultSet.getFloat("precio");
+
+            System.out.println("----------------------------------------");
+            System.out.println("codigo: " + codigoDeProducto);
+            System.out.println("nombre: " + nombre);
+            System.out.println("stock: " + stock);
+            System.out.println("precio: $" + precio );
+            System.out.println("----------------------------------------");
+        }
+
+        if (resultSet != null){
+            resultSet.close();
+        }
+
+        if (statement != null){
+            statement.close();
+        }
+    }
+
+    //Create
+    public void guardarFiguraDeAccion(FiguraDeAccion figuraDeAccion) throws SQLException {
+        PreparedStatement statement = null;
+
+        String query = "INSERT INTO figura_de_accion(codigo_de_producto,nombre,descripcion,stock,precio," +
+                "fabricante,es_articulado)" +
+                "VALUES(?,?,?,?,?,?,?);";
+
+        statement = connection.prepareStatement(query);
+        statement.setInt(1,figuraDeAccion.getCodigoDeProducto());
+        statement.setString(2,figuraDeAccion.getNombre());
+        statement.setString(3,figuraDeAccion.getDescripcion());
+        statement.setInt(4,figuraDeAccion.getStock());
+        statement.setFloat(5,figuraDeAccion.getPrecio());
+        statement.setString(6,figuraDeAccion.getFabricante());
+        statement.setBoolean(7,figuraDeAccion.isEsArticulado());
+
+        int rowsAffected = statement.executeUpdate();
+
+        if (rowsAffected > 0){
+            System.out.println("Figura de accion con codigo " + figuraDeAccion.getCodigoDeProducto() +
+                    " guardada en la base de datos");
+        }
+
+        if (statement != null){
+            statement.close();
+        }
+    }
+
+    //Update
+    public void actualizarFiguraDeAccion(int codigoProducto, int nuevoStock, float nuevoPrecio) throws SQLException {
+        PreparedStatement statement = null;
+
+        String query = "UPDATE figura_de_accion SET stock = ?, SET precio = ? WHERE codigo_de_producto = ?;";
+
+        statement = connection.prepareStatement(query);
+        statement.setInt(1,nuevoStock);
+        statement.setFloat(2,nuevoPrecio);
+        statement.setInt(3,codigoProducto);
+
+        int rowsAffected = statement.executeUpdate();
+
+        if (rowsAffected > 0){
+            System.out.println("Figura de accion con codigo: " + codigoProducto + " modificada exitosamente");
+        }
+
+        if (statement != null){
+            statement.close();
+        }
+
+    }
+
+    //Delete
+    public void borrarFiguraDeAccion(int codigoProducto) throws SQLException {
+        PreparedStatement statement = null;
+
+        String query = "DELETE FROM figura_de_accion WHERE codigo_de_producto = ?;";
+
+        statement = connection.prepareStatement(query);
+        statement.setInt(1,codigoProducto);
+
+        int rowsAffected = statement.executeUpdate();
+
+        if (rowsAffected > 0){
+            System.out.println("Figura de accion con codigo: " + codigoProducto + " borrado de la base de datos");
         }
 
         if (statement != null){
