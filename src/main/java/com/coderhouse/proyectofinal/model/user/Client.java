@@ -1,5 +1,6 @@
 package com.coderhouse.proyectofinal.model.user;
 
+import com.coderhouse.proyectofinal.model.payment.Debito;
 import com.coderhouse.proyectofinal.model.product.Producto;
 import com.coderhouse.proyectofinal.model.transactions.Compra;
 import com.coderhouse.proyectofinal.model.payment.MedioDePago;
@@ -14,16 +15,16 @@ import java.util.List;
 public class Client extends User {
 
 
-    private MedioDePago medioDePago;
+    private Debito tDebito;
     private Carrito carrito;
     private List<Compra> compras;
 
     //Constructor
 
     public Client(int cuil, String nombre, String mail, String password,
-                  MedioDePago medioDePago, Carrito carrito, List<Compra> compras) {
+                  Debito tDebito, Carrito carrito, List<Compra> compras) {
         super(cuil, nombre, mail, password);
-        this.medioDePago = medioDePago;
+        this.tDebito = tDebito;
         this.carrito = carrito;
         this.compras = compras;
     }
@@ -49,17 +50,17 @@ public class Client extends User {
 
     public void pagarCarrito(){
         //Mensjae en el metodo de cada medio de pago
-        this.medioDePago.pagar(this.carrito.getTotal());
+        this.tDebito.pagar(this.carrito.getTotal());
     }
 
     //Getters y Setters
 
-    public MedioDePago getMedioDePago() {
-        return medioDePago;
+    public Debito gettDebito() {
+        return tDebito;
     }
 
-    public void setMedioDePago(MedioDePago medioDePago) {
-        this.medioDePago = medioDePago;
+    public void settDebito(Debito tDebito) {
+        this.tDebito = tDebito;
     }
 
     public Carrito getCarrito() {
