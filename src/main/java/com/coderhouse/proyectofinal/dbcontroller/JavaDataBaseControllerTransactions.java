@@ -22,11 +22,13 @@ public class JavaDataBaseControllerTransactions extends JavaDataBaseController{
 
         while (resultSet.next()){
             int id = resultSet.getInt("id");
+            int cuilCliente = resultSet.getInt("cuil_cliente");
             int cuilAdmin = resultSet.getInt("cuil_admin");
             float total = resultSet.getFloat("total");
 
             System.out.println("--------------------------------------------------------");
-            System.out.println("numero de compra: " + id);
+            System.out.println("Numero de compra: " + id);
+            System.out.println("Cliente: " + cuilCliente);
             System.out.println("Administrador : " + cuilAdmin);
             System.out.println("Total: " + total);
             System.out.println("--------------------------------------------------------");
@@ -83,4 +85,38 @@ public class JavaDataBaseControllerTransactions extends JavaDataBaseController{
     }
 
     //Crud Venta
+
+    //Read
+    public void  mostrarVentas() throws SQLException {
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        String query = "SELECT * FROM venta;";
+
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(query);
+
+        while (resultSet.next()){
+            int id = resultSet.getInt("id");
+            int cuilCliente = resultSet.getInt("cuil_admin");
+            float total = resultSet.getFloat("total");
+
+            System.out.println("--------------------------------------------------------");
+            System.out.println("Numero de venta: " + id);
+            System.out.println("Cliente : " + cuilCliente);
+            System.out.println("Total: " + total);
+            System.out.println("--------------------------------------------------------");
+        }
+
+        if (resultSet != null){
+            resultSet.close();
+        }
+
+        if (statement != null){
+            statement.close();
+        }
+
+    }
+
+
 }
