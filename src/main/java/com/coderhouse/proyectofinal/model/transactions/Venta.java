@@ -1,6 +1,8 @@
 package com.coderhouse.proyectofinal.model.transactions;
 
+import com.coderhouse.proyectofinal.model.payment.Debito;
 import com.coderhouse.proyectofinal.model.user.Admin;
+import com.coderhouse.proyectofinal.model.user.Carrito;
 import com.coderhouse.proyectofinal.model.user.Client;
 import com.coderhouse.proyectofinal.model.payment.MedioDePago;
 import jakarta.persistence.Entity;
@@ -17,9 +19,9 @@ public class Venta extends Transaccion {
 
     //Constructor
 
-    public Venta( Date fecha, MedioDePago medioDePago,
+    public Venta( Date fecha, Carrito carrito,
                  float total, Client client, Admin vendedor) {
-        super( fecha, medioDePago, total);
+        super( fecha, carrito, total);
         this.client = client;
         this.vendedor = vendedor;
     }

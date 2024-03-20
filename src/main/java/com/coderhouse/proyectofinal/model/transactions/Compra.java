@@ -1,8 +1,11 @@
 package com.coderhouse.proyectofinal.model.transactions;
 
+import com.coderhouse.proyectofinal.model.payment.Debito;
 import com.coderhouse.proyectofinal.model.user.Admin;
 import com.coderhouse.proyectofinal.model.payment.MedioDePago;
+import com.coderhouse.proyectofinal.model.user.Carrito;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Compra extends Transaccion {
@@ -10,9 +13,9 @@ public class Compra extends Transaccion {
 
     //Constructor
 
-    public Compra(Date fecha,
-                  MedioDePago medioDePago, float total, Admin vendedor) {
-        super( fecha, medioDePago, total);
+    public Compra(Date fecha, Carrito carrito,
+                   float total, Admin vendedor) {
+        super( fecha,carrito, total);
         this.vendedor = vendedor;
     }
 
@@ -22,6 +25,7 @@ public class Compra extends Transaccion {
     }
 
     //Getters y Setters
+
 
     public Admin getVendedor() {
         return vendedor;
