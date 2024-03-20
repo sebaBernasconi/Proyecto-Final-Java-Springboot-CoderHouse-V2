@@ -4,9 +4,7 @@ import com.coderhouse.proyectofinal.model.payment.Debito;
 import com.coderhouse.proyectofinal.model.product.Producto;
 import com.coderhouse.proyectofinal.model.transactions.Compra;
 import com.coderhouse.proyectofinal.model.payment.MedioDePago;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -14,8 +12,10 @@ import java.util.List;
 @Table(name = "clientes")
 public class Client extends User {
 
-
+    @OneToOne
+    @JoinColumn(name = "nro_tarjeta")
     private Debito tDebito;
+
     private Carrito carrito;
     private List<Compra> compras;
 

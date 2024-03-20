@@ -6,9 +6,6 @@ import jakarta.persistence.*;
 public abstract class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int idUsr;
     @Column(name = "cuil")
     private int cuil;
     @Column(name = "nombre")
@@ -33,15 +30,6 @@ public abstract class User {
     }
 
     //Getters y Setters
-
-
-    public int getIdUsr() {
-        return idUsr;
-    }
-
-    public void setIdUsr(int idUsr) {
-        this.idUsr = idUsr;
-    }
 
     public int getCuil() {
         return cuil;
