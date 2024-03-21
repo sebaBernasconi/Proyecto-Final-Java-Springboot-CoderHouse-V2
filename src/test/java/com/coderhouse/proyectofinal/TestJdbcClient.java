@@ -72,7 +72,7 @@ public class TestJdbcClient {
         controller.guarComprasDeUnCliente(client);
 
 
-        controller.agregarNroTarjeta(client.getCuil(),client.gettDebito().getNroTarjeta());
+        controller.agregarNroTarjeta(client);
         System.out.println();
 
         System.out.println("----------------------------------Mostrando los cambios en el cliente----------------------------------");
@@ -88,5 +88,7 @@ public class TestJdbcClient {
         System.out.println("Despues de la busqueda");
 
         controller.closeConnection();
+
+        System.out.println("--------------------------FIN TEST JDBCCLIENT--------------------------");
     }
 }

@@ -65,28 +65,32 @@ public class JavaDataBaseControllerCliente  extends  JavaDataBaseController{
 
         resultSet = statement.executeQuery();
 
-        String nombre = resultSet.getString("nombre");
-        String mail = resultSet.getString("mail");
-        String password = resultSet.getString("password");
-        int idCarrito = resultSet.getInt("id_carrito");
-        int nroTarjeta = resultSet.getInt("nro_tarjeta");
+        while (resultSet.next()){
 
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println("Cuil: " + cuil);
-        System.out.println("Nombre: " + nombre);
-        System.out.println("Mail: " + mail);
-        System.out.println("Password: " + password);
-        System.out.println("Id Carrito: " + idCarrito);
-        System.out.println("Numero de Tarjeta: " + nroTarjeta);
-        System.out.println();
-        System.out.println("Facturas del cliente {");
-        verFacturas(cuil);
-        System.out.println("}");
-        System.out.println();
-        System.out.println("Compras del cliente {");
-        verCompras(cuil);
-        System.out.println("}");
-        System.out.println("--------------------------------------------------------------------");
+            String nombre = resultSet.getString("nombre");
+            String mail = resultSet.getString("mail");
+            String password = resultSet.getString("password");
+            int idCarrito = resultSet.getInt("id_carrito");
+            int nroTarjeta = resultSet.getInt("nro_tarjeta");
+
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("Cuil: " + cuil);
+            System.out.println("Nombre: " + nombre);
+            System.out.println("Mail: " + mail);
+            System.out.println("Password: " + password);
+            System.out.println("Id Carrito: " + idCarrito);
+            System.out.println("Numero de Tarjeta: " + nroTarjeta);
+            System.out.println();
+            System.out.println("Facturas del cliente {");
+            verFacturas(cuil);
+            System.out.println("}");
+            System.out.println();
+            System.out.println("Compras del cliente {");
+            verCompras(cuil);
+            System.out.println("}");
+            System.out.println("--------------------------------------------------------------------");
+        }
+
 
         if (resultSet != null){
             resultSet.close();
@@ -222,18 +226,30 @@ public class JavaDataBaseControllerCliente  extends  JavaDataBaseController{
 
     }
 
-    public void agregarNroTarjeta(int cuil, int nroTarjeta) throws SQLException {
+    public void agregarNroTarjeta(Client client) throws SQLException {
+       //PRimero guardo la tarjeta
+        //Instancio el jdbc payment
+        JavaDataBaseControllerPayment jdbcP = new JavaDataBaseControllerPayment();
+
+        jdbcP.getConnection();
+
+        jdbcP.guardarTarjetaDebitoCliente(client);
+
+        jdbcP.closeConnection();
+
+        //actualizo el valor en la tabla cliente
+
         PreparedStatement statement = null;
 
         String query = "UPDATE clientes SET nro_tarjeta = ? WHERE cuil = ?;";
 
         statement = connection.prepareStatement(query);
-        statement.setInt(1,nroTarjeta);
-        statement.setInt(2,cuil);
+        statement.setInt(1,client.gettDebito().getNroTarjeta());
+        statement.setInt(2,client.getCuil());
 
         int rowsAffected = statement.executeUpdate();
         if (rowsAffected > 0){
-            System.out.println("Numero de tarjeta guardado para el cliente con cuil: " + cuil);
+            System.out.println("Numero de tarjeta guardado para el cliente con cuil: " + client.getCuil());
         }
 
         if (statement != null){
