@@ -252,4 +252,90 @@ public class JavaDataBaseControllerFactura  extends JavaDataBaseController{
         }
     }
 
+    //Mostrar facturas de un cliente
+    public void mostrarFacturasDeUnCliente(int cuil) throws SQLException {
+        PreparedStatement statementFacturaA = null;
+        PreparedStatement statementFacturaB = null;
+        PreparedStatement statementFacturaC = null;
+
+        ResultSet resultSetFacturaA = null;
+        ResultSet resultSetFacturaB = null;
+        ResultSet resultSetFacturaC = null;
+
+        String queryFacturaA = "SELECT * FROM factura_a WHERE cuil_cliente = ?;";
+        String queryFacturaB = "SELECT * FROM factura_b WHERE cuil_cliente = ?;";
+        String queryFacturaC = "SELECT * FROM factura_c WHERE cuil_cliente = ?;";
+
+        statementFacturaA = connection.prepareStatement(queryFacturaA);
+        statementFacturaB = connection.prepareStatement(queryFacturaB);
+        statementFacturaC = connection.prepareStatement(queryFacturaC);
+
+        statementFacturaA.setInt(1,cuil);
+        statementFacturaB.setInt(1,cuil);
+        statementFacturaC.setInt(1,cuil);
+
+        resultSetFacturaA = statementFacturaA.executeQuery();
+        resultSetFacturaB = statementFacturaB.executeQuery();
+        resultSetFacturaC = statementFacturaC.executeQuery();
+
+        System.out.println("Facturas A");
+        while (resultSetFacturaA.next()){
+            int nroFactura = resultSetFacturaA.getInt("nro_factura");
+            int cuilCliente = resultSetFacturaA.getInt("cuil_cliente");
+            Date fecha = resultSetFacturaA.getDate("fecha");
+            float total = resultSetFacturaA.getFloat("total");
+
+            System.out.println("---------------------------------------");
+            System.out.println("numero: " + nroFactura);
+            System.out.println("cuil: " + cuilCliente);
+            System.out.println("fecha" + fecha.toString());
+            System.out.println("total: " + total);
+            System.out.println("---------------------------------------");
+        }
+
+        System.out.println("Facturas B");
+        while (resultSetFacturaB.next()){
+            int nroFactura = resultSetFacturaB.getInt("nro_factura");
+            int cuilCliente = resultSetFacturaB.getInt("cuil_cliente");
+            Date fecha = resultSetFacturaB.getDate("fecha");
+            float total = resultSetFacturaB.getFloat("total");
+
+            System.out.println("---------------------------------------");
+            System.out.println("numero: " + nroFactura);
+            System.out.println("cuil: " + cuilCliente);
+            System.out.println("fecha" + fecha.toString());
+            System.out.println("total: " + total);
+            System.out.println("---------------------------------------");
+        }
+
+        System.out.println("Facturas C");
+        while (resultSetFacturaC.next()){
+            int nroFactura = resultSetFacturaC.getInt("nro_factura");
+            int cuilCliente = resultSetFacturaC.getInt("cuil_cliente");
+            Date fecha = resultSetFacturaC.getDate("fecha");
+            float total = resultSetFacturaC.getFloat("total");
+
+            System.out.println("---------------------------------------");
+            System.out.println("numero: " + nroFactura);
+            System.out.println("cuil: " + cuilCliente);
+            System.out.println("fecha" + fecha.toString());
+            System.out.println("total: " + total);
+            System.out.println("---------------------------------------");
+        }
+
+        if (resultSetFacturaA != null||
+                resultSetFacturaB != null|| resultSetFacturaC != null){
+            resultSetFacturaA.close();
+            resultSetFacturaB.close();
+            resultSetFacturaC.close();
+        }
+
+        if (statementFacturaA != null || statementFacturaB != null || statementFacturaC != null){
+            statementFacturaA.close();
+            statementFacturaB.close();
+            statementFacturaC.close();
+        }
+
+
+    }
 }
