@@ -15,7 +15,7 @@ public class JavaDataBaseControllerCliente  extends  JavaDataBaseController{
         Statement statement = null;
         ResultSet resultSet = null;
 
-        String query = "SELECT cuil, nombre, mail, password FROM clientes;";
+        String query = "SELECT * FROM clientes;";
 
         statement = connection.createStatement();
         resultSet = statement.executeQuery(query);
@@ -25,15 +25,28 @@ public class JavaDataBaseControllerCliente  extends  JavaDataBaseController{
             String nombre = resultSet.getString("nombre");
             String mail = resultSet.getString("mail");
             String password = resultSet.getString("password");
+            int idCarrito = resultSet.getInt("id_carrito");
+            int nroTarjeta = resultSet.getInt("nro_tarjeta");
 
-
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("Cuil: " + cuil);
+            System.out.println("Nombre: " + nombre);
+            System.out.println("Mail: " + mail);
+            System.out.println("Password: " + password);
+            System.out.println("Id Carrito: " + idCarrito);
+            System.out.println("Numero de Tarjeta: " + nroTarjeta);
             System.out.println();
-            System.out.println("El cliente con cuil " + cuil +
-                    " es " + nombre + ". Su mail es " + mail +
-                    " y su contraseña " + password);
+            System.out.println("Facturas del cliente {");
+            verFacturas(cuil);
+            System.out.println("}");
+            System.out.println();
+            System.out.println("Compras del cliente {");
+            verCompras(cuil);
+            System.out.println("}");
+            System.out.println("--------------------------------------------------------------------");
         }
 
-        if (resultSet != null){
+        if (resultSet != null) {
             resultSet.close();
         }
 
@@ -46,8 +59,8 @@ public class JavaDataBaseControllerCliente  extends  JavaDataBaseController{
     public void guardarCliente(Client client) throws SQLException {
         PreparedStatement statement = null;
 
-        String query = "INSERT INTO clientes(cuil,nombre,mail,password)" +
-                "VALUES(?,?,?,?);";
+        String query = "INSERT INTO clientes(cuil,nombre,mail,password,id_Carrito,nro_tarjeta)" +
+                "VALUES(?,?,?,?,?,?);";
 
         statement = connection.prepareStatement(query);
 
@@ -55,6 +68,8 @@ public class JavaDataBaseControllerCliente  extends  JavaDataBaseController{
         statement.setString(2,client.getNombre());
         statement.setString(3,client.getMail());
         statement.setString(4,client.getPassword());
+        statement.setInt(5,client.getCarrito().getIdCarrito());
+        statement.setInt(6,client.gettDebito().getNroTarjeta());
 
         int rowsAffected = statement.executeUpdate();
 
@@ -144,6 +159,17 @@ public class JavaDataBaseControllerCliente  extends  JavaDataBaseController{
         if (statement != null){
             statement.close();
         }
+    }
+
+    private void verFacturas(int cuilCliente) throws SQLException {
+        JavaDataBaseControllerFactura jdbcF = new JavaDataBaseControllerFactura();
+        jdbcF.mostrarFacturasDeUnCliente(cuilCliente);
+
+    }
+
+    private void verCompras(int cuilCliente)throws SQLException{
+        JavaDataBaseControllerTransactions jdbcT = new JavaDataBaseControllerTransactions();
+        jdbcT.mostrarComprasDeUnCliente(cuilCliente);
     }
 
 }

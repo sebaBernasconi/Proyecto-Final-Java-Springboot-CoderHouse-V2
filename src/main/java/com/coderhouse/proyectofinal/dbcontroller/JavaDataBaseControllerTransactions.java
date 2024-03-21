@@ -178,13 +178,13 @@ public class JavaDataBaseControllerTransactions extends JavaDataBaseController{
 
     //Metodos aparte
 
-    public void mostrarComprasDeUnCliente(Client client) throws SQLException {
+    public void mostrarComprasDeUnCliente(int cuil) throws SQLException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         String query = "SELECT * FROM compra WHERE ciul_cliente = ?;";
         statement = connection.prepareStatement(query);
-        statement.setInt(1,client.getCuil());
+        statement.setInt(1,cuil);
 
         resultSet = statement.executeQuery(query);
         while (resultSet.next()){
@@ -210,14 +210,14 @@ public class JavaDataBaseControllerTransactions extends JavaDataBaseController{
         }
     }
 
-    public void mostrarVentasDeUnAdmin(Admin admin) throws SQLException {
+    public void mostrarVentasDeUnAdmin(int cuil) throws SQLException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         String query =  "SELECT * FROM venta WHERE cuil_admin = ?;";
 
         statement = connection.prepareStatement(query);
-        statement.setInt(1,admin.getCuil());
+        statement.setInt(1,cuil);
 
         resultSet = statement.executeQuery(query);
 
