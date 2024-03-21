@@ -19,7 +19,7 @@ public class TestJdbcTransactions {
         Client client = new Client(2043900195,"Sebastian","bernaseba1@gmail.com","secreta",
                 null,null,null);
 
-        Carrito carrito = new Carrito(1,client,0,null,false,20);
+        Carrito carrito = new Carrito(client,0,null,false,20);
 
         Admin admin = new Admin(111222333,"Juan","jj@gmail.com","ACDC",
                 new ArrayList<>());

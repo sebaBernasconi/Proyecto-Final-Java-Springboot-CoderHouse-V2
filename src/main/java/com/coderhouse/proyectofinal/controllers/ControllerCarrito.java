@@ -39,7 +39,7 @@ public class ControllerCarrito {
         ControllerUser controllerUser = ControllerUser.getInstancia();
         Client c = controllerUser.getClient(cuilCliente);
 
-        Carrito carrito = new Carrito(idCarrito,c,0,
+        Carrito carrito = new Carrito(c,0,
                 new ArrayList<>(),false,0);
         this.idCarrito ++;
         listadoDeCarritos.add(carrito);

@@ -15,9 +15,8 @@ public class Carrito {
 
     //Constructor
 
-    public Carrito(int idCarrito, Client cliente, int cantidadDeArticulos,
+    public Carrito(Client cliente, int cantidadDeArticulos,
                    List<Producto> productos, boolean pagado, float total) {
-        this.idCarrito = idCarrito;
         this.cliente = cliente;
         this.cantidadDeArticulos = cantidadDeArticulos;
         this.productos = productos;
