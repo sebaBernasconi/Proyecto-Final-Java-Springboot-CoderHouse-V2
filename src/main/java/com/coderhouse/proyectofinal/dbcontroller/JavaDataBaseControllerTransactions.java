@@ -182,11 +182,11 @@ public class JavaDataBaseControllerTransactions extends JavaDataBaseController{
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
-        String query = "SELECT * FROM compra WHERE ciul_cliente = ?;";
+        String query = "SELECT * FROM compra WHERE cuil_cliente = ?;";
         statement = connection.prepareStatement(query);
         statement.setInt(1,cuil);
 
-        resultSet = statement.executeQuery(query);
+        resultSet = statement.executeQuery();
         while (resultSet.next()){
             int id = resultSet.getInt("id");
             int cuilCliente = resultSet.getInt("cuil_cliente");

@@ -178,5 +178,35 @@ public class JavaDataBaseControllerCarrito extends JavaDataBaseController {
         }
     }
 
+    public int obtenerIdDeCarritoPorCuil(int cuil) throws SQLException {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        int id = 0;
+
+        String query = "SELECT id FROM carrito WHERE cuil_cliente = ?;";
+
+        statement = connection.prepareStatement(query);
+        statement.setInt(1,cuil);
+
+        resultSet = statement.executeQuery();
+
+
+        while (resultSet.next()){
+            id = resultSet.getInt("id");
+        }
+
+        if (resultSet != null){
+            resultSet.close();
+        }
+
+        if (statement != null){
+            statement.close();
+        }
+
+        return id;
+
+
+    }
+
 
 }

@@ -101,8 +101,8 @@ public class JavaDataBaseControllerCliente  extends  JavaDataBaseController{
     public void guardarCliente(Client client) throws SQLException {
         PreparedStatement statement = null;
 
-        String query = "INSERT INTO clientes(cuil,nombre,mail,password,id_Carrito,nro_tarjeta)" +
-                "VALUES(?,?,?,?,?,?);";
+        String query = "INSERT INTO clientes(cuil,nombre,mail,password)" +
+                "VALUES(?,?,?,?);";
 
         statement = connection.prepareStatement(query);
 
@@ -110,12 +110,6 @@ public class JavaDataBaseControllerCliente  extends  JavaDataBaseController{
         statement.setString(2,client.getNombre());
         statement.setString(3,client.getMail());
         statement.setString(4,client.getPassword());
-        statement.setInt(5,client.getCarrito().getIdCarrito());
-        statement.setInt(6,client.gettDebito().getNroTarjeta());
-
-        //No se persiste en la tabla cliente pero igual forma parte del guardado.
-        //Se va  guardar en la tabla compra
-        guarComprasDeUnCliente(client);
 
         int rowsAffected = statement.executeUpdate();
 
@@ -131,13 +125,17 @@ public class JavaDataBaseControllerCliente  extends  JavaDataBaseController{
     }
 
     //Create
-    private void guarComprasDeUnCliente(Client client) throws SQLException {
+    public void guarComprasDeUnCliente(Client client) throws SQLException {
         JavaDataBaseControllerTransactions jdbcT = new JavaDataBaseControllerTransactions();
+
+        jdbcT.getConnection();
 
         for (Compra compra :
                 client.getCompras()) {
             jdbcT.guardarCompra(compra);
         }
+
+        jdbcT.closeConnection();
 
     }
     //Update
@@ -187,6 +185,62 @@ public class JavaDataBaseControllerCliente  extends  JavaDataBaseController{
         }
     }
 
+    //Update
+    public void agregarIdCarrito(Client client) throws SQLException {
+        //Primero guardo el carrito en su tabla
+        //Instancio jdbc carrito
+        JavaDataBaseControllerCarrito jdbcC = new JavaDataBaseControllerCarrito();
+        jdbcC.getConnection();
+
+        jdbcC.guardarCarrito(client.getCarrito());
+
+        int idCarrito = jdbcC.obtenerIdDeCarritoPorCuil(client.getCuil());
+
+        jdbcC.closeConnection();
+
+        //Se lo asigno al cliente tambien.
+        client.getCarrito().setIdCarrito(idCarrito);
+
+        //Ahora actualizo la tabla cliente
+        PreparedStatement statement = null;
+
+        String query = "UPDATE clientes SET id_carrito = ? WHERE cuil = ?;";
+
+        statement = connection.prepareStatement(query);
+        statement.setInt(1,client.getCuil());
+        statement.setInt(2,idCarrito);
+
+        int rowsAffected = statement.executeUpdate();
+
+        if (rowsAffected > 0){
+            System.out.println("id del carrito guardado para el cliente con cuil: " + client.getCuil());
+        }
+
+        if (statement != null){
+            statement.close();
+        }
+
+    }
+
+    public void agregarNroTarjeta(int cuil, int nroTarjeta) throws SQLException {
+        PreparedStatement statement = null;
+
+        String query = "UPDATE clientes SET nro_tarjeta = ? WHERE cuil = ?;";
+
+        statement = connection.prepareStatement(query);
+        statement.setInt(1,nroTarjeta);
+        statement.setInt(2,cuil);
+
+        int rowsAffected = statement.executeUpdate();
+        if (rowsAffected > 0){
+            System.out.println("Numero de tarjeta guardado para el cliente con cuil: " + cuil);
+        }
+
+        if (statement != null){
+            statement.close();
+        }
+    }
+
     //Delete
     public void borrarCliente(int cuil) throws SQLException {
         PreparedStatement  statement = null;
@@ -209,13 +263,21 @@ public class JavaDataBaseControllerCliente  extends  JavaDataBaseController{
 
     private void verFacturas(int cuilCliente) throws SQLException {
         JavaDataBaseControllerFactura jdbcF = new JavaDataBaseControllerFactura();
+        jdbcF.getConnection();
+
         jdbcF.mostrarFacturasDeUnCliente(cuilCliente);
+
+        jdbcF.closeConnection();
 
     }
 
     private void verCompras(int cuilCliente)throws SQLException{
         JavaDataBaseControllerTransactions jdbcT = new JavaDataBaseControllerTransactions();
+        jdbcT.getConnection();
+
         jdbcT.mostrarComprasDeUnCliente(cuilCliente);
+
+        jdbcT.closeConnection();
     }
 
 }
