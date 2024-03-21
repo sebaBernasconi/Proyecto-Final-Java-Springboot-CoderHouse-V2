@@ -5,8 +5,7 @@ import com.coderhouse.proyectofinal.model.user.Admin;
 import com.coderhouse.proyectofinal.model.user.Carrito;
 import com.coderhouse.proyectofinal.model.user.Client;
 import com.coderhouse.proyectofinal.model.payment.MedioDePago;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
@@ -14,7 +13,12 @@ import java.util.Date;
 @Table(name = "venta")
 public class Venta extends Transaccion {
 
+    @ManyToOne
+    @JoinColumn(name = "cuil_cliente")
     private Client client;
+
+    @ManyToOne
+    @JoinColumn(name = "cuil_admin")
     private Admin vendedor;
 
     //Constructor
@@ -29,5 +33,23 @@ public class Venta extends Transaccion {
     //Constructor vacio para la persistencia
     public Venta() {
 
+    }
+
+    //Getters y Setters
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Admin getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(Admin vendedor) {
+        this.vendedor = vendedor;
     }
 }

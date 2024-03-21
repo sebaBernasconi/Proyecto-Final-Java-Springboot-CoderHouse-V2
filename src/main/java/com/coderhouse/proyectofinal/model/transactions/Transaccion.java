@@ -16,7 +16,7 @@ public abstract class Transaccion {
     @Column(name = "id")
     private int idTransaccion;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_carrito")
     private Carrito carrito;
 

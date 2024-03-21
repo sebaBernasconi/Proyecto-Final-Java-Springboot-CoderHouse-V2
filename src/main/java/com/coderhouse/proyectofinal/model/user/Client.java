@@ -16,6 +16,8 @@ public class Client extends User {
     @JoinColumn(name = "nro_tarjeta")
     private Debito tDebito;
 
+    @OneToOne
+    @JoinColumn(name = "id_carrito")
     private Carrito carrito;
     private List<Compra> compras;
 
