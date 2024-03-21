@@ -55,6 +55,48 @@ public class JavaDataBaseControllerCliente  extends  JavaDataBaseController{
         }
     }
 
+    public void mostrarUnCliente(int cuil) throws SQLException {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        String query = "SELECT * FROM clientes WHERE cuil = ?;";
+        statement = connection.prepareStatement(query);
+        statement.setInt(1,cuil);
+
+        resultSet = statement.executeQuery();
+
+        String nombre = resultSet.getString("nombre");
+        String mail = resultSet.getString("mail");
+        String password = resultSet.getString("password");
+        int idCarrito = resultSet.getInt("id_carrito");
+        int nroTarjeta = resultSet.getInt("nro_tarjeta");
+
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("Cuil: " + cuil);
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Mail: " + mail);
+        System.out.println("Password: " + password);
+        System.out.println("Id Carrito: " + idCarrito);
+        System.out.println("Numero de Tarjeta: " + nroTarjeta);
+        System.out.println();
+        System.out.println("Facturas del cliente {");
+        verFacturas(cuil);
+        System.out.println("}");
+        System.out.println();
+        System.out.println("Compras del cliente {");
+        verCompras(cuil);
+        System.out.println("}");
+        System.out.println("--------------------------------------------------------------------");
+
+        if (resultSet != null){
+            resultSet.close();
+        }
+
+        if (statement != null){
+            statement.close();
+        }
+    }
+
     //Create
     public void guardarCliente(Client client) throws SQLException {
         PreparedStatement statement = null;
@@ -71,6 +113,10 @@ public class JavaDataBaseControllerCliente  extends  JavaDataBaseController{
         statement.setInt(5,client.getCarrito().getIdCarrito());
         statement.setInt(6,client.gettDebito().getNroTarjeta());
 
+        //No se persiste en la tabla cliente pero igual forma parte del guardado.
+        //Se va  guardar en la tabla compra
+        guarComprasDeUnCliente(client);
+
         int rowsAffected = statement.executeUpdate();
 
         if (rowsAffected > 0){
@@ -85,12 +131,12 @@ public class JavaDataBaseControllerCliente  extends  JavaDataBaseController{
     }
 
     //Create
-    private void guarComprasDeUnCliente(Client client){
-        PreparedStatement statement = null;
+    private void guarComprasDeUnCliente(Client client) throws SQLException {
+        JavaDataBaseControllerTransactions jdbcT = new JavaDataBaseControllerTransactions();
 
         for (Compra compra :
                 client.getCompras()) {
-
+            jdbcT.guardarCompra(compra);
         }
 
     }
