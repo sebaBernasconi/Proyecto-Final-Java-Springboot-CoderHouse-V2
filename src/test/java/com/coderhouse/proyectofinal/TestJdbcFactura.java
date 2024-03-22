@@ -1,9 +1,11 @@
 package com.coderhouse.proyectofinal;
 
+import com.coderhouse.proyectofinal.dbcontroller.JavaDataBaseControllerCliente;
 import com.coderhouse.proyectofinal.dbcontroller.JavaDataBaseControllerFactura;
 import com.coderhouse.proyectofinal.model.ticket.FacturaA;
 import com.coderhouse.proyectofinal.model.ticket.FacturaB;
 import com.coderhouse.proyectofinal.model.ticket.FacturaC;
+import com.coderhouse.proyectofinal.model.user.Client;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -12,6 +14,10 @@ import java.util.Date;
 public class TestJdbcFactura {
 
     public static void main(String[] args) throws SQLException {
+
+        Client client = new Client(2043900195,"Sebastian","bernaseba1@gmail.com","secreta",
+                null,null,null);
+
         FacturaA facturaA = new FacturaA(129,2043900195,
                 LocalDate.of(2001, 12, 1),1399F);
         FacturaB facturaB = new FacturaB(139,2043900195,
@@ -20,6 +26,10 @@ public class TestJdbcFactura {
                 LocalDate.of(2021,3,3),1111F);
 
         JavaDataBaseControllerFactura jdbcFactura = new JavaDataBaseControllerFactura();
+        JavaDataBaseControllerCliente jdbcClient = new JavaDataBaseControllerCliente();
+
+        jdbcClient.getConnection();
+        jdbcClient.guardarCliente(client);
 
         jdbcFactura.getConnection();
 
@@ -46,6 +56,12 @@ public class TestJdbcFactura {
         jdbcFactura.mostrarFacturasB();
         jdbcFactura.mostrarFacturasC();
 
+        jdbcClient.borrarCliente(client.getCuil());
+
+        jdbcClient.closeConnection();
         jdbcFactura.closeConnection();
+
+        System.out.println("-------------------------------------------");
+        System.out.println("Fin Test JDBC Factura");
     }
 }
