@@ -139,7 +139,7 @@ public class JavaDataBaseControllerProductos extends JavaDataBaseController{
         Statement statement = null;
         ResultSet resultSet = null;
 
-        String query = "SELECET * FROM figura_de_accion ;";
+        String query = "SELECT * FROM figura_de_accion ;";
 
         statement = connection.createStatement();
         resultSet = statement.executeQuery(query);
@@ -201,7 +201,7 @@ public class JavaDataBaseControllerProductos extends JavaDataBaseController{
     public void actualizarFiguraDeAccion(int codigoProducto, int nuevoStock, float nuevoPrecio) throws SQLException {
         PreparedStatement statement = null;
 
-        String query = "UPDATE figura_de_accion SET stock = ?, SET precio = ? WHERE codigo_de_producto = ?;";
+        String query = "UPDATE figura_de_accion SET stock = ?, precio = ? WHERE codigo_de_producto = ?;";
 
         statement = connection.prepareStatement(query);
         statement.setInt(1,nuevoStock);
