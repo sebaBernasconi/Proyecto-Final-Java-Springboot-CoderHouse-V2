@@ -50,6 +50,8 @@ public class JavaDataBaseControllerTransactions extends JavaDataBaseController{
 
     //Create
     public void guardarCompra(Compra compra) throws SQLException {
+        JavaDataBaseControllerCarrito controllerCarrito = new JavaDataBaseControllerCarrito();
+        controllerCarrito.getConnection();
         PreparedStatement statement = null;
 
         String query = "INSERT INTO compra(fecha,cuil_admin,cuil_cliente,id_carrito,total)" +
@@ -59,7 +61,7 @@ public class JavaDataBaseControllerTransactions extends JavaDataBaseController{
         statement.setDate(1, (Date) compra.getFecha());
         statement.setInt(2,compra.getVendedor().getCuil());
         statement.setInt(3,compra.getClient().getCuil());
-        statement.setInt(4,compra.getCarrito().getIdCarrito());
+        statement.setInt(4,controllerCarrito.obtenerIdDeCarritoPorCuil(compra.getClient().getCuil()));
         statement.setFloat(5,compra.getTotal());
 
         int rowsAffected = statement.executeUpdate();
@@ -71,7 +73,7 @@ public class JavaDataBaseControllerTransactions extends JavaDataBaseController{
         if (statement != null){
             statement.close();
         }
-
+        controllerCarrito.closeConnection();
     }
 
     //Considero que la compra no tiene nada que actualizar
@@ -80,7 +82,7 @@ public class JavaDataBaseControllerTransactions extends JavaDataBaseController{
     public void borrarCompra(int idCompra) throws SQLException {
         PreparedStatement statement = null;
 
-        String query = "DELETE FROM comrpa WHERE id = ?;";
+        String query = "DELETE FROM compra WHERE id = ?;";
 
         statement = connection.prepareStatement(query);
         statement.setInt(1,idCompra);
@@ -130,6 +132,9 @@ public class JavaDataBaseControllerTransactions extends JavaDataBaseController{
 
     //Create
     public void guardarVenta(Venta venta) throws SQLException{
+        JavaDataBaseControllerCarrito controllerCarrito = new JavaDataBaseControllerCarrito();
+        controllerCarrito.getConnection();
+
         PreparedStatement statement = null;
 
         String query = "INSERT INTO venta(fecha,cuil_cliente,cuil_admin,id_carrito,total)" +
@@ -139,7 +144,7 @@ public class JavaDataBaseControllerTransactions extends JavaDataBaseController{
         statement.setDate(1, (Date) venta.getFecha());
         statement.setInt(2,venta.getClient().getCuil());
         statement.setInt(3,venta.getVendedor().getCuil());
-        statement.setInt(4,venta.getCarrito().getIdCarrito());
+        statement.setInt(4,controllerCarrito.obtenerIdDeCarritoPorCuil(venta.getClient().getCuil()));
         statement.setFloat(5,venta.getTotal());
 
         int rowsAffected = statement.executeUpdate();
@@ -151,7 +156,7 @@ public class JavaDataBaseControllerTransactions extends JavaDataBaseController{
         if (statement != null){
             statement.close();
         }
-
+        controllerCarrito.closeConnection();
     }
 
     //Considero que la venta no tiene nada que actualizar

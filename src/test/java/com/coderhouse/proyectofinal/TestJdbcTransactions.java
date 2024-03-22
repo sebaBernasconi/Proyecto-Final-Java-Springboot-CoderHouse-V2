@@ -1,5 +1,8 @@
 package com.coderhouse.proyectofinal;
 
+import com.coderhouse.proyectofinal.dbcontroller.JavaDataBaseControllerAdmins;
+import com.coderhouse.proyectofinal.dbcontroller.JavaDataBaseControllerCarrito;
+import com.coderhouse.proyectofinal.dbcontroller.JavaDataBaseControllerCliente;
 import com.coderhouse.proyectofinal.dbcontroller.JavaDataBaseControllerTransactions;
 import com.coderhouse.proyectofinal.model.transactions.Compra;
 import com.coderhouse.proyectofinal.model.transactions.Venta;
@@ -30,26 +33,54 @@ public class TestJdbcTransactions {
         Venta venta = new Venta(new Date(2020,4,1),carrito,carrito.getTotal(),client,admin);
 
         JavaDataBaseControllerTransactions javaDataBaseControllerTransactions = new JavaDataBaseControllerTransactions();
+        JavaDataBaseControllerCliente javaDataBaseControllerCliente = new JavaDataBaseControllerCliente();
+        JavaDataBaseControllerAdmins javaDataBaseControllerAdmins = new JavaDataBaseControllerAdmins();
+        JavaDataBaseControllerCarrito javaDataBaseControllerCarrito = new JavaDataBaseControllerCarrito();
 
+        javaDataBaseControllerCliente.getConnection();
+        javaDataBaseControllerAdmins.getConnection();
+        javaDataBaseControllerCarrito.getConnection();
         javaDataBaseControllerTransactions.getConnection();
 
+        javaDataBaseControllerCliente.guardarCliente(client);
+        javaDataBaseControllerAdmins.guardarAdmin(admin);
+
+        client.setCarrito(carrito);
+        javaDataBaseControllerCarrito.guardarCarrito(client.getCarrito());
+
         javaDataBaseControllerTransactions.guardarCompra(compra);
-        javaDataBaseControllerTransactions.mostrarCompras();
-
-        System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-        System.out.println("CRUD Venta");
-
         javaDataBaseControllerTransactions.guardarVenta(venta);
 
+        System.out.println("-------------------MOSTRANDO LA VENTA-------------------");
         javaDataBaseControllerTransactions.mostrarVentas();
 
+        System.out.println("-------------------MOSTRANDO LA COMPRA-------------------");
+        javaDataBaseControllerTransactions.mostrarCompras();
+
+
+        //No se considero que se pudiera modificar ningun campo de compra ni venta.
+        // en cualquier caso se borra y se guarda una nueva
+
+        //Borrando
         javaDataBaseControllerTransactions.borrarVenta(venta.getIdTransaccion());
+        javaDataBaseControllerTransactions.borrarCompra(compra.getIdTransaccion());
 
-        System.out.println("Despues de borrar y antes de intentar mostrar");
+        System.out.println("-------------------MOSTRANDO LA VENTA DESPUES DE BORRAR-------------------");
         javaDataBaseControllerTransactions.mostrarVentas();
-        System.out.println("Despues de borrar y despues de intentar");
 
+        System.out.println("-------------------MOSTRANDO LA COMPRA DESPUES DE BORRAR-------------------");
+        javaDataBaseControllerTransactions.mostrarCompras();
+
+        javaDataBaseControllerCliente.borrarCliente(client.getCuil());
+        javaDataBaseControllerAdmins.borrarAdmin(admin.getCuil());
+        javaDataBaseControllerCarrito.borrarCarrito
+                (javaDataBaseControllerCarrito.obtenerIdDeCarritoPorCuil(carrito.getIdCarrito()));
+
+        javaDataBaseControllerCarrito.closeConnection();
+        javaDataBaseControllerCliente.closeConnection();
+        javaDataBaseControllerAdmins.closeConnection();
         javaDataBaseControllerTransactions.closeConnection();
 
+        System.out.println("-------------------FIN TEST JDBC Transactions-------------------");
     }
 }
