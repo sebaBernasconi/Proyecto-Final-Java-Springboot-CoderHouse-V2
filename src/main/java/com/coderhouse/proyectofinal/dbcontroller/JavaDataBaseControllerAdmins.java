@@ -26,10 +26,15 @@ public class JavaDataBaseControllerAdmins extends  JavaDataBaseController{
             String password = resultSet.getString("password");
 
 
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("Cuil: " + cuil);
+            System.out.println("Nombre: " + nombre);
+            System.out.println("Mail: " + mail);
+            System.out.println("Password: " + password);
             System.out.println();
-            System.out.println("El administrador con cuil " + cuil +
-                    " es " + nombre + ". Su mail es " + mail +
-                    " y su contraseña " + password);
+            System.out.println("Ventas: ");
+            verVentas(cuil);
+            System.out.println("--------------------------------------------------------------------");
         }
 
         if (resultSet != null){
@@ -39,6 +44,44 @@ public class JavaDataBaseControllerAdmins extends  JavaDataBaseController{
         if (statement != null){
             statement.close();
         }
+    }
+
+    public void mostrarAdminPorCuil(int cuil) throws SQLException{
+
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        String query = "SELECT * FROM administradores WHERE cuil = ?;";
+
+        statement = connection.prepareStatement(query);
+        statement.setInt(1,cuil);
+        resultSet = statement.executeQuery();
+
+        while (resultSet.next()){
+            String nombre = resultSet.getString("nombre");
+            String mail = resultSet.getString("mail");
+            String password = resultSet.getString("password");
+
+
+            System.out.println("--------------------------------------------------------------------");
+            System.out.println("Cuil: " + cuil);
+            System.out.println("Nombre: " + nombre);
+            System.out.println("Mail: " + mail);
+            System.out.println("Password: " + password);
+            System.out.println();
+            System.out.println("Ventas: ");
+            verVentas(cuil);
+            System.out.println("--------------------------------------------------------------------");
+        }
+
+        if (resultSet != null){
+            resultSet.close();
+        }
+
+        if (statement != null){
+            statement.close();
+        }
+
     }
 
     //Create
@@ -72,28 +115,26 @@ public class JavaDataBaseControllerAdmins extends  JavaDataBaseController{
     }
     //Create
     private void guardarVentasDeUnAdmin(Admin admin) throws SQLException {
-        PreparedStatement statement = null;
+        JavaDataBaseControllerTransactions jdbcT = new JavaDataBaseControllerTransactions();
 
-        for (Venta v :
+        jdbcT.getConnection();
+
+        for (Venta venta :
                 admin.getVentas()) {
-            String query ="INSERT INTO admin_ventas (cuil_admin, id_venta)" +
-                    "       VALUES(?,?);";
-
-            statement = connection.prepareStatement(query);
-            statement.setInt(1,admin.getCuil());
-            statement.setInt(2,v.getIdTransaccion());
-
-            int rowsAffected = statement.executeUpdate();
-
-            if (rowsAffected == (long) admin.getVentas().size()){
-                System.out.println();
-                System.out.println("Ventas del admin guardadas en la base de datos");
-            }
+            jdbcT.guardarVenta(venta);
         }
+        
+        jdbcT.closeConnection();
+    }
 
-        if (statement != null){
-            statement.close();
-        }
+    private void verVentas(int cuil) throws SQLException {
+        JavaDataBaseControllerTransactions jdbcT = new JavaDataBaseControllerTransactions();
+
+        jdbcT.getConnection();
+
+        jdbcT.mostrarVentasDeUnAdmin(cuil);
+
+        jdbcT.closeConnection();
     }
 
     //Update

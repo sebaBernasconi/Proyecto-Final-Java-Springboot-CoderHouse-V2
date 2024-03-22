@@ -2,8 +2,10 @@ package com.coderhouse.proyectofinal;
 
 import com.coderhouse.proyectofinal.dbcontroller.JavaDataBaseController;
 import com.coderhouse.proyectofinal.dbcontroller.JavaDataBaseControllerAdmins;
+import com.coderhouse.proyectofinal.dbcontroller.JavaDataBaseControllerCliente;
 import com.coderhouse.proyectofinal.model.transactions.Venta;
 import com.coderhouse.proyectofinal.model.user.Admin;
+import com.coderhouse.proyectofinal.model.user.Carrito;
 import com.coderhouse.proyectofinal.model.user.Client;
 
 import java.sql.SQLException;
@@ -14,40 +16,71 @@ import java.util.List;
 public class TestJdbcAdmin {
 
     public static void main(String[] args) throws SQLException {
-        JavaDataBaseControllerAdmins controller = new JavaDataBaseControllerAdmins();
+        JavaDataBaseControllerAdmins controllerAdmins = new JavaDataBaseControllerAdmins();
+        JavaDataBaseControllerCliente controllerCliente = new JavaDataBaseControllerCliente();
 
-        //Este cliente no va a ser persistido ya que es solo una prueba de los admins.
+        //cliente para persistir y probar
         Client client = new Client(2043900195,"Sebastian","bernaseba1@gmail.com","secreta",
                 null,null,null);
 
-       //instanciando un admin
+        Carrito carrito = new Carrito(client, 3, null, true, 1120);
+
+
+        controllerCliente.getConnection();
+
+        controllerCliente.guardarCliente(client);
+        client.setCarrito(carrito);
+        controllerCliente.agregarIdCarrito(client);
+
+
+
+        //instanciando un admin
+        List<Venta> ventasAdminUno = new ArrayList<>();
         Admin admin = new Admin(111222333,"Juan","jj@gmail.com","ACDC",
                 new ArrayList<>());
 
+        Admin admin2 = new Admin(2020123321,"Lucas","LucasB@gmail.com","1234",
+                new ArrayList<>());
+
         //instanciando una venta para guardar en el listado
-        Venta v = new Venta(new Date(),null,104.4F,client,admin);
-        v.setIdTransaccion(2);
+        Venta venta = new Venta(new java.sql.Date(2020,4,1),client.getCarrito(),
+                client.getCarrito().getTotal(),client,admin);
+        ventasAdminUno.add(venta);
+        admin.setVentas(ventasAdminUno);
 
-        //listado de ventas del admin
-        List<Venta> ventasDelAdmin = new ArrayList<>();
-        ventasDelAdmin.add(v);
-        //setteando las ventas del admin
-        admin.setVentas(ventasDelAdmin);
+        controllerAdmins.getConnection();
 
-        //Obteniendo conexion
-        controller.getConnection();
+        controllerAdmins.guardarAdmin(admin);
+        controllerAdmins.guardarAdmin(admin2);
 
-        controller.borrarAdmin(111222333);
-        controller.guardarAdmin(admin);
+        System.out.println("--------------------------------MOSTRANDO TODOS LOS ADMINS----------------");
 
-        controller.mostrarAdmins();
+        controllerAdmins.mostrarAdmins();
 
-        controller.modificarMailAdmin(111222333,"Juan@gmail.com");
-        controller.modificarPasswordAdmin(111222333,"Angus");
+        //modificando un admin
+        controllerAdmins.modificarMailAdmin(admin.getCuil(),"JuanJose@gmail.com");
+        controllerAdmins.modificarPasswordAdmin(admin.getCuil(),"nueva password");
 
-        controller.mostrarAdmins();
+        System.out.println("--------------------------------MOSTRANDO ADMIN DESPUES DE ACUTALIZACION--------------------------------");
+        controllerAdmins.mostrarAdminPorCuil(admin.getCuil());
 
-        //Cerrando conexion
-        controller.closeConnection();
+        //borrando los admins
+        controllerAdmins.borrarAdmin(admin.getCuil());
+
+
+        System.out.println("--------------------------------MOSTRANDO ADMINS DESPUES DE BORRAR--------------------------------");
+
+        controllerAdmins.mostrarAdmins();
+
+        controllerAdmins.closeConnection();
+
+        //Borrando el cliente guardado
+
+
+        controllerCliente.borrarCliente(client.getCuil());
+
+        controllerCliente.closeConnection();
+
+        System.out.println("--------------------------FIN TEST JDBCADMIN--------------------------");
     }
 }

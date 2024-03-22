@@ -219,7 +219,7 @@ public class JavaDataBaseControllerTransactions extends JavaDataBaseController{
         statement = connection.prepareStatement(query);
         statement.setInt(1,cuil);
 
-        resultSet = statement.executeQuery(query);
+        resultSet = statement.executeQuery();
 
         while(resultSet.next()){
             int id = resultSet.getInt("id");
