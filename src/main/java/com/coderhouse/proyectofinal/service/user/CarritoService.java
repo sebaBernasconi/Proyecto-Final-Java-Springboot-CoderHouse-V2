@@ -2,6 +2,7 @@ package com.coderhouse.proyectofinal.service.user;
 
 import com.coderhouse.proyectofinal.model.user.Carrito;
 import com.coderhouse.proyectofinal.repository.CarritoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.Optional;
 @Service
 public class CarritoService {
 
+    @Autowired
     private CarritoRepository carritoRepository;
 
     public Carrito guardarCarrito(Carrito carrito){
@@ -21,6 +23,7 @@ public class CarritoService {
             if (carritoRepository.existsById(codigo)){ //preguntar si no hay drama en usar optional(?
                 Optional<Carrito> carritoAPagar = carritoRepository.findById(codigo);
                 carritoAPagar.orElse(null).setPagado(pagado);
+                return carritoRepository.save(carritoAPagar.orElse(null));
             }
         }catch (EmptyResultDataAccessException e){
             return null;
@@ -34,6 +37,7 @@ public class CarritoService {
             if (carritoRepository.existsById(codigo)){
                 Optional<Carrito>carritoAModificar = carritoRepository.findById(codigo);
                 carritoAModificar.orElse(null).setCantidadDeArticulos(nuevaCantidadDeArtiulos);
+                return carritoRepository.save(carritoAModificar.orElse(null));
             }
         }catch (EmptyResultDataAccessException e){
             return null;
