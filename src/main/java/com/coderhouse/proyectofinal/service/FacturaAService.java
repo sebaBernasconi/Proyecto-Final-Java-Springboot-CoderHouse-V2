@@ -2,6 +2,7 @@ package com.coderhouse.proyectofinal.service;
 
 import com.coderhouse.proyectofinal.model.ticket.FacturaA;
 import com.coderhouse.proyectofinal.repository.FacturaARepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Service
 public class FacturaAService {
 
+    @Autowired
     private FacturaARepository facturaARepository;
 
     public List<FacturaA> listarFacturasA(){
