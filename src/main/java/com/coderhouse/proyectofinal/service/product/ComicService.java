@@ -1,4 +1,4 @@
-package com.coderhouse.proyectofinal.service;
+package com.coderhouse.proyectofinal.service.product;
 
 import com.coderhouse.proyectofinal.model.product.Comic;
 import com.coderhouse.proyectofinal.repository.ComicRepository;

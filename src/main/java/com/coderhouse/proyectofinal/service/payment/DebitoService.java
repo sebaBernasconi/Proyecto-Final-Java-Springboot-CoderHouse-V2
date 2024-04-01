@@ -1,4 +1,4 @@
-package com.coderhouse.proyectofinal.service;
+package com.coderhouse.proyectofinal.service.payment;
 
 import com.coderhouse.proyectofinal.model.payment.Debito;
 import com.coderhouse.proyectofinal.repository.DebitoRepository;
