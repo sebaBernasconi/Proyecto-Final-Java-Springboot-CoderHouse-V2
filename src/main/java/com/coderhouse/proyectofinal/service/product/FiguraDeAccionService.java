@@ -7,6 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FiguraDeAccionService {
@@ -24,6 +25,7 @@ public class FiguraDeAccionService {
 
     public FiguraDeAccion editarFiguraDeAccion(int codigoProducto, int nuevoStock,
                                                float nuevoPrecio,FiguraDeAccion figuraDeAccion){
+        //Editar: sacar el stock y el objeto. usar optional y que sea solo modificar precio
         try {
             if (figuraDeAccionRepository.existsById(codigoProducto)){
                 figuraDeAccion.setStock(nuevoStock);
@@ -35,6 +37,16 @@ public class FiguraDeAccionService {
         }
 
         return null;
+    }
+
+    public FiguraDeAccion actualizarStockPostVenta(int codigoProducto){
+        try {
+            Optional<FiguraDeAccion> figuraDeAccionActualizar = figuraDeAccionRepository.findById(codigoProducto);
+            figuraDeAccionActualizar.orElse(null).actualizarStock();
+           return figuraDeAccionRepository.save(figuraDeAccionActualizar.orElse(null));
+        }catch (EmptyResultDataAccessException e){
+            return null;
+        }
     }
 
     public boolean eliminarFiguraDeAccion(int codigoDeProducto){

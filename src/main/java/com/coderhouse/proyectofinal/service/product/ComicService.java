@@ -7,6 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ComicService {
@@ -38,6 +39,16 @@ public class ComicService {
         }
 
         return null;
+    }
+
+    public Comic actualizarStockPostVenta(int codigoDeProducto){
+        try {
+            Optional<Comic> comicParaActualizar = comicRepository.findById(codigoDeProducto);
+            comicParaActualizar.orElse(null).actualizarStock();
+            return comicRepository.save(comicParaActualizar.orElse(null));
+        }catch (EmptyResultDataAccessException e){
+            return null;
+        }
     }
     public boolean eliminarComic(int codigoDeProducto){
         try {
