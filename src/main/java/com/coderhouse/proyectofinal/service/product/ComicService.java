@@ -19,6 +19,15 @@ public class ComicService {
         return comicRepository.findAll();
     }
 
+    public Comic buscarComicPorCodigo(int codigo){
+        try {
+            Optional<Comic> comic =  comicRepository.findById(codigo);
+            return comic.orElse(null);
+        }catch (EmptyResultDataAccessException e){
+            return null;
+        }
+    }
+
     public Comic guardarComic(Comic comic){
         return comicRepository.save(comic);
     }
