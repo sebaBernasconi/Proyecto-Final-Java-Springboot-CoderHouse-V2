@@ -19,6 +19,15 @@ public class FiguraDeAccionService {
         return figuraDeAccionRepository.findAll();
     }
 
+    public FiguraDeAccion buscarFiguraPorCodigo(int codigo){
+        try {
+            Optional<FiguraDeAccion>figuraDeAccion = figuraDeAccionRepository.findById(codigo);
+            return figuraDeAccion.orElse(null);
+        }catch (EmptyResultDataAccessException e){
+            return null;
+        }
+    }
+
     public FiguraDeAccion guardarFiguraDeAccion(FiguraDeAccion figuraDeAccion){
         return figuraDeAccionRepository.save(figuraDeAccion);
     }
