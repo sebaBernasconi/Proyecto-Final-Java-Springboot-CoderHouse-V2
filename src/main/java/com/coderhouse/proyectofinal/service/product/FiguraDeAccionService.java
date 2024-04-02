@@ -49,6 +49,16 @@ public class FiguraDeAccionService {
         }
     }
 
+    public FiguraDeAccion modificarPrecio(int codigoDeProducto, float nuevoPrecio){
+        try {
+            Optional<FiguraDeAccion> figuraDeAccion = figuraDeAccionRepository.findById(codigoDeProducto);
+            figuraDeAccion.orElse(null).modificarPrecio(nuevoPrecio);
+            return figuraDeAccionRepository.save(figuraDeAccion.orElse(null));
+        }catch (EmptyResultDataAccessException e){
+            return null;
+        }
+    }
+
     public boolean eliminarFiguraDeAccion(int codigoDeProducto){
         try {
             figuraDeAccionRepository.deleteById(codigoDeProducto);
