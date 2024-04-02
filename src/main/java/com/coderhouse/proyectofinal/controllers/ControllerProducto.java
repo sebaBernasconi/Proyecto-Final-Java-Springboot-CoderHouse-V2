@@ -3,24 +3,36 @@ package com.coderhouse.proyectofinal.controllers;
 import com.coderhouse.proyectofinal.exception.ProductNotFoundException;
 import com.coderhouse.proyectofinal.model.product.Comic;
 import com.coderhouse.proyectofinal.model.product.FiguraDeAccion;
+import com.coderhouse.proyectofinal.service.product.ComicService;
+import com.coderhouse.proyectofinal.service.product.FiguraDeAccionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RestController
+@RequestMapping(value = "/productos")
 public class ControllerProducto {
 
-    private int idFiguraDeAccion = 0;
-    private int idComic = 0;
+    //Declarando los servicios que voy a necesitar
 
-    private List<FiguraDeAccion>listadoDeFigurasDeAccion;
-    private List<Comic> listadoDeComics;
+    @Autowired
+    private ComicService comicService;
 
+    @Autowired
+    private FiguraDeAccionService figuraDeAccionService;
+
+    //Creando instancia de controller
     private static ControllerProducto intancia;
 
     //Constructor
     public ControllerProducto(){
-        this.listadoDeFigurasDeAccion = new ArrayList<>();
-        this.listadoDeComics = new ArrayList<>();
+
     }
 
     //getInstancia para que sea singleton
@@ -34,110 +46,131 @@ public class ControllerProducto {
 
     //Metodos del controller
 
-    public void registrarFiguraDeAccion(int codigoDeProducto, String nombre, String descripcion,
-                                        int stock, float precio, String fabricante,
-                                        boolean esArticulado) throws ProductNotFoundException {
-        if (buscarFiguraDeAccion(codigoDeProducto) == null){
-            FiguraDeAccion figuraDeAccion = new FiguraDeAccion(codigoDeProducto,nombre,descripcion,
-                    stock, precio,fabricante,esArticulado);
-            listadoDeFigurasDeAccion.add(figuraDeAccion);
-            this.idFiguraDeAccion ++;
-        }else {
-            System.out.println("Ya hay una figura de accion registrada " +
-                    "con el codigo: " + codigoDeProducto);
+    @PostMapping(value = "/agregarFigura", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<FiguraDeAccion> registrarFiguraDeAccion(@RequestBody FiguraDeAccion figuraDeAccion)  {
+
+        figuraDeAccionService.guardarFiguraDeAccion(figuraDeAccion);
+         return new ResponseEntity<>(figuraDeAccion, HttpStatus.CREATED);
+
+    }
+
+    @PostMapping(value = "/agregarComic", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Comic> registrarComic(@RequestBody Comic comic) {
+        comicService.guardarComic(comic);
+        return new ResponseEntity<>(comic,HttpStatus.CREATED);
+    }
+
+
+    @PutMapping(value = "/actualizarStockFigura/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<FiguraDeAccion> actualizarStockFiguraDeAccion(@PathVariable("id") Integer codigoDeProducto) {
+        try {
+            FiguraDeAccion figuraDeAccion = figuraDeAccionService.actualizarStockPostVenta(codigoDeProducto);
+            return new ResponseEntity<>(figuraDeAccion,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    public void registrarComic(int codigoDeProducto, String nombre,
-                               String descripcion, int stock, float precio,
-                               String autor, String idioma, boolean tapaDura)
-    throws ProductNotFoundException {
-        if (buscarComic(codigoDeProducto) == null){
-            Comic c = new Comic(codigoDeProducto,nombre,descripcion,
-                    stock,precio,autor,idioma,tapaDura);
-            listadoDeComics.add(c);
-            this.idComic ++;
-        }else {
-            System.out.println("Ya hay un comic registrado con el" +
-                    " codigo: " + codigoDeProducto);
+    @PutMapping(value = "/actualizarStockComic/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Comic> actualizarStockComic(@PathVariable("id") Integer codigoDeProducto) {
+        try {
+            Comic comic = comicService.actualizarStockPostVenta(codigoDeProducto);
+            return new ResponseEntity<>(comic,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-
-    public void actualizarStockFiguraDeAccion(int codigoDeProducto)
-            throws ProductNotFoundException {
-        FiguraDeAccion f = buscarFiguraDeAccion(codigoDeProducto);
-        f.actualizarStock();
 
     }
 
-    public void actualizarStockComic(int codigoDeProducto)
-            throws ProductNotFoundException {
-        Comic c = buscarComic(codigoDeProducto);
-        c.actualizarStock();
-    }
-    public void editarFiguraDeAccion(int codigoDeProducto,String nuevoNombre,String nuevaDescripcion,
-                                     String nuevoFabricante, boolean nuevoEsArticulado)
-            throws ProductNotFoundException {
-        FiguraDeAccion f = buscarFiguraDeAccion(codigoDeProducto);
-        f.editarFiguraDeAccion(nuevoNombre,nuevaDescripcion,nuevoFabricante,nuevoEsArticulado);
+    @PutMapping(value = "/editarFigura/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<FiguraDeAccion> editarFiguraDeAccion(@PathVariable("id") Integer codigoDeProducto) {
+      //Consultar que onda
+        return null;
     }
 
     public void editarComic(int codigoDeProdcto,String nuevoNombre ,
                             String nuevaDescripcion, String nuevoAutor,
                             String nuevoIdioma, boolean nuevoTapaDura)
             throws ProductNotFoundException {
-        Comic c = buscarComic(codigoDeProdcto);
-        c.editarComic(nuevoNombre,nuevaDescripcion,
-                nuevoAutor,nuevoIdioma,nuevoTapaDura);
+       //Consultar que onda
     }
 
-    public void modificarPrecioFiguraDeAccion(int codigoDeProducto,
-                                              float nuevoPrecio)
-            throws ProductNotFoundException {
-        FiguraDeAccion f = buscarFiguraDeAccion(codigoDeProducto);
-        f.modificarPrecio(nuevoPrecio);
+
+    @PutMapping(value = "/actualizarPrecioFigura/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<FiguraDeAccion> modificarPrecioFiguraDeAccion(@PathVariable("id")
+                                                                            Integer codigoDeProducto,
+                                                                        float nuevoPrecio) {
+        try {
+            FiguraDeAccion figuraDeAccion = figuraDeAccionService.modificarPrecio(codigoDeProducto,nuevoPrecio);
+            return new ResponseEntity<>(figuraDeAccion,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
-    public void modificarPrecioComic(int codigoDeProducto,
-                                     float nuevoPrecio)
-        throws ProductNotFoundException {
-        Comic c = buscarComic(codigoDeProducto);
-        c.modificarPrecio(nuevoPrecio);
+    @PutMapping(value = "/actualizarPrecioComic/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Comic> modificarPrecioComic(@PathVariable("id") Integer codigoDeProducto,
+                                     float nuevoPrecio){
+        try {
+            Comic comic = comicService.modificarPrecio(codigoDeProducto,nuevoPrecio);
+            return new ResponseEntity<>(comic,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     //Getter de los productos
     //Mala practica(?
-    public FiguraDeAccion getFiguraDeAccion(int codigoDeProducto) throws ProductNotFoundException {
-        return buscarFiguraDeAccion(codigoDeProducto);
+    @GetMapping(value = "/buscarFigura/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<FiguraDeAccion> obtenerFiguraPorCodigo(@PathVariable("id") Integer codigoDeProducto) {
+        try {
+            FiguraDeAccion figuraDeAccion = figuraDeAccionService.buscarFiguraPorCodigo(codigoDeProducto);
+
+            if (figuraDeAccion != null){
+                return new ResponseEntity<>(figuraDeAccion,HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>(figuraDeAccion,HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public Comic getComic(int codigoDeProducto) throws ProductNotFoundException {
-        return buscarComic(codigoDeProducto);
+    @GetMapping(value = "/buscarComic/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Comic> obtenerComicPorCodigo(@PathVariable("id") Integer codigoDeProducto) {
+        try {
+            Comic comic = comicService.buscarComicPorCodigo(codigoDeProducto);
+            if (comic != null){
+                return new ResponseEntity<>(comic,HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>(comic,HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     //Metodos privados que devuelven objetos que el cliente nunca debe ver
-    private FiguraDeAccion buscarFiguraDeAccion(int codigoDeProducto)
-            throws ProductNotFoundException {
-        for (FiguraDeAccion f:
-                listadoDeFigurasDeAccion) {
-            if (codigoDeProducto == f.getCodigoDeProducto()) {
-                return f;
-            }
+    @GetMapping(value = "/listarFiguras", produces = {MediaType.APPLICATION_JSON_VALUE})
+    private ResponseEntity<List<FiguraDeAccion>> obtenerFigurasDeAccion() {
+        try {
+            List<FiguraDeAccion> listadoFiguras = figuraDeAccionService.listarFigurasDeAccion();
+            return new ResponseEntity<>(listadoFiguras,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        throw new ProductNotFoundException("No hay ninguna figura de accion registrada " +
-                "con el codigo: " + codigoDeProducto);
     }
 
-    private Comic buscarComic(int codigoDeProducto)
-            throws ProductNotFoundException {
-        for (Comic c :
-                listadoDeComics) {
-            if (codigoDeProducto == c.getCodigoDeProducto()) {
-                return c;
-            }
-        }
-        throw new ProductNotFoundException("No hay ningun comic registrado con " +
-                " el codigo: " + codigoDeProducto);
+    @GetMapping(value = "/listarComics", produces = {MediaType.APPLICATION_JSON_VALUE})
+    private ResponseEntity<List<Comic>> obtenerComics() {
+      try {
+          List<Comic> listadoComics = comicService.listarComics();
+          return new ResponseEntity<>(listadoComics,HttpStatus.OK);
+      }catch (Exception e){
+          return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+      }
 
 
     }
