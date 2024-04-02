@@ -50,6 +50,16 @@ public class ComicService {
             return null;
         }
     }
+
+    public Comic modificarPrecio(int codigoDeProducto, float nuevoPrecio){
+        try {
+            Optional<Comic> comic = comicRepository.findById(codigoDeProducto);
+            comic.orElse(null).modificarPrecio(nuevoPrecio);
+            return comicRepository.save(comic.orElse(null));
+        }catch (EmptyResultDataAccessException e){
+            return null;
+        }
+    }
     public boolean eliminarComic(int codigoDeProducto){
         try {
             comicRepository.deleteById(codigoDeProducto);
