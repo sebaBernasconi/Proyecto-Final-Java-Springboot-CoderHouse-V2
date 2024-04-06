@@ -2,22 +2,32 @@ package com.coderhouse.proyectofinal.controllers;
 
 import com.coderhouse.proyectofinal.exception.CarritoNotFoundException;
 import com.coderhouse.proyectofinal.exception.UserNotFoundException;
+import com.coderhouse.proyectofinal.model.product.Comic;
 import com.coderhouse.proyectofinal.model.user.Carrito;
 import com.coderhouse.proyectofinal.model.user.Client;
+import com.coderhouse.proyectofinal.service.user.CarritoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RestController
+@RequestMapping(value = "/carrito")
 public class ControllerCarrito {
 
-    private int idCarrito = 0;
-    private List<Carrito> listadoDeCarritos;
+    @Autowired
+    private CarritoService carritoService;
 
     public static ControllerCarrito instancia;
 
     //Constructor
     public ControllerCarrito(){
-        this.listadoDeCarritos = new ArrayList<>();
+
     }
 
     //Metodo get instancia para que sea un singleton
@@ -30,36 +40,63 @@ public class ControllerCarrito {
     }
 
     //Metodos del controller
-    //Mala practica que devuelva un carrito?
-    public Carrito crearCarrito(int cuilCliente)
-            throws UserNotFoundException{
-        /*Solo lo uso en el metodo crear cliente, que se le asigne
-        * un carrito vacio, pero es mala practica que devuelva un
-        * objeto de negocio un metodo publico*/
-        ControllerUser controllerUser = ControllerUser.getInstancia();
-        Client c = controllerUser.getClient(cuilCliente);
+    @PostMapping(value = "/agregar", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Carrito>agregarCarrito(@RequestBody Carrito carrito){
 
-        Carrito carrito = new Carrito(c,0,
-                new ArrayList<>(),false,0);
-        this.idCarrito ++;
-        listadoDeCarritos.add(carrito);
-
-        return carrito;
+        carritoService.guardarCarrito(carrito);
+        return new ResponseEntity<>(carrito, HttpStatus.CREATED);
     }
 
-
-
-
-    //Metodos privados que devuelven objetos que el cliente nunca debe ver
-    private Carrito buscarCarrito(int idCarrito)
-            throws CarritoNotFoundException {
-        for (Carrito c :
-                listadoDeCarritos) {
-            if (idCarrito == c.getIdCarrito()) {
-                return c;
-            }
+    @PutMapping(value = "/pagar/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Carrito>pagarCarrito(@PathVariable("id") Integer codigo){
+        try {
+            Carrito carritoPagado = carritoService.pagarCarrito(codigo);
+            return new ResponseEntity<>(carritoPagado,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        throw new CarritoNotFoundException("No hay un carrito cargado con el id: "
-                + idCarrito);
+    }
+
+    @PutMapping(value = "/agregarComic/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Carrito>ageregarComic(@PathVariable("id")Integer codigoCarrito,
+                                                Integer codigoProducto){
+        try {
+            Carrito carrito = carritoService.agregarComic(codigoCarrito,codigoProducto);
+            return new ResponseEntity<>(carrito,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping(value = "/agregarFigura/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Carrito>agregarFiguraDeAccion(@PathVariable("id")Integer codigoCarrito,
+                                                        Integer codigoProducto){
+        try {
+            Carrito carrito = carritoService.agregarFiguraDeAccion(codigoCarrito,codigoProducto);
+            return new ResponseEntity<>(carrito,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping(value = "/eliminar/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Void>eliminarCarrito(@PathVariable("id") Integer codigo){
+        boolean carritoEliminado = carritoService.borrarCarrito(codigo);
+
+        if (carritoEliminado){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping(value = "/listar",produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<Carrito>>listarCarritos(){
+        try {
+            List<Carrito>listadoDeCarritos = carritoService.listarCarritos();
+            return new ResponseEntity<>(listadoDeCarritos,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
