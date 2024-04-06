@@ -18,11 +18,11 @@ public class CarritoService {
         return carritoRepository.save(carrito);
     }
 
-    public Carrito pagarCarrito(int codigo, boolean pagado){
+    public Carrito pagarCarrito(int codigo){
         try {
             if (carritoRepository.existsById(codigo)){ //preguntar si no hay drama en usar optional(?
                 Optional<Carrito> carritoAPagar = carritoRepository.findById(codigo);
-                carritoAPagar.orElse(null).setPagado(pagado);
+                carritoAPagar.orElse(null).setPagado(true);
                 return carritoRepository.save(carritoAPagar.orElse(null));
             }
         }catch (EmptyResultDataAccessException e){
