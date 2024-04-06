@@ -7,10 +7,12 @@ import com.coderhouse.proyectofinal.model.user.Carrito;
 import com.coderhouse.proyectofinal.repository.CarritoRepository;
 import com.coderhouse.proyectofinal.service.product.ComicService;
 import com.coderhouse.proyectofinal.service.product.FiguraDeAccionService;
+import org.springframework.aop.target.LazyInitTargetSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,6 +20,10 @@ public class CarritoService {
 
     @Autowired
     private CarritoRepository carritoRepository;
+
+    public List<Carrito>listarCarritos(){
+        return carritoRepository.findAll();
+    }
 
     public Carrito guardarCarrito(Carrito carrito){
         return carritoRepository.save(carrito);
