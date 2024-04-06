@@ -1,7 +1,12 @@
 package com.coderhouse.proyectofinal.service.user;
 
+import com.coderhouse.proyectofinal.model.product.Comic;
+import com.coderhouse.proyectofinal.model.product.FiguraDeAccion;
+import com.coderhouse.proyectofinal.model.product.Producto;
 import com.coderhouse.proyectofinal.model.user.Carrito;
 import com.coderhouse.proyectofinal.repository.CarritoRepository;
+import com.coderhouse.proyectofinal.service.product.ComicService;
+import com.coderhouse.proyectofinal.service.product.FiguraDeAccionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -32,18 +37,46 @@ public class CarritoService {
         return null;
     }
 
-    public Carrito agregarArticulo(int codigo, int nuevaCantidadDeArtiulos){
+    public Carrito agregarComic(int codigo, int codigoProducto){
         try {
-            if (carritoRepository.existsById(codigo)){
-                Optional<Carrito>carritoAModificar = carritoRepository.findById(codigo);
-                carritoAModificar.orElse(null).setCantidadDeArticulos(nuevaCantidadDeArtiulos);
-                return carritoRepository.save(carritoAModificar.orElse(null));
-            }
+            //Instanciando el servicio del producto a agregar
+            ComicService comicService = new ComicService();
+
+            //Obteniendo el carrito
+            Optional<Carrito>carritoAModificar = carritoRepository.findById(codigo);
+
+            //Obteniendo el comic a agregar
+            Comic comicParaAgregar = comicService.buscarComicPorCodigo(codigoProducto);
+
+            //Asignando el producto al carrito
+            carritoAModificar.orElse(null).agregarAlCarrito(comicParaAgregar);
+
+            return carritoRepository.save(carritoAModificar.orElse(null));
+
         }catch (EmptyResultDataAccessException e){
             return null;
         }
+    }
 
-        return null;
+    public Carrito agregarFiguraDeAccion(int codigo, int codigoProducto){
+        try {
+            //Instanciando el servicio del producto a agregar
+            FiguraDeAccionService figuraDeAccionService = new FiguraDeAccionService();
+
+            //Obteniendo el carrito
+            Optional<Carrito>carritoAModificar = carritoRepository.findById(codigo);
+
+            //Obteniendo el comic a agregar
+            FiguraDeAccion figuraParaAgregar = figuraDeAccionService.buscarFiguraPorCodigo(codigo);
+
+            //Asignando el producto al carrito
+            carritoAModificar.orElse(null).agregarAlCarrito(figuraParaAgregar);
+
+            return carritoRepository.save(carritoAModificar.orElse(null));
+
+        }catch (EmptyResultDataAccessException e){
+            return null;
+        }
     }
 
     public boolean borrarCarrito(int codigo){
