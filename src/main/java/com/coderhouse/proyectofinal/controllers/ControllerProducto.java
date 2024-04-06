@@ -121,6 +121,27 @@ public class ControllerProducto {
 
     }
 
+    @DeleteMapping(value = "/eliminarComic/{id}")
+    public ResponseEntity<Void>eliminarComic(@PathVariable("id") Integer codigo){
+        boolean comicEliminado = comicService.eliminarComic(codigo);
+        if (comicEliminado){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping(value = "/eliminarFigura/{id}")
+    public ResponseEntity<Void>eliminarFiguraDeAccion(@PathVariable("id") Integer codigo){
+        boolean figuraEliminada = figuraDeAccionService.eliminarFiguraDeAccion(codigo);
+
+        if (figuraEliminada){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     //Getter de los productos
     //Mala practica(?
     @GetMapping(value = "/buscarFigura/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
