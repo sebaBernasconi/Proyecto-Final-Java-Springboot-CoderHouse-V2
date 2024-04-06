@@ -7,6 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DebitoService {
@@ -22,17 +23,15 @@ public class DebitoService {
         return tDebitoRepository.save(debito);
     }
 
-    public Debito actualizarSaldo(int nroTarjeta, float nuevoSaldo, Debito debito){
+    public Debito pagar(int nroTarjeta, float total){
 
-        try{
-            if (tDebitoRepository.existsById(nroTarjeta)){
-                debito.setSaldo(nuevoSaldo);
-                return tDebitoRepository.save(debito);
-            }
+        try {
+            Optional<Debito>tarjeta = tDebitoRepository.findById(nroTarjeta);
+            tarjeta.orElse(null).pagar(total);
+            return tDebitoRepository.save(tarjeta.orElse(null));
         }catch (EmptyResultDataAccessException e){
             return null;
         }
-        return null;
     }
 
     public boolean eliminarTarjedaDeDebito(int nroTarjeta){
