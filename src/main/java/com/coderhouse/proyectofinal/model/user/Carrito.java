@@ -1,16 +1,36 @@
 package com.coderhouse.proyectofinal.model.user;
 
 import com.coderhouse.proyectofinal.model.product.Producto;
+import jakarta.persistence.*;
 
 import java.util.List;
 
+@Entity
+@Table(name = "carrito")
 public class Carrito {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int idCarrito;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cuil")
     private Client cliente;
+
+    @Column(name = "cantidad_de_articulos")
     private int cantidadDeArticulos;
+
+    @ManyToMany
+    @JoinTable(name = "carrito_producto",
+     joinColumns = @JoinColumn(name = "id_carrito"),
+    inverseJoinColumns = @JoinColumn(name ="id_producto"))
     private List<Producto> productos;
+
+    @Column(name = "pagado")
     private boolean pagado;
+
+    @Column(name = "total")
     private float total;
 
     //Constructor
@@ -24,6 +44,10 @@ public class Carrito {
         this.total = total;
     }
 
+    public Carrito() {
+
+    }
+
     //Metodos de la clase
     public void pagarCarrito(){
 
@@ -32,6 +56,7 @@ public class Carrito {
 
     public void agregarAlCarrito(Producto p){
         this.productos.add(p);
+        this.cantidadDeArticulos ++;
         this.total += p.getPrecio();
 
         System.out.println("Producto: " + p.getNombre() +
