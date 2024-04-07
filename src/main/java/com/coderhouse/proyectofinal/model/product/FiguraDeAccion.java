@@ -1,8 +1,17 @@
 package com.coderhouse.proyectofinal.model.product;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "figura_de_accion")
 public class FiguraDeAccion extends Producto {
 
+    @Column(name = "fabricante")
     private String fabricante;
+
+    @Column(name = "esArticulado")
     private boolean esArticulado;
 
     //Constructor
@@ -12,6 +21,11 @@ public class FiguraDeAccion extends Producto {
         super(codigoDeProducto, nombre, descripcion, stock, precio);
         this.fabricante = fabricante;
         this.esArticulado = esArticulado;
+    }
+
+    //Constructor vacio para la persistencia
+    public FiguraDeAccion() {
+
     }
 
     public void editarFiguraDeAccion(String nuevoNombre ,String nuevaDescripcion,
