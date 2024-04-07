@@ -47,7 +47,7 @@ public class ControllerCarrito {
         return new ResponseEntity<>(carrito, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/pagar/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(value = "/pagar/{id}")
     public ResponseEntity<Carrito>pagarCarrito(@PathVariable("id") Integer codigo){
         try {
             Carrito carritoPagado = carritoService.pagarCarrito(codigo);
@@ -57,9 +57,9 @@ public class ControllerCarrito {
         }
     }
 
-    @PutMapping(value = "/agregarComic/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(value = "/agregarComic/{id}/{idComic}")
     public ResponseEntity<Carrito>ageregarComic(@PathVariable("id")Integer codigoCarrito,
-                                                Integer codigoProducto){
+                                                @PathVariable("idComic") Integer codigoProducto){
         try {
             Carrito carrito = carritoService.agregarComic(codigoCarrito,codigoProducto);
             return new ResponseEntity<>(carrito,HttpStatus.OK);
@@ -68,9 +68,9 @@ public class ControllerCarrito {
         }
     }
 
-    @PutMapping(value = "/agregarFigura/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(value = "/agregarFigura/{id}/{idFigura}")
     public ResponseEntity<Carrito>agregarFiguraDeAccion(@PathVariable("id")Integer codigoCarrito,
-                                                        Integer codigoProducto){
+                                                        @PathVariable("idFigura") Integer codigoProducto){
         try {
             Carrito carrito = carritoService.agregarFiguraDeAccion(codigoCarrito,codigoProducto);
             return new ResponseEntity<>(carrito,HttpStatus.OK);
