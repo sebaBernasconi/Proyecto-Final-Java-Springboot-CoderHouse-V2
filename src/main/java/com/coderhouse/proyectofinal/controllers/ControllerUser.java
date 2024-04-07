@@ -13,24 +13,33 @@ import com.coderhouse.proyectofinal.model.transactions.Venta;
 import com.coderhouse.proyectofinal.model.user.Admin;
 import com.coderhouse.proyectofinal.model.user.Carrito;
 import com.coderhouse.proyectofinal.model.user.Client;
+import com.coderhouse.proyectofinal.service.user.AdminService;
+import com.coderhouse.proyectofinal.service.user.ClientService;
+import com.sun.jdi.event.ExceptionEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RestController
+@RequestMapping(value = "/user")
 public class ControllerUser {
 
-    private int idClient = 0;
-    private int idAdmin = 0;
+    @Autowired
+    ClientService clientService;
 
-    private List<Client> listadoDeClientes;
-    private List<Admin> listadoDeAdmins;
+    @Autowired
+    AdminService adminService;
     private static  ControllerUser instancia;
 
 
     //Constructor
     public ControllerUser() {
-        this.listadoDeClientes = new ArrayList<>();
-        this.listadoDeAdmins = new ArrayList<>();
+
     }
 
   //getInstancia para que sea singleton
@@ -43,6 +52,105 @@ public class ControllerUser {
     }
 
     //Metodos del Controller
+
+    @PostMapping(value ="/agregarClient", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Client>guardarCliente(@RequestBody Client client){
+        clientService.guardarCliente(client);
+        return new ResponseEntity<>(client, HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/agregarAdmin", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Admin>guardarAdmin(@RequestBody Admin admin){
+        adminService.guardarAdmin(admin);
+        return new ResponseEntity<>(admin,HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/modificarMailClient/{id}")
+    public ResponseEntity<Client>modificarMailClient(@PathVariable("id") Integer cuil,
+                                                     String nuevoMail){
+        try {
+            Client cliente = clientService.modificarMail(cuil,nuevoMail);
+            return new ResponseEntity<>(cliente,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping(value = "/modificarMailAdmin/{id}")
+    public ResponseEntity<Admin>modificarMailAdmin(@PathVariable("id") Integer cuil,
+                                                     String nuevoMail){
+        try {
+            Admin admin = adminService.modificarMail(cuil,nuevoMail);
+            return new ResponseEntity<>(admin,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping(value = "/modificarPasswordClient/{id}")
+    public ResponseEntity<Client>modificarPasswordCliente(@PathVariable("id") Integer cuil,
+                                                          String nuevaPassword){
+        try {
+            Client cliente = clientService.modificarPassword(cuil,nuevaPassword);
+            return new ResponseEntity<>(cliente,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping(value = "/modificarPasswordAdmin/{id}")
+    public ResponseEntity<Admin>modificarPasswordAdmin(@PathVariable("id") Integer cuil,
+                                                          String nuevaPassword){
+        try {
+            Admin admin = adminService.modificarPassword(cuil,nuevaPassword);
+            return new ResponseEntity<>(admin,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping(value = "/borrarCliente/{id}")
+    public ResponseEntity<Void>borrarCliente(@PathVariable("id")Integer cuil){
+        boolean clienteEliminado = clientService.eliminarCliente(cuil);
+
+        if (clienteEliminado) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping(value = "/borrarAdmin/{id}")
+    public ResponseEntity<Void>borrarAdmin(@PathVariable("id") Integer cuil){
+        boolean adminEliminado = adminService.eliminarAdmin(cuil);
+
+        if (adminEliminado) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping(value = "/listarClientes", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<Client>>listarClientes(){
+        try {
+            List<Client>listadoClientes = clientService.listarClientes();
+            return new ResponseEntity<>(listadoClientes,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/listarAdmins", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<Admin>>listarAdmins(){
+        try {
+            List<Admin>listadoAdmins = adminService.listarAdmins();
+            return new ResponseEntity<>(listadoAdmins,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    /*
     public void registrarCliente(int cuil, String nombre, String mail,
                                  String password)
             throws UserNotFoundException, CarritoNotFoundException {
@@ -215,5 +323,5 @@ public class ControllerUser {
         throw new UserNotFoundException("No hay ningun admin registrado " +
                 "con el cuil: " + cuil);
     }
-
+*/
 }
