@@ -1,7 +1,17 @@
 package com.coderhouse.proyectofinal.model.payment;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public abstract class Tarjeta extends MedioDePago{
+
+    @Id
+    @Column(name = "nro_tarjeta")
     private int nroTarjeta;
+
+    @Column(name = "nombre_titular")
     private String titular;
     private int codigoDeSeguridad;
 
@@ -10,6 +20,11 @@ public abstract class Tarjeta extends MedioDePago{
         this.nroTarjeta = nroTarjeta;
         this.titular = titular;
         this.codigoDeSeguridad = codigoDeSeguridad;
+    }
+
+    //Constructor vacio para la persistencia
+    public Tarjeta() {
+
     }
 
     //Al ser abtracta no tengo que implementar el pagar del medio de pago
