@@ -12,13 +12,15 @@ import java.util.List;
 @Table(name = "clientes")
 public class Client extends User {
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "nro_tarjeta")
     private Debito tDebito;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_carrito")
     private Carrito carrito;
+
+    @OneToMany(mappedBy = "cuil_cliente",cascade = CascadeType.ALL)
     private List<Compra> compras;
 
     //Constructor
