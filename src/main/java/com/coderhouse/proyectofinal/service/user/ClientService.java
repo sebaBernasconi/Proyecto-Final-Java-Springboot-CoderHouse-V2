@@ -25,16 +25,14 @@ public class ClientService {
 
     public Client modificarMail(int cuil, String nuevoMail){
         try {
-            if (clientRepository.existsById(cuil)){
-                Optional<Client>clienteAModificar = clientRepository.findById(cuil);
-                clienteAModificar.orElse(null).setMail(nuevoMail);
-                return clientRepository.save(clienteAModificar.orElse(null));
-            }
+
+            Optional<Client>clienteAModificar = clientRepository.findById(cuil);
+            clienteAModificar.orElse(null).setMail(nuevoMail);
+            return clientRepository.save(clienteAModificar.orElse(null));
+
         }catch (EmptyResultDataAccessException e){
             return null;
         }
-        return null;
-
     }
 
     public Client modificarPassword(int cuil, String nuevaPassword){
@@ -50,6 +48,7 @@ public class ClientService {
 
         return null;
     }
+
     public boolean eliminarCliente(int cuil){
         try {
             clientRepository.deleteById(cuil);
