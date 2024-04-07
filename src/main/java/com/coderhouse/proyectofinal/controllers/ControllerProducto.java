@@ -61,7 +61,7 @@ public class ControllerProducto {
     }
 
 
-    @PutMapping(value = "/actualizarStockFigura/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(value = "/actualizarStockFigura/{id}")
     public ResponseEntity<FiguraDeAccion> actualizarStockFiguraDeAccion(@PathVariable("id") Integer codigoDeProducto) {
         try {
             FiguraDeAccion figuraDeAccion = figuraDeAccionService.actualizarStockPostVenta(codigoDeProducto);
@@ -71,7 +71,7 @@ public class ControllerProducto {
         }
     }
 
-    @PutMapping(value = "/actualizarStockComic/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(value = "/actualizarStockComic/{id}")
     public ResponseEntity<Comic> actualizarStockComic(@PathVariable("id") Integer codigoDeProducto) {
         try {
             Comic comic = comicService.actualizarStockPostVenta(codigoDeProducto);
@@ -96,10 +96,10 @@ public class ControllerProducto {
     }
 
 
-    @PutMapping(value = "/actualizarPrecioFigura/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(value = "/actualizarPrecioFigura/{id}/{precio}")
     public ResponseEntity<FiguraDeAccion> modificarPrecioFiguraDeAccion(@PathVariable("id")
                                                                             Integer codigoDeProducto,
-                                                                        float nuevoPrecio) {
+                                                                       @PathVariable("precio") float nuevoPrecio) {
         try {
             FiguraDeAccion figuraDeAccion = figuraDeAccionService.modificarPrecio(codigoDeProducto,nuevoPrecio);
             return new ResponseEntity<>(figuraDeAccion,HttpStatus.OK);
@@ -109,9 +109,9 @@ public class ControllerProducto {
 
     }
 
-    @PutMapping(value = "/actualizarPrecioComic/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(value = "/actualizarPrecioComic/{id}/{precio}")
     public ResponseEntity<Comic> modificarPrecioComic(@PathVariable("id") Integer codigoDeProducto,
-                                     float nuevoPrecio){
+                                     @PathVariable("precio") float nuevoPrecio){
         try {
             Comic comic = comicService.modificarPrecio(codigoDeProducto,nuevoPrecio);
             return new ResponseEntity<>(comic,HttpStatus.OK);

@@ -22,9 +22,9 @@ public class VentaService {
         return  ventaRepository.save(venta);
     }
 
-    public List<Venta>VentasDeUnAdmin(int cuil){
+    /*public List<Venta>VentasDeUnAdmin(int cuil){
         return ventaRepository.findAllByCuil(cuil);
-    }
+    }*/
 
     public boolean eliminarVenta(int idVenta){
         try {

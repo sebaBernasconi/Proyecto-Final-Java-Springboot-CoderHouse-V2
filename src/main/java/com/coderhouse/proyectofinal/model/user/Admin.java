@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "administradores")
 public class Admin extends User {
 
-    @OneToMany(mappedBy = "cuil_admin", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL)
     private List<Venta> ventas;
 
     //Constructor

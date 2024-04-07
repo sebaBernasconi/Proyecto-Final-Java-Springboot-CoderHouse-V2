@@ -98,7 +98,7 @@ public class ControllerFactura {
         }
     }
 
-    @GetMapping(value = "/facturaA/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+   /* @GetMapping(value = "/facturaA/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<FacturaA>>obtenerFacturasADeUnCliente(@PathVariable("id") Integer cuil){
         try {
             List<FacturaA>facturasCliente = facturaAService.listarFacturasADeUnCliente(cuil);
@@ -126,7 +126,7 @@ public class ControllerFactura {
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 
 
 }

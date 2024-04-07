@@ -18,10 +18,10 @@ public class FacturaAService {
         return facturaARepository.findAll();
     }
 
-    public List<FacturaA>listarFacturasADeUnCliente(int cuil){
+    /*public List<FacturaA>listarFacturasADeUnCliente(int cuil){
         //Probar, capaz no ande
         return facturaARepository.findAllByCuil(cuil);
-    }
+    }*/
 
     public FacturaA guardarFacturaA(FacturaA facturaA){
         return facturaARepository.save(facturaA);

@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface CompraRepository extends JpaRepository<Compra,Integer> {
-    List<Compra> findAllByCuil(int cuil);
+    //List<Compra> findAllByCuil(int cuil);
 }

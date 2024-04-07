@@ -65,9 +65,9 @@ public class ControllerUser {
         return new ResponseEntity<>(admin,HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/modificarMailClient/{id}")
+    @PutMapping(value = "/modificarMailClient/{id}/{mail}")
     public ResponseEntity<Client>modificarMailClient(@PathVariable("id") Integer cuil,
-                                                     String nuevoMail){
+                                                    @PathVariable("mail") String nuevoMail){
         try {
             Client cliente = clientService.modificarMail(cuil,nuevoMail);
             return new ResponseEntity<>(cliente,HttpStatus.OK);
@@ -76,9 +76,9 @@ public class ControllerUser {
         }
     }
 
-    @PutMapping(value = "/modificarMailAdmin/{id}")
+    @PutMapping(value = "/modificarMailAdmin/{id}/{mail}")
     public ResponseEntity<Admin>modificarMailAdmin(@PathVariable("id") Integer cuil,
-                                                     String nuevoMail){
+                                                     @PathVariable("mail") String nuevoMail){
         try {
             Admin admin = adminService.modificarMail(cuil,nuevoMail);
             return new ResponseEntity<>(admin,HttpStatus.OK);
@@ -87,9 +87,9 @@ public class ControllerUser {
         }
     }
 
-    @PutMapping(value = "/modificarPasswordClient/{id}")
+    @PutMapping(value = "/modificarPasswordClient/{id}/{password}")
     public ResponseEntity<Client>modificarPasswordCliente(@PathVariable("id") Integer cuil,
-                                                          String nuevaPassword){
+                                                          @PathVariable("password") String nuevaPassword){
         try {
             Client cliente = clientService.modificarPassword(cuil,nuevaPassword);
             return new ResponseEntity<>(cliente,HttpStatus.OK);
@@ -98,9 +98,9 @@ public class ControllerUser {
         }
     }
 
-    @PutMapping(value = "/modificarPasswordAdmin/{id}")
+    @PutMapping(value = "/modificarPasswordAdmin/{id}/{password}")
     public ResponseEntity<Admin>modificarPasswordAdmin(@PathVariable("id") Integer cuil,
-                                                          String nuevaPassword){
+                                                       @PathVariable("password") String nuevaPassword){
         try {
             Admin admin = adminService.modificarPassword(cuil,nuevaPassword);
             return new ResponseEntity<>(admin,HttpStatus.OK);

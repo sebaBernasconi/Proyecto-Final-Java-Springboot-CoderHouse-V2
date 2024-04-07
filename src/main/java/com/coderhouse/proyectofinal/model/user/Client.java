@@ -20,7 +20,7 @@ public class Client extends User {
     @JoinColumn(name = "id_carrito")
     private Carrito carrito;
 
-    @OneToMany(mappedBy = "cuil_cliente",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client",cascade = CascadeType.ALL)
     private List<Compra> compras;
 
     //Constructor

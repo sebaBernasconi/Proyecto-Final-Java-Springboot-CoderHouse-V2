@@ -19,9 +19,9 @@ public class FacturaCService {
         return facturaCRepository.findAll();
     }
 
-    public List<FacturaC>listarFacturasCDeUnCliente(int cuil){
+   /* public List<FacturaC>listarFacturasCDeUnCliente(int cuil){
         return facturaCRepository.findAllByCuil(cuil);
-    }
+    }*/
 
     public FacturaC guardarFacutraC(FacturaC facturaC){
         return facturaCRepository.save(facturaC);

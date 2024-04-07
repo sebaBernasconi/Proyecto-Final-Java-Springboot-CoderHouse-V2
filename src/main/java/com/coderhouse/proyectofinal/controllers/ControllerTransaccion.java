@@ -82,7 +82,7 @@ public class ControllerTransaccion {
         }
     }
 
-    @GetMapping(value = "/listarCompras/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+   /* @GetMapping(value = "/listarCompras/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<Compra>>listarComprasCliente(@PathVariable("id")Integer cuil){
         try {
             List<Compra>comprasCliente = compraService.ComprasDeUnCliente(cuil);
@@ -90,7 +90,7 @@ public class ControllerTransaccion {
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 
     @GetMapping(value = "/listarVentas",produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<Venta>>listarVentas(){
@@ -102,7 +102,7 @@ public class ControllerTransaccion {
         }
     }
 
-    @GetMapping(value = "/listarVentas/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+   /* @GetMapping(value = "/listarVentas/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<Venta>>listarVentasAdmin(@PathVariable("id") Integer cuil){
         try {
             List<Venta>ventasAdmin = ventaService.VentasDeUnAdmin(cuil);
@@ -110,7 +110,7 @@ public class ControllerTransaccion {
         }catch (Exception e){{
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }}
-    }
+    }*/
 
 }
 

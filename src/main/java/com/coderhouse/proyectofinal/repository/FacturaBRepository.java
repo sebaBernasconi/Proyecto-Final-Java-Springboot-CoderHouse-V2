@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface FacturaBRepository extends JpaRepository<FacturaB,Integer> {
-    List<FacturaB> findAllByCuil(int cuil);
+    //List<FacturaB> findAllByCuil(int cuil);
 }

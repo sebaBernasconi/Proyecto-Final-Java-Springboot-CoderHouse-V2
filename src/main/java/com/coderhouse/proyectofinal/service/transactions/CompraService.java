@@ -22,9 +22,9 @@ public class CompraService {
         return compraRepository.save(compra);
     }
 
-    public List<Compra>ComprasDeUnCliente(int cuil){
+    /*public List<Compra>ComprasDeUnCliente(int cuil){
         return compraRepository.findAllByCuil(cuil);
-    }
+    }*/
 
     public boolean eliminarCompra(int idCompra){
         try{
