@@ -1,7 +1,16 @@
 package com.coderhouse.proyectofinal.model.payment;
 
+import com.coderhouse.proyectofinal.model.user.Client;
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "t_debito")
 public class Debito extends Tarjeta{
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cuil")
+    private Client client;
+    @Column(name = "saldo")
     private float saldo;
 
     //Constructor
@@ -9,6 +18,11 @@ public class Debito extends Tarjeta{
     public Debito(int nroTarjeta, String titular, int codigoDeSeguridad, float saldo) {
         super(nroTarjeta, titular, codigoDeSeguridad);
         this.saldo = saldo;
+    }
+
+    //Constructor vacio para la persistencia
+    public Debito() {
+        super();
     }
 
     //Metodos abstractos de la super clase desarrollados
