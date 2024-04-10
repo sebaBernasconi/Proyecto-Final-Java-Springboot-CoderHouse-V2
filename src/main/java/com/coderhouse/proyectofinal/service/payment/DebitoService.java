@@ -23,15 +23,15 @@ public class DebitoService {
         return tDebitoRepository.save(debito);
     }
 
-    public Debito pagar(int nroTarjeta, float total){
+    public boolean pagar(int nroTarjeta, float total){
 
-        try {
             Optional<Debito>tarjeta = tDebitoRepository.findById(nroTarjeta);
-            tarjeta.orElse(null).pagar(total);
-            return tDebitoRepository.save(tarjeta.orElse(null));
-        }catch (EmptyResultDataAccessException e){
-            return null;
-        }
+
+            boolean pagado = tarjeta.orElse(null).pagar(total);
+
+            tDebitoRepository.save(tarjeta.orElse(null));
+
+            return pagado;
     }
 
     public boolean eliminarTarjedaDeDebito(int nroTarjeta){

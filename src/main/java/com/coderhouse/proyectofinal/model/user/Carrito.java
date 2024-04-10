@@ -59,6 +59,8 @@ public class Carrito {
         this.cantidadDeArticulos ++;
         this.total += p.getPrecio();
 
+        p.actualizarStock();
+
         System.out.println("Producto: " + p.getNombre() +
                 " agregado!");
         System.out.println("Nuevo total: " + this.total);

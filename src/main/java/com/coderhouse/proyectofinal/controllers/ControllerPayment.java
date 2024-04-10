@@ -47,14 +47,15 @@ public class ControllerPayment {
         return new ResponseEntity<>(tDebito, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/pagar/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Debito>pagar(@PathVariable("id")Integer nro, float total){
-        //Sacar el consumes json value? creo que no tiene que estar
-        try {
-            Debito tarjeta = debitoService.pagar(nro,total);
-            return new ResponseEntity<>(tarjeta,HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    @PutMapping(value = "/pagar/{id}/{total}")
+    public ResponseEntity<String>pagar(@PathVariable("id")Integer nro,
+                                       @PathVariable("total") float total){
+        boolean pagado = debitoService.pagar(nro,total);
+        if (pagado) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else {
+            //no es claro. Tendria que devolver not possible o un msj en el postman de alguna forma?
+            return new ResponseEntity<>("No tiene saldo suficiente para abonar",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
