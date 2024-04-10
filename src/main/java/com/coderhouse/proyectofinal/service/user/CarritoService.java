@@ -43,19 +43,13 @@ public class CarritoService {
         return null;
     }
 
-    public Carrito agregarComic(int codigo, int codigoProducto){
+    public Carrito agregarComic(int codigo, Comic comic){
         try {
-            //Instanciando el servicio del producto a agregar
-            ComicService comicService = new ComicService();
-
             //Obteniendo el carrito
             Optional<Carrito>carritoAModificar = carritoRepository.findById(codigo);
 
-            //Obteniendo el comic a agregar
-            Comic comicParaAgregar = comicService.buscarComicPorCodigo(codigoProducto);
-
             //Asignando el producto al carrito
-            carritoAModificar.orElse(null).agregarAlCarrito(comicParaAgregar);
+            carritoAModificar.orElse(null).agregarAlCarrito(comic);
 
             return carritoRepository.save(carritoAModificar.orElse(null));
 
@@ -64,19 +58,13 @@ public class CarritoService {
         }
     }
 
-    public Carrito agregarFiguraDeAccion(int codigo, int codigoProducto){
+    public Carrito agregarFiguraDeAccion(int codigo, FiguraDeAccion figuraDeAccion){
         try {
-            //Instanciando el servicio del producto a agregar
-            FiguraDeAccionService figuraDeAccionService = new FiguraDeAccionService();
-
             //Obteniendo el carrito
             Optional<Carrito>carritoAModificar = carritoRepository.findById(codigo);
 
-            //Obteniendo el comic a agregar
-            FiguraDeAccion figuraParaAgregar = figuraDeAccionService.buscarFiguraPorCodigo(codigo);
-
             //Asignando el producto al carrito
-            carritoAModificar.orElse(null).agregarAlCarrito(figuraParaAgregar);
+            carritoAModificar.orElse(null).agregarAlCarrito(figuraDeAccion);
 
             return carritoRepository.save(carritoAModificar.orElse(null));
 
