@@ -27,15 +27,17 @@ public class Debito extends Tarjeta{
 
     //Metodos abstractos de la super clase desarrollados
     @Override
-    public void pagar(float total) {
+    public boolean pagar(float total) {
         if (this.saldo > total){
             this.saldo = this.saldo - total;
             System.out.println("Carrito abonado!");
+            return true;
         }else {
             System.out.println("El saldo de la cuenta es menor al" +
                     "total del carrito. No se puede realizar el pago");
             System.out.println("Saldo: " + this.saldo +
                     "\ntotal: " + total);
+            return false;
         }
     }
 
