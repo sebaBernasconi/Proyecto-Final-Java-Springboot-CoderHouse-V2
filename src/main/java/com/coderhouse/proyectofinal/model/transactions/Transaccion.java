@@ -77,4 +77,12 @@ public abstract class Transaccion {
     public void setTotal(float total) {
         this.total = total;
     }
+
+    public Factura getFactura() {
+        return factura;
+    }
+
+    public void setFactura(Factura factura) {
+        this.factura = factura;
+    }
 }
