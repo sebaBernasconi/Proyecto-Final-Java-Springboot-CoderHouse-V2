@@ -18,21 +18,9 @@ public class FacturaAService {
         return facturaARepository.findAll();
     }
 
-    /*public List<FacturaA>listarFacturasADeUnCliente(int cuil){
-        //Probar, capaz no ande
-        return facturaARepository.findAllByCuil(cuil);
-    }*/
-
     public FacturaA guardarFacturaA(FacturaA facturaA){
         return facturaARepository.save(facturaA);
     }
 
-    public boolean eliminarFacturaA(int nroFactura){
-        try{
-            facturaARepository.deleteById(nroFactura);
-            return true;
-        }catch (EmptyResultDataAccessException e){
-            return false;
-        }
-    }
+    //No hay metodo eliminar porque la factura es un doc comercial. No puede ser borradi
 }
