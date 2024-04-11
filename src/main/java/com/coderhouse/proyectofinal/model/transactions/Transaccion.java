@@ -26,6 +26,10 @@ public abstract class Transaccion {
     @Column(name = "total")
     private float total;
 
+    @ManyToOne
+    @JoinColumn(name = "nro_factura")
+    private Factura factura;
+
     //Constructor
 
     public Transaccion(Date fecha, Carrito carrito,float total) {
