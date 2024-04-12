@@ -32,20 +32,16 @@ public class FiguraDeAccionService {
         return figuraDeAccionRepository.save(figuraDeAccion);
     }
 
-    public FiguraDeAccion editarFiguraDeAccion(int codigoProducto, int nuevoStock,
-                                               float nuevoPrecio,FiguraDeAccion figuraDeAccion){
+    public FiguraDeAccion editarFiguraDeAccion(int codigoProducto, FiguraDeAccion figuraDeAccion{
         //Editar: sacar el stock y el objeto. usar optional y que sea solo modificar precio
         try {
-            if (figuraDeAccionRepository.existsById(codigoProducto)){
-                figuraDeAccion.setStock(nuevoStock);
-                figuraDeAccion.setPrecio(nuevoPrecio);
-                return figuraDeAccionRepository.save(figuraDeAccion);
-            }
+            Optional<FiguraDeAccion> figuraDeAccionActualizada = figuraDeAccionRepository.findById(codigoProducto);
+            figuraDeAccionActualizada.orElse(null).editarFiguraDeAccion(figuraDeAccion.getNombre(),
+                    figuraDeAccion.getDescripcion(),figuraDeAccion.getFabricante(),figuraDeAccion.isEsArticulado());
+            return figuraDeAccionActualizada.orElse(null);
         }catch (EmptyResultDataAccessException e){
             return null;
         }
-
-        return null;
     }
 
     public FiguraDeAccion actualizarStockPostVenta(int codigoProducto){
