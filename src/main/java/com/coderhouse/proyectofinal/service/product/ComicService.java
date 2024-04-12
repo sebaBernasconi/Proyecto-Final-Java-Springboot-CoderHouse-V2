@@ -32,23 +32,18 @@ public class ComicService {
         return comicRepository.save(comic);
     }
 
-    public Comic editarComic(int codigo,String nuevoNombre, String nuevaDesc, float nuevoPrecio,
-                             String nuevoAutor, String nuevoIdioma, Comic comic){
+    /*public Comic editarComic(int codigo, Comic comic){
         try {
-            if (comicRepository.existsById(codigo)){
-                comic.setNombre(nuevoNombre);
-                comic.setDescripcion(nuevaDesc);
-                comic.setPrecio(nuevoPrecio);
-                comic.setAutor(nuevoAutor);
-                comic.setIdioma(nuevoIdioma);
-                return comicRepository.save(comic);
-            }
+                Optional<Comic> comicActualizado = comicRepository.findById(codigo);
+                comic.orElse(null).editarComic(nuevoNombre,nuevaDesc,
+                        nuevoAutor,nuevoIdioma,nuevoTapaDura);
+
+                return comicRepository.save(comic.orElse(null));
+
         }catch (EmptyResultDataAccessException e){
             return null;
         }
-
-        return null;
-    }
+    }*/
 
     public Comic actualizarStockPostVenta(int codigoDeProducto){
         try {

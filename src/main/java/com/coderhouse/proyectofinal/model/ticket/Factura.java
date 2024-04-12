@@ -37,9 +37,9 @@ public abstract class Factura {
     }
 
     //Constructor vacio para persistencia
-    public Factura() {
+   public Factura(){
 
-    }
+   }
 
     //Getters y Setters
 

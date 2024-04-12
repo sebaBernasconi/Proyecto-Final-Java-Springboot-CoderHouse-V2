@@ -8,6 +8,7 @@ import com.coderhouse.proyectofinal.model.payment.MedioDePago;
 import com.coderhouse.proyectofinal.model.product.Comic;
 import com.coderhouse.proyectofinal.model.product.FiguraDeAccion;
 import com.coderhouse.proyectofinal.model.product.Producto;
+import com.coderhouse.proyectofinal.model.ticket.Factura;
 import com.coderhouse.proyectofinal.model.transactions.Compra;
 import com.coderhouse.proyectofinal.model.transactions.Venta;
 import com.coderhouse.proyectofinal.model.user.Admin;
@@ -21,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +111,15 @@ public class ControllerUser {
         }
     }
 
+    @GetMapping(value = "/listarFacturas/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<Factura>>listarFacturasDeUnCliente(@PathVariable("id") Integer cuil){
+        try {
+            List<Factura>listadoDeFacturas = clientService.listarFacturas(cuil);
+            return new ResponseEntity<>(listadoDeFacturas,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @DeleteMapping(value = "/borrarCliente/{id}")
     public ResponseEntity<Void>borrarCliente(@PathVariable("id")Integer cuil){
         boolean clienteEliminado = clientService.eliminarCliente(cuil);

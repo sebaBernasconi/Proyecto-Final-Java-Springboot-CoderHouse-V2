@@ -32,10 +32,11 @@ public abstract class Transaccion {
 
     //Constructor
 
-    public Transaccion(Date fecha, Carrito carrito,float total) {
+    public Transaccion(Date fecha, Carrito carrito,float total, Factura factura) {
         this.fecha = fecha;
         this.carrito = carrito;
         this.total = total;
+        this.factura = factura;
     }
 
     //Constructor vacio para la persistencia

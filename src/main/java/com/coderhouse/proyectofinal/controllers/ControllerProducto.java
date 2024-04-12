@@ -88,12 +88,11 @@ public class ControllerProducto {
         return null;
     }
 
-    public void editarComic(int codigoDeProdcto,String nuevoNombre ,
-                            String nuevaDescripcion, String nuevoAutor,
-                            String nuevoIdioma, boolean nuevoTapaDura)
-            throws ProductNotFoundException {
-       //Consultar que onda
-    }
+    /*@PutMapping(value = "/editarComic/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Comic> editarComic(@PathVariable("id") Integer codigo,
+                                             @RequestBody Comic comic) {
+
+    }*/
 
 
     @PutMapping(value = "/actualizarPrecioFigura/{id}/{precio}")

@@ -10,6 +10,7 @@ import com.coderhouse.proyectofinal.model.user.Client;
 import com.coderhouse.proyectofinal.service.ticket.FacturaAService;
 import com.coderhouse.proyectofinal.service.ticket.FacturaBService;
 import com.coderhouse.proyectofinal.service.ticket.FacturaCService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,8 +29,14 @@ import java.util.List;
 public class ControllerFactura {
 
     //Declarando los servicios que voy a necesitar
+
+    @Autowired
     private FacturaAService facturaAService;
+
+    @Autowired
     private FacturaBService facturaBService;
+
+    @Autowired
     private FacturaCService facturaCService;
 
     private static ControllerFactura instancia;
@@ -97,36 +104,6 @@ public class ControllerFactura {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-   /* @GetMapping(value = "/facturaA/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<FacturaA>>obtenerFacturasADeUnCliente(@PathVariable("id") Integer cuil){
-        try {
-            List<FacturaA>facturasCliente = facturaAService.listarFacturasADeUnCliente(cuil);
-            return new ResponseEntity<>(facturasCliente,HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping(value = "/facturaB/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<FacturaB>>obtenerFacturasBDeUnCliente(@PathVariable("id") Integer cuil){
-        try {
-            List<FacturaB>facturascliente = facturaBService.listarFacturasBDeUnCliente(cuil);
-            return new ResponseEntity<>(facturascliente,HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping(value = "/facturaC/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<FacturaC>>obtenerFacutrasCDeUnCliente(@PathVariable("id") Integer cuil){
-        try {
-            List<FacturaC>facturasCliente = facturaCService.listarFacturasCDeUnCliente(cuil);
-            return new ResponseEntity<>(facturasCliente,HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }*/
 
 
 }

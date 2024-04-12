@@ -1,6 +1,7 @@
 package com.coderhouse.proyectofinal.model.transactions;
 
 import com.coderhouse.proyectofinal.model.payment.Debito;
+import com.coderhouse.proyectofinal.model.ticket.Factura;
 import com.coderhouse.proyectofinal.model.user.Admin;
 import com.coderhouse.proyectofinal.model.user.Carrito;
 import com.coderhouse.proyectofinal.model.user.Client;
@@ -23,9 +24,9 @@ public class Venta extends Transaccion {
 
     //Constructor
 
-    public Venta( Date fecha, Carrito carrito,
-                 float total, Client client, Admin vendedor) {
-        super( fecha, carrito, total);
+    public Venta(Date fecha, Carrito carrito,
+                 float total, Factura factura, Client client, Admin vendedor) {
+        super( fecha, carrito, total,factura);
         this.client = client;
         this.vendedor = vendedor;
     }
