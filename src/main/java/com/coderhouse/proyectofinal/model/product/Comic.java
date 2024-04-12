@@ -34,23 +34,23 @@ public class Comic extends Producto{
     public void editarComic(String nuevoNombre ,String nuevaDescripcion,
                                      String nuevoAutor,String nuevoIdioma,
                             boolean nuevoTapaDura) {
-        if (this.getNombre() != nuevoNombre && nuevoNombre != ""){
+        if (this.getNombre() != nuevoNombre && nuevoNombre != " "){
             this.setNombre(nuevoNombre);
         }
 
-        if (this.getDescripcion() != nuevaDescripcion && nuevaDescripcion != ""){
+        if (this.getDescripcion() != nuevaDescripcion && nuevaDescripcion != " "){
             this.setDescripcion(nuevaDescripcion);
         }
 
-        if (this.getAutor() != nuevoAutor && nuevoAutor != "") {
+        if (this.getAutor() != nuevoAutor && nuevoAutor != " ") {
             this.setAutor(nuevoAutor);
         }
 
-        if (this.getIdioma() != nuevoIdioma && nuevoIdioma != "") {
+        if (this.getIdioma() != nuevoIdioma && nuevoIdioma != " ") {
             this.setIdioma(nuevoIdioma);
         }
 
-        if (this.autor != nuevoAutor && nuevoAutor != ""){
+        if (this.autor != nuevoAutor && nuevoAutor != " "){
             this.autor = nuevoAutor;
         }
 

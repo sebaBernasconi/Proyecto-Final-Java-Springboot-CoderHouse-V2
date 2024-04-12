@@ -83,16 +83,29 @@ public class ControllerProducto {
     }
 
     @PutMapping(value = "/editarFigura/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<FiguraDeAccion> editarFiguraDeAccion(@PathVariable("id") Integer codigoDeProducto) {
-      //Consultar que onda
-        return null;
+    public ResponseEntity<FiguraDeAccion> editarFiguraDeAccion(@PathVariable("id") Integer codigoDeProducto,
+                                                               @RequestBody FiguraDeAccion figuraDeAccion) {
+      try {
+          FiguraDeAccion figuraActualizada = figuraDeAccionService.editarFiguraDeAccion(codigoDeProducto,
+                  figuraDeAccion);
+          return new ResponseEntity<>(figuraActualizada,HttpStatus.OK);
+      }catch (Exception e){
+          return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+      }
     }
 
-    /*@PutMapping(value = "/editarComic/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(value = "/editarComic/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Comic> editarComic(@PathVariable("id") Integer codigo,
-                                             @RequestBody Comic comic) {
+                                           @RequestBody Comic comic ) {
 
-    }*/
+        try {
+            Comic comicActualizado = comicService.editarComic(codigo, comic);
+            return new ResponseEntity<>(comicActualizado,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 
 
     @PutMapping(value = "/actualizarPrecioFigura/{id}/{precio}")
