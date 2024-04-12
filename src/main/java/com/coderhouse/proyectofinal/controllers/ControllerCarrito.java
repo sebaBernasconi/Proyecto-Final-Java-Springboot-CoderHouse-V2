@@ -4,6 +4,7 @@ import com.coderhouse.proyectofinal.exception.CarritoNotFoundException;
 import com.coderhouse.proyectofinal.exception.UserNotFoundException;
 import com.coderhouse.proyectofinal.model.product.Comic;
 import com.coderhouse.proyectofinal.model.product.FiguraDeAccion;
+import com.coderhouse.proyectofinal.model.product.Producto;
 import com.coderhouse.proyectofinal.model.user.Carrito;
 import com.coderhouse.proyectofinal.model.user.Client;
 import com.coderhouse.proyectofinal.service.user.CarritoService;
@@ -96,6 +97,16 @@ public class ControllerCarrito {
         try {
             List<Carrito>listadoDeCarritos = carritoService.listarCarritos();
             return new ResponseEntity<>(listadoDeCarritos,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/listarProductos/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<Producto>>listarProductos(@PathVariable("id")Integer id){
+        try {
+            List<Producto>productosDelCarrito = carritoService.verProductosDelCarrito(id);
+            return new ResponseEntity<>(productosDelCarrito,HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

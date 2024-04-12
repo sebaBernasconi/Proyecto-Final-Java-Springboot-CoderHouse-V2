@@ -25,6 +25,14 @@ public class CarritoService {
         return carritoRepository.findAll();
     }
 
+    public List<Producto>verProductosDelCarrito(int id){
+        List<Producto> productos;
+
+        Optional<Carrito> carrito = carritoRepository.findById(id);
+        productos = carrito.orElse(null).getProductos();
+        return productos;
+    }
+
     public Carrito guardarCarrito(Carrito carrito){
         return carritoRepository.save(carrito);
     }
