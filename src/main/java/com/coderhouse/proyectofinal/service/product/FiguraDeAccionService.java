@@ -32,7 +32,7 @@ public class FiguraDeAccionService {
         return figuraDeAccionRepository.save(figuraDeAccion);
     }
 
-    public FiguraDeAccion editarFiguraDeAccion(int codigoProducto, FiguraDeAccion figuraDeAccion{
+    public FiguraDeAccion editarFiguraDeAccion(int codigoProducto, FiguraDeAccion figuraDeAccion){
         //Editar: sacar el stock y el objeto. usar optional y que sea solo modificar precio
         try {
             Optional<FiguraDeAccion> figuraDeAccionActualizada = figuraDeAccionRepository.findById(codigoProducto);
