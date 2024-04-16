@@ -1,21 +1,37 @@
 package com.coderhouse.proyectofinal.model.product;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
+@Schema(description = "Modelo de Producto")
 @Entity
 public abstract class Producto {
+    @Schema(description = "id de los productos")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int idProd;
+
+    @Schema(description = "Codigo del Producto",requiredMode = Schema.RequiredMode.REQUIRED, example = "2342")
     @Column(name = "codigo_de_producto")
     private int codigoDeProducto;
+
+    @Schema(description = "Nombre del Producto",requiredMode = Schema.RequiredMode.REQUIRED, example = "Flash: Born to Run")
     @Column(name = "nombre")
     private String nombre;
+
+    @Schema(description = "Descripcion del Producto",requiredMode = Schema.RequiredMode.REQUIRED,
+            example = "El comic trata sobre los primeros años de Wally West como velocista y las " +
+                    "adversidades que enfrento en su carrera como compañero de Barry Allen, el segundo" +
+                    "portador del manto de Flash ")
     @Column(name = "descripcion")
     private String descripcion;
+
+    @Schema(description = "Stock del Producto",requiredMode = Schema.RequiredMode.REQUIRED, example = "3")
     @Column(name = "stock")
     private int stock;
+
+    @Schema(description = "Precio del Producto",requiredMode = Schema.RequiredMode.REQUIRED, example = "233.43")
     @Column(name = "precio")
     private float precio;
 
