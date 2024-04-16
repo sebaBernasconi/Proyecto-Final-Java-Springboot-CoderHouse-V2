@@ -1,28 +1,35 @@
 package com.coderhouse.proyectofinal.model.ticket;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.Date;
 
+@Schema(description = "Modelo de Factura")
 @Entity
 public abstract class Factura {
     //idFactura es el comprobante interno del sistema
+    @Schema(description = "id de los productos")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int idFactura;
 
     //nroFactura es el numero real de la factura que asigna afip
+    @Schema(description = "Numero de la Factura", requiredMode = Schema.RequiredMode.REQUIRED,example = "34522342")
     @Column(name = "nro_factura")
     private int nroFactura;
 
+    @Schema(description = "Cuil del cliente al cual se le Factura", requiredMode = Schema.RequiredMode.REQUIRED,example = "20123456780")
     @Column(name = "cuil_cliente")
     private int cuilCliente;
 
+    @Schema(description = "Fecha de la Factura",requiredMode = Schema.RequiredMode.REQUIRED, example = "2024-04-15")
     @Column(name = "fecha")
     private LocalDate fecha;
 
+    @Schema(description = "Importe de la Factura",requiredMode = Schema.RequiredMode.REQUIRED, example = "234.32")
     @Column(name = "total")
     private float total;
 
