@@ -1,17 +1,24 @@
 package com.coderhouse.proyectofinal.model.product;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+@Schema(description = "Modelo de Comic")
 @Entity
 @Table(name = "comic")
 public class Comic extends Producto{
 
+    @Schema(description = "Autor del Comic",requiredMode = Schema.RequiredMode.REQUIRED, example = "Mark Weid")
     @Column(name = "autor")
     private String autor;
+
+    @Schema(description = "Idioma del Comic",requiredMode = Schema.RequiredMode.REQUIRED, example = "Ingles")
     @Column(name = "idioma")
     private String idioma;
+
+    @Schema(description = "Caracteristica del Comic",requiredMode = Schema.RequiredMode.REQUIRED, example = "true")
     @Column(name = "tapa_dura")
     private boolean tapaDura;
 
