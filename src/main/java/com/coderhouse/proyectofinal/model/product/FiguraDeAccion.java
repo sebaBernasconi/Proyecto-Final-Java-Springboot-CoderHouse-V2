@@ -1,16 +1,20 @@
 package com.coderhouse.proyectofinal.model.product;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+@Schema(description = "Modelo de las FigurasDeAccion")
 @Entity
 @Table(name = "figura_de_accion")
 public class FiguraDeAccion extends Producto {
 
+    @Schema(description = "Empresa fabricante de la Figura",requiredMode = Schema.RequiredMode.REQUIRED, example = "Mattel")
     @Column(name = "fabricante")
     private String fabricante;
 
+    @Schema(description = "Caracteristica de la Figura",requiredMode = Schema.RequiredMode.REQUIRED, example = "false")
     @Column(name = "esArticulado")
     private boolean esArticulado;
 
