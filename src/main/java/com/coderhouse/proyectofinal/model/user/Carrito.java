@@ -1,35 +1,45 @@
 package com.coderhouse.proyectofinal.model.user;
 
 import com.coderhouse.proyectofinal.model.product.Producto;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.util.List;
 
+@Schema(description = "Modelo del Carrito")
 @Entity
 @Table(name = "carrito")
 public class Carrito {
+
+    @Schema(description = "Id autogenerado del Carrito")
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int idCarrito;
 
+    @Schema(description = "Cliente asociado al Carrito", requiredMode = Schema.RequiredMode.REQUIRED)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cuil")
     private Client cliente;
 
+    @Schema(description = "Cantidad de articulos en el Carrito", requiredMode = Schema.RequiredMode.REQUIRED, example = "4")
+
     @Column(name = "cantidad_de_articulos")
     private int cantidadDeArticulos;
 
+    @Schema(description = "Listado de Productos en el Carrito", requiredMode = Schema.RequiredMode.REQUIRED)
     @ManyToMany
     @JoinTable(name = "carrito_producto",
      joinColumns = @JoinColumn(name = "id_carrito"),
     inverseJoinColumns = @JoinColumn(name ="id_producto"))
     private List<Producto> productos;
 
+    @Schema(description = "Estado del Carrito", requiredMode = Schema.RequiredMode.REQUIRED, example = "true")
     @Column(name = "pagado")
     private boolean pagado;
 
+    @Schema(description = "Precio final del Carrito", requiredMode = Schema.RequiredMode.REQUIRED, example = "2345.894")
     @Column(name = "total")
     private float total;
 
