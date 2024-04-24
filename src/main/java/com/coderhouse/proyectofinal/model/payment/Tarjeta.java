@@ -1,18 +1,25 @@
 package com.coderhouse.proyectofinal.model.payment;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
+@Schema(description = "Modelo de tarjeta")
 @Entity
 public abstract class Tarjeta extends MedioDePago{
 
+    @Schema(description = "Numero de tarjeta", requiredMode = Schema.RequiredMode.REQUIRED, example = "23423423")
     @Id
     @Column(name = "nro_tarjeta")
     private int nroTarjeta;
 
+    @Schema(description = "Nombre del titular", requiredMode = Schema.RequiredMode.REQUIRED, example = "Sebastian Bernasconi")
     @Column(name = "nombre_titular")
     private String titular;
+
+    @Schema(description = "codigo de seguridad de la tarjeta", requiredMode = Schema.RequiredMode.REQUIRED, example = "363")
+
     private int codigoDeSeguridad;
 
     //Constructor

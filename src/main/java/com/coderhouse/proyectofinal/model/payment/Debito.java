@@ -1,15 +1,19 @@
 package com.coderhouse.proyectofinal.model.payment;
 
 import com.coderhouse.proyectofinal.model.user.Client;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "t_debito")
 public class Debito extends Tarjeta{
 
+    @Schema(description = "Cliente al que esta asociada la tarjeta", requiredMode = Schema.RequiredMode.REQUIRED)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cuil")
     private Client client;
+
+    @Schema(description = "Saldo de la tarjeta", requiredMode = Schema.RequiredMode.REQUIRED, example = "2344.56")
     @Column(name = "saldo")
     private float saldo;
 
