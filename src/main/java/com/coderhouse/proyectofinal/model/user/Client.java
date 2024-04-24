@@ -4,22 +4,27 @@ import com.coderhouse.proyectofinal.model.payment.Debito;
 import com.coderhouse.proyectofinal.model.product.Producto;
 import com.coderhouse.proyectofinal.model.transactions.Compra;
 import com.coderhouse.proyectofinal.model.payment.MedioDePago;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.util.List;
 
+@Schema(description = "Modelo del Cliente")
 @Entity
 @Table(name = "clientes")
 public class Client extends User {
 
+    @Schema(description = "Tarjeta asociada al Cliente", requiredMode = Schema.RequiredMode.REQUIRED)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "nro_tarjeta")
     private Debito tDebito;
 
+    @Schema(description = "Carrito asociado al Cliente", requiredMode = Schema.RequiredMode.REQUIRED)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_carrito")
     private Carrito carrito;
 
+    @Schema(description = "Comrpas asociadas al Cliente", requiredMode = Schema.RequiredMode.REQUIRED)
     @OneToMany(mappedBy = "client",cascade = CascadeType.ALL)
     private List<Compra> compras;
 

@@ -1,17 +1,26 @@
 package com.coderhouse.proyectofinal.model.user;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
+@Schema(description = "Modelo del User")
 @Entity
 public abstract class User {
 
+    @Schema(description = "Cuil del User", requiredMode = Schema.RequiredMode.REQUIRED, example = "20123120")
     @Id
     @Column(name = "cuil")
     private int cuil;
+
+    @Schema(description = "Nombre del User", requiredMode = Schema.RequiredMode.REQUIRED, example = "Sebastian Bernasconi")
     @Column(name = "nombre")
     private  String nombre;
+
+    @Schema(description = "Mail del User", requiredMode = Schema.RequiredMode.REQUIRED, example = "sebas@gmail.com")
     @Column(name = "mail")
     private String mail;
+
+    @Schema(description = "Contraseña del User", requiredMode = Schema.RequiredMode.REQUIRED, example = "contraseña")
     @Column(name = "password")
     private String password;
 
