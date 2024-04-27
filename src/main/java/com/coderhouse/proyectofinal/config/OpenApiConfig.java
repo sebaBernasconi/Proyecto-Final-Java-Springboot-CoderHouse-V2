@@ -1,10 +1,13 @@
 package com.coderhouse.proyectofinal.config;
 
+import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 public class OpenApiConfig {
@@ -25,7 +28,9 @@ public class OpenApiConfig {
                         .contact(new Contact()
                                 .name("Sebastian Bernasconi")
                                 .email("bernaseba1@gmail.com")
-                                .url("https://github.com/sebaBernasconi/Proyecto-Final-Java-Springboot-CoderHouse-V2"))
+                                .url("https://github.com/sebaBernasconi/Proyecto-Final-Java-Springboot-CoderHouse-V2")
+                        )
+
                 );
     }
 }
