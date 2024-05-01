@@ -17,6 +17,12 @@ import com.coderhouse.proyectofinal.model.user.Client;
 import com.coderhouse.proyectofinal.service.user.AdminService;
 import com.coderhouse.proyectofinal.service.user.ClientService;
 import com.sun.jdi.event.ExceptionEvent;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +35,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/user")
+@Tag(name = "Gestion de Users", description = "Endopoints del Cliente y Admin")
 public class ControllerUser {
 
     @Autowired
@@ -36,7 +43,7 @@ public class ControllerUser {
 
     @Autowired
     AdminService adminService;
-    private static  ControllerUser instancia;
+    private static ControllerUser instancia;
 
 
     //Constructor
@@ -44,295 +51,205 @@ public class ControllerUser {
 
     }
 
-  //getInstancia para que sea singleton
-    public static ControllerUser getInstancia(){
-        if (instancia == null){
-            return  instancia = new ControllerUser();
-        }else {
+    //getInstancia para que sea singleton
+    public static ControllerUser getInstancia() {
+        if (instancia == null) {
+            return instancia = new ControllerUser();
+        } else {
             return instancia;
         }
     }
 
     //Metodos del Controller
-
-    @PostMapping(value ="/agregarClient", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Client>guardarCliente(@RequestBody Client client){
+    @Operation(summary = "Agregar Cliente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Cliente guardado en la base de datos",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))
+                    }),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
+    })
+    @PostMapping(value = "/agregarClient", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Client> guardarCliente(@RequestBody Client client) {
         clientService.guardarCliente(client);
         return new ResponseEntity<>(client, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Agregar Admin")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Admin guardado en la base de datos",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = Admin.class))
+                    }),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
+    })
     @PostMapping(value = "/agregarAdmin", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Admin>guardarAdmin(@RequestBody Admin admin){
+    public ResponseEntity<Admin> guardarAdmin(@RequestBody Admin admin) {
         adminService.guardarAdmin(admin);
-        return new ResponseEntity<>(admin,HttpStatus.CREATED);
+        return new ResponseEntity<>(admin, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Modificar mail Cliente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Mail del Cliente actualizado", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
+    })
     @PutMapping(value = "/modificarMailClient/{id}/{mail}")
-    public ResponseEntity<Client>modificarMailClient(@PathVariable("id") Integer cuil,
-                                                    @PathVariable("mail") String nuevoMail){
+    public ResponseEntity<Client> modificarMailClient(@PathVariable("id") Integer cuil,
+                                                      @PathVariable("mail") String nuevoMail) {
         try {
-            Client cliente = clientService.modificarMail(cuil,nuevoMail);
-            return new ResponseEntity<>(cliente,HttpStatus.OK);
-        }catch (Exception e){
+            Client cliente = clientService.modificarMail(cuil, nuevoMail);
+            return new ResponseEntity<>(cliente, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    @Operation(summary = "Modificar mail Admin")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Mail del Admin actualizado", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Admin.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
+    })
     @PutMapping(value = "/modificarMailAdmin/{id}/{mail}")
-    public ResponseEntity<Admin>modificarMailAdmin(@PathVariable("id") Integer cuil,
-                                                     @PathVariable("mail") String nuevoMail){
+    public ResponseEntity<Admin> modificarMailAdmin(@PathVariable("id") Integer cuil,
+                                                    @PathVariable("mail") String nuevoMail) {
         try {
-            Admin admin = adminService.modificarMail(cuil,nuevoMail);
-            return new ResponseEntity<>(admin,HttpStatus.OK);
-        }catch (Exception e){
+            Admin admin = adminService.modificarMail(cuil, nuevoMail);
+            return new ResponseEntity<>(admin, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    @Operation(summary = "Modificar password Cliente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Contraseña del Cliente actualizada", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
+    })
     @PutMapping(value = "/modificarPasswordClient/{id}/{password}")
-    public ResponseEntity<Client>modificarPasswordCliente(@PathVariable("id") Integer cuil,
-                                                          @PathVariable("password") String nuevaPassword){
+    public ResponseEntity<Client> modificarPasswordCliente(@PathVariable("id") Integer cuil,
+                                                           @PathVariable("password") String nuevaPassword) {
         try {
-            Client cliente = clientService.modificarPassword(cuil,nuevaPassword);
-            return new ResponseEntity<>(cliente,HttpStatus.OK);
-        }catch (Exception e){
+            Client cliente = clientService.modificarPassword(cuil, nuevaPassword);
+            return new ResponseEntity<>(cliente, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    @Operation(summary = "Modificar password Admin")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Contraseña del Admin actualizada", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Admin.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
+    })
     @PutMapping(value = "/modificarPasswordAdmin/{id}/{password}")
-    public ResponseEntity<Admin>modificarPasswordAdmin(@PathVariable("id") Integer cuil,
-                                                       @PathVariable("password") String nuevaPassword){
+    public ResponseEntity<Admin> modificarPasswordAdmin(@PathVariable("id") Integer cuil,
+                                                        @PathVariable("password") String nuevaPassword) {
         try {
-            Admin admin = adminService.modificarPassword(cuil,nuevaPassword);
-            return new ResponseEntity<>(admin,HttpStatus.OK);
-        }catch (Exception e){
+            Admin admin = adminService.modificarPassword(cuil, nuevaPassword);
+            return new ResponseEntity<>(admin, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    @Operation(summary = "Listar Facturas de un Cliente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Devuelve un listado de objetos Factura", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))
+            })
+    })
     @GetMapping(value = "/listarFacturas/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<Factura>>listarFacturasDeUnCliente(@PathVariable("id") Integer cuil){
+    public ResponseEntity<List<Factura>> listarFacturasDeUnCliente(@PathVariable("id") Integer cuil) {
         try {
-            List<Factura>listadoDeFacturas = clientService.listarFacturas(cuil);
-            return new ResponseEntity<>(listadoDeFacturas,HttpStatus.OK);
-        }catch (Exception e){
+            List<Factura> listadoDeFacturas = clientService.listarFacturas(cuil);
+            return new ResponseEntity<>(listadoDeFacturas, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Operation(summary = "Eliminar un Cliente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "El No Content hace referencia a que se borro lo solicitado" +
+                    " en la base de datos", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "El Not Found hace referencia a que lo que se solicito borrar" +
+                    " no se encontro en la base de datos", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
+    })
     @DeleteMapping(value = "/borrarCliente/{id}")
-    public ResponseEntity<Void>borrarCliente(@PathVariable("id")Integer cuil){
+    public ResponseEntity<Void> borrarCliente(@PathVariable("id") Integer cuil) {
         boolean clienteEliminado = clientService.eliminarCliente(cuil);
 
         if (clienteEliminado) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }else {
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+    @Operation(summary = "Eliminar un Admin")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "El No Content hace referencia a que se borro lo solicitado" +
+                    " en la base de datos", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Admin.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "El Not Found hace referencia a que lo que se solicito borrar" +
+                    " no se encontro en la base de datos", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
+    })
     @DeleteMapping(value = "/borrarAdmin/{id}")
-    public ResponseEntity<Void>borrarAdmin(@PathVariable("id") Integer cuil){
+    public ResponseEntity<Void> borrarAdmin(@PathVariable("id") Integer cuil) {
         boolean adminEliminado = adminService.eliminarAdmin(cuil);
 
         if (adminEliminado) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }else {
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+    @Operation(summary = "Listar Clientes")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Devuelve un listado de todos los Clientes", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
+    })
     @GetMapping(value = "/listarClientes", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<Client>>listarClientes(){
+    public ResponseEntity<List<Client>> listarClientes() {
         try {
-            List<Client>listadoClientes = clientService.listarClientes();
-            return new ResponseEntity<>(listadoClientes,HttpStatus.OK);
-        }catch (Exception e){
+            List<Client> listadoClientes = clientService.listarClientes();
+            return new ResponseEntity<>(listadoClientes, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    @Operation(summary = "Listar Admins")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Devuelve un listado de todos los Admins", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Admin.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
+    })
     @GetMapping(value = "/listarAdmins", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<Admin>>listarAdmins(){
+    public ResponseEntity<List<Admin>> listarAdmins() {
         try {
-            List<Admin>listadoAdmins = adminService.listarAdmins();
-            return new ResponseEntity<>(listadoAdmins,HttpStatus.OK);
-        }catch (Exception e){
+            List<Admin> listadoAdmins = adminService.listarAdmins();
+            return new ResponseEntity<>(listadoAdmins, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    /*
-    public void registrarCliente(int cuil, String nombre, String mail,
-                                 String password)
-            throws UserNotFoundException, CarritoNotFoundException {
-        if (buscarCliente(cuil) == null){
-            Client c = new Client(cuil,nombre,mail,password,
-                    null,null,null);
-            idClient ++;
-
-            ControllerCarrito controllerCarrito = ControllerCarrito.getInstancia();
-            c.setCarrito(controllerCarrito.crearCarrito(cuil));
-
-            listadoDeClientes.add(c);
-        }else {
-            System.out.println("Ya hay un cliente registrado con el cuil: " + cuil);
-        }
-
-
-    }
-
-    public void registrarAdmin(int cuil, String nombre, String mail,
-                               String password) throws UserNotFoundException {
-        if (buscarAdmin(cuil) == null){
-            Admin a = new Admin(cuil,nombre,mail,password,null);
-            idAdmin ++;
-            listadoDeAdmins.add(a);
-        }else {
-            System.out.println("Ya hay un admin registrado con el cuil: " + cuil);
-        }
-    }
-
-    public void agregarMedioDePagoAlCliente(int cuil, Debito tDebito)
-        throws UserNotFoundException{
-        Client c = buscarCliente(cuil);
-        c.settDebito(tDebito);
-    }
-
-    public void agregarFiguraDeAccionAlCarrito(int cuil, int codigoDeProducto) throws UserNotFoundException,
-            ProductNotFoundException {
-
-        Client c = buscarCliente(cuil);
-        ControllerProducto controllerProducto = ControllerProducto.getIntancia();
-        FiguraDeAccion f = controllerProducto.getFiguraDeAccion(codigoDeProducto);
-        if((c != null && f != null)){
-            c.agregarAlCarrito(f);
-        }
-    }
-
-    public void agregarComicAlCarrito(int cuil, int codigoDeProducto)
-    throws UserNotFoundException, ProductNotFoundException{
-        Client c = buscarCliente(cuil);
-
-        ControllerProducto controllerProducto = ControllerProducto.getIntancia();
-        Comic comic = controllerProducto.getComic(codigoDeProducto);
-
-        if (c != null && comic != null){
-            c.agregarAlCarrito(comic);
-        }
-    }
-
-    public void sacarFiguraDeAccionDelCarrito(int cuil, int codigoDeProducto)
-            throws UserNotFoundException, ProductNotFoundException {
-        Client c = buscarCliente(cuil);
-
-        ControllerProducto controllerProducto = ControllerProducto.getIntancia();
-        FiguraDeAccion f = controllerProducto.getFiguraDeAccion(codigoDeProducto);
-
-        Carrito carrito = c.getCarrito();
-
-        if((c != null && f != null) && carrito.estaEnElCarrito(codigoDeProducto)){
-            c.sacarDelCarrito(f);
-        }
-    }
-
-    public void sacarComicDelCarrito(int cuil, int codigoDeProducto)
-        throws UserNotFoundException, ProductNotFoundException{
-        Client c = buscarCliente(cuil);
-
-        ControllerProducto controllerProducto = ControllerProducto.getIntancia();
-        Comic comic = controllerProducto.getComic(codigoDeProducto);
-
-        Carrito carrito = c.getCarrito();
-
-        if ((c != null && comic != null) && carrito.estaEnElCarrito(codigoDeProducto)){
-            c.sacarDelCarrito(comic);
-        }
-    }
-
-    public void pagarCarrito(int cuil) throws UserNotFoundException {
-        Client c = buscarCliente(cuil);
-        if (c != null) {
-            c.pagarCarrito();
-        }
-    }
-
-    public void verComprasDeUnCliente(int cuil) throws UserNotFoundException {
-        Client c = buscarCliente(cuil);
-        if (c != null) {
-            List<Compra> compras = c.getCompras();
-
-            for (Compra compra :
-                    compras) {
-                System.out.println(compra.toString());
-            }
-        }
-
-    }
-
-    public void verVentasDeUnAdmin(int cuil) throws UserNotFoundException {
-        Admin a = buscarAdmin(cuil);
-        if (a != null){
-            List<Venta> ventas = a.getVentas();
-
-            for (Venta v :
-                    ventas) {
-                System.out.println(v.toString());
-            }
-        }
-
-    }
-
-    public void mostrarClientes(){
-        if (!listadoDeClientes.isEmpty()){
-            for (Client c :
-                    listadoDeClientes) {
-                System.out.println(c.toString());
-            }
-        }else {
-            System.out.println("No hay ningun cliente registrado todavia");
-        }
-
-    }
-
-    public void mostrarAdmins(){
-        if (!listadoDeAdmins.isEmpty()){
-            for (Admin a :
-                    listadoDeAdmins) {
-                System.out.println(a.toString());
-            }
-        }else {
-            System.out.println("No hay ningun admin registrado todavia");
-        }
-
-    }
-
-    //Getter del cliente
-    //Malas practicas?
-    public Client getClient(int cuil)throws UserNotFoundException{
-        return buscarCliente(cuil);
-    }
-
-    //Metodos privados que devuelven objetos que el cliente nunca debe ver
-    private Client buscarCliente(int cuil) throws UserNotFoundException {
-        for (Client c :
-                listadoDeClientes) {
-            if (cuil == c.getCuil()) {
-                return c;
-            }
-        }
-        throw new UserNotFoundException("No hay ningun cliente registrado " +
-                "con el cuil: " + cuil);
-    }
-
-    private Admin buscarAdmin(int cuil) throws UserNotFoundException{
-        for (Admin a :
-                listadoDeAdmins) {
-            if (cuil == a.getCuil()){
-                return a;
-            }
-        }
-        throw new UserNotFoundException("No hay ningun admin registrado " +
-                "con el cuil: " + cuil);
-    }
-*/
 }
