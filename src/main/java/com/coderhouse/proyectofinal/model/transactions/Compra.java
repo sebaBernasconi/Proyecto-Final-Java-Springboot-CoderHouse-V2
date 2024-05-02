@@ -6,6 +6,7 @@ import com.coderhouse.proyectofinal.model.user.Admin;
 import com.coderhouse.proyectofinal.model.payment.MedioDePago;
 import com.coderhouse.proyectofinal.model.user.Carrito;
 import com.coderhouse.proyectofinal.model.user.Client;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -14,13 +15,17 @@ import jakarta.persistence.Table;
 import java.util.Calendar;
 import java.util.Date;
 
+@Schema(description = "Modelo de Compra")
 @Entity
 @Table(name = "compra")
 public class Compra extends Transaccion {
+
+    @Schema(description = "Cliente asociado a la Compra", requiredMode = Schema.RequiredMode.REQUIRED)
     @ManyToOne
     @JoinColumn(name = "cuil_cliente")
     private Client client;
 
+    @Schema(description = "Admin asociado a la Compra", requiredMode = Schema.RequiredMode.REQUIRED)
     @ManyToOne
     @JoinColumn(name = "cuil_admin")
     private Admin vendedor;
