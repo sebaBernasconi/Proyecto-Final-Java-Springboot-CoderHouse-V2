@@ -1,8 +1,10 @@
 package com.coderhouse.proyectofinal;
 
 import com.coderhouse.proyectofinal.controllers.ControllerProducto;
+import com.coderhouse.proyectofinal.controllers.ControllerUser;
 import com.coderhouse.proyectofinal.model.product.Comic;
 import com.coderhouse.proyectofinal.model.product.FiguraDeAccion;
+import com.coderhouse.proyectofinal.model.user.Client;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,6 +28,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
 
     //Instanciando los controllers
     ControllerProducto controllerProducto = ControllerProducto.getIntancia();
+    ControllerUser controllerUser = ControllerUser.getInstancia();
 
     public void mostrarMenu(){
         try{
@@ -98,6 +101,158 @@ public class ProyectoFinalApplication implements CommandLineRunner {
     }
 
 
+    //Metodos de los clientes
+    public void subMenuClientes(){
+        try {
+            Scanner scanner = new Scanner(System.in);
+            int opcion = -1;
+
+            do {
+                try {
+                    System.out.println("Sub Menu Clientes: \n" +
+                            "1. Guardar cliente \n" +
+                            "2. Modificar mail \n" +
+                            "3. Modificar password \n" +
+                            "4. Listar facturas \n" +
+                            "5. Eliminar cliente \n" +
+                            "6. Listar clientes \n" +
+                            "0. Volver al menu principal \n");
+                    System.out.println("Ingrese una opcion: ");
+
+                    if (scanner.hasNextInt()) {
+                        opcion = scanner.nextInt();
+                        scanner.nextLine();
+                    } else {
+                        System.out.println("Entrada invalida." +
+                                "Debe ingresar un numero del Menu");
+                        scanner.nextLine();
+                        continue;
+                    }
+
+                    switch (opcion){
+                        case 1:
+                            guardarCliente();
+                            //Hay que completar el metodo cuando esten el resto de los sub menues
+                            break;
+                        case 2:
+                            modificarMailCliente();
+                            break;
+                        case 3:
+                            modificarPasswordCliente();
+                        case 4:
+                            listarFacturasCliente();
+                            break;
+                        case 5:
+                            eliminarCliente();
+                            break;
+                        case 6:
+                            listarClientes();
+                            break;
+                        case 0:
+                            mostrarMenu();
+                        default:
+                            System.err.println("Opcion invlida. Ingrese un numero del menu.");
+                            break;
+                    }
+                } catch (InputMismatchException e) {
+                    System.err.println("Error: Ingrese un numero valido");
+                    scanner.nextLine();
+                    opcion = -1;
+                }
+            } while (opcion != 0);
+
+            scanner.close();
+
+        }catch (Exception e){
+            e.getMessage();
+        }
+    }
+
+    public void guardarCliente(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese por teclado los siguientes datos");
+
+        System.out.println("Cuil del cliente: ");
+        int cuil = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Nombre del Cliente: ");
+        String nombre = scanner.nextLine();
+        System.out.println();
+
+        System.out.println("Mail del cliente: ");
+        String mail = scanner.nextLine();
+        System.out.println();
+
+        System.out.println("Password del cliente: ");
+        String password = scanner.nextLine();
+        System.out.println();
+        //El resto cuando haga los otros menus y metodos
+        System.out.println();
+    }
+
+    public void modificarMailCliente(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el cuil del cliente cuyo mail desea modificar: ");
+        int cuil = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingrese el nuevo mail: ");
+        String nuevoMail = scanner.nextLine();
+        System.out.println();
+
+        controllerUser.modificarMailClient(cuil,nuevoMail);
+
+    }
+
+    public void modificarPasswordCliente(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el cuil del cliente cuya password desea modificar: ");
+        int cuil = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingrese la nueva password: ");
+        String nuevoMail = scanner.nextLine();
+        System.out.println();
+
+        controllerUser.modificarPasswordCliente(cuil,nuevoMail);
+    }
+
+    public void listarFacturasCliente(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el cuil del cliente del que quiere ver las facturas: ");
+        int cuil = scanner.nextInt();
+        System.out.println();
+
+        controllerUser.listarFacturasDeUnCliente(cuil);
+    }
+
+    public void eliminarCliente(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el cuil del cliente que desea eliminar: ");
+        int cuil = scanner.nextInt();
+        System.out.println();
+
+        controllerUser.borrarCliente(cuil);
+    }
+
+    public void listarClientes(){
+        List<Client>listadoClientes = controllerUser.listarClientes().getBody();
+        System.out.println("Listado de clientes: { ");
+
+        for (Client c :
+                listadoClientes) {
+            System.out.println(" [ ");
+            c.toString();
+            System.out.println(" ], ");
+        }
+        System.out.println(" }");
+    }
     //Metodos de los comics
     public void subMenuComics(){
         try {
