@@ -53,6 +53,7 @@ public class Venta extends Transaccion {
     public FacturaB GenerarFacturaB(){
         return  new FacturaB(getIdTransaccion(),getClient(),getClient().getCuil(),getCarrito().getCantidadDeArticulos(),
                 getCarrito().getProductos(), LocalDate.now(),getTotal());
+
     }
 
     public FacturaC GenerarFacturaC(){

@@ -1,7 +1,13 @@
 package com.coderhouse.proyectofinal.controllers;
 
+import com.coderhouse.proyectofinal.model.ticket.FacturaA;
+import com.coderhouse.proyectofinal.model.ticket.FacturaB;
+import com.coderhouse.proyectofinal.model.ticket.FacturaC;
 import com.coderhouse.proyectofinal.model.transactions.Compra;
 import com.coderhouse.proyectofinal.model.transactions.Venta;
+import com.coderhouse.proyectofinal.service.ticket.FacturaAService;
+import com.coderhouse.proyectofinal.service.ticket.FacturaBService;
+import com.coderhouse.proyectofinal.service.ticket.FacturaCService;
 import com.coderhouse.proyectofinal.service.transactions.CompraService;
 import com.coderhouse.proyectofinal.service.transactions.VentaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,6 +36,16 @@ public class ControllerTransaccion {
 
     @Autowired
     VentaService ventaService;
+
+    @Autowired
+    FacturaAService facturaAService;
+
+    @Autowired
+    FacturaBService facturaBService;
+
+    @Autowired
+    FacturaCService facturaCService;
+
 
     //Instanciando el controller
     private static ControllerTransaccion instancia;
@@ -69,6 +85,96 @@ public class ControllerTransaccion {
     public ResponseEntity<Venta>guardarVenta(@RequestBody Venta venta){
         ventaService.guardarVenta(venta);
         return new ResponseEntity<>(venta,HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Generar Factura A de una Compra")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Factura A creada y guardada en la base de datos", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = FacturaA.class))
+            }),
+            @ApiResponse(responseCode = "500",description = "Error interno del servidor",content = @Content)
+    })
+    @PostMapping(value = "/generarFacturaACompra/{id}",consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<FacturaA>generarFacturaADeCompra(@PathVariable("id") Integer idCompra){
+
+        FacturaA facturaA = facturaAService.
+                guardarFacturaA(compraService.buscarCompraPorId(idCompra).GenerarFacturaA());
+        return new ResponseEntity<>(facturaA,HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Generar Factura B de una Compra")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Factura B creada y guardada en la base de datos", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = FacturaB.class))
+            }),
+            @ApiResponse(responseCode = "500",description = "Error interno del servidor",content = @Content)
+    })
+    @PostMapping(value = "/generarFacturaBCompra/{id}",consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<FacturaB>generarFacturaBDeCompra(@PathVariable("id") Integer idCompra){
+
+        FacturaB facturaB = facturaBService.
+                guardarFacuraB(compraService.buscarCompraPorId(idCompra).GenerarFacturaB());
+        return new ResponseEntity<>(facturaB,HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Generar Factura C de una Compra")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Factura C creada y guardada en la base de datos", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = FacturaB.class))
+            }),
+            @ApiResponse(responseCode = "500",description = "Error interno del servidor",content = @Content)
+    })
+    @PostMapping(value = "/generarFacturaCCompra/{id}",consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<FacturaC>generarFacturaCDeCompra(@PathVariable("id") Integer idCompra){
+
+        FacturaC facturaC = facturaCService.
+                guardarFacutraC(compraService.buscarCompraPorId(idCompra).GenerarFacturaC());
+        return new ResponseEntity<>(facturaC,HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Generar Factura A de una Venta")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Factura A creada y guardada en la base de datos", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = FacturaA.class))
+            }),
+            @ApiResponse(responseCode = "500",description = "Error interno del servidor",content = @Content)
+    })
+    @PostMapping(value = "/generarFacturaAVenta/{id}",consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<FacturaA>generarFacturaADeVenta(@PathVariable("id") Integer idCompra){
+
+        FacturaA facturaA = facturaAService.
+                guardarFacturaA(ventaService.buscarVentaPorId(idCompra).GenerarFacturaA());
+        return new ResponseEntity<>(facturaA,HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Generar Factura B de una Venta")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Factura B creada y guardada en la base de datos", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = FacturaB.class))
+            }),
+            @ApiResponse(responseCode = "500",description = "Error interno del servidor",content = @Content)
+    })
+    @PostMapping(value = "/generarFacturaBVenta/{id}",consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<FacturaB>generarFacturaBDeVenta(@PathVariable("id") Integer idCompra){
+
+        FacturaB facturaB = facturaBService.
+                guardarFacuraB(ventaService.buscarVentaPorId(idCompra).GenerarFacturaB());
+        return new ResponseEntity<>(facturaB,HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Generar Factura C de una Venta")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Factura C creada y guardada en la base de datos", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = FacturaB.class))
+            }),
+            @ApiResponse(responseCode = "500",description = "Error interno del servidor",content = @Content)
+    })
+    @PostMapping(value = "/generarFacturaCVenta/{id}",consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<FacturaC>generarFacturaCDeVenta(@PathVariable("id") Integer idCompra){
+
+        FacturaC facturaC = facturaCService.
+                guardarFacutraC(ventaService.buscarVentaPorId(idCompra).GenerarFacturaC());
+        return new ResponseEntity<>(facturaC,HttpStatus.CREATED);
     }
 
     @Operation(summary = "Eliminar Compra")

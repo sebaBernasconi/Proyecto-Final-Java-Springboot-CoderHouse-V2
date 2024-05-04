@@ -7,6 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CompraService {
@@ -18,6 +19,14 @@ public class CompraService {
         return compraRepository.findAll();
     }
 
+    public Compra buscarCompraPorId(int id){
+        try {
+            Optional<Compra> compra = compraRepository.findById(id);
+            return compra.orElse(null);
+        }catch (EmptyResultDataAccessException e){
+            return null;
+        }
+    }
     public Compra guardarCompra(Compra compra){
         return compraRepository.save(compra);
     }

@@ -7,6 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VentaService {
@@ -22,9 +23,14 @@ public class VentaService {
         return  ventaRepository.save(venta);
     }
 
-    /*public List<Venta>VentasDeUnAdmin(int cuil){
-        return ventaRepository.findAllByCuil(cuil);
-    }*/
+    public Venta buscarVentaPorId(int id){
+        try {
+            Optional<Venta>venta = ventaRepository.findById(id);
+            return venta.orElse(null);
+        }catch (EmptyResultDataAccessException e){
+            return null;
+        }
+    }
 
     public boolean eliminarVenta(int idVenta){
         try {
