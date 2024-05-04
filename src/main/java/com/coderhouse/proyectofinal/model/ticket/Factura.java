@@ -9,11 +9,11 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-@Schema(description = "Modelo de Factura")
+@Schema(description = "Modelo de factura")
 @Entity
 public abstract class Factura {
     //idFactura es el comprobante interno del sistema
-    @Schema(description = "id de los productos")
+    @Schema(description = "id de la factura")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
