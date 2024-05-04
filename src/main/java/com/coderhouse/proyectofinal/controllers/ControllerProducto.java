@@ -303,7 +303,7 @@ public class ControllerProducto {
     })
     //Metodos privados que devuelven objetos que el cliente nunca debe ver
     @GetMapping(value = "/listarFiguras", produces = {MediaType.APPLICATION_JSON_VALUE})
-    private ResponseEntity<List<FiguraDeAccion>> obtenerFigurasDeAccion() {
+    public ResponseEntity<List<FiguraDeAccion>> obtenerFigurasDeAccion() {
         try {
             List<FiguraDeAccion> listadoFiguras = figuraDeAccionService.listarFigurasDeAccion();
             return new ResponseEntity<>(listadoFiguras,HttpStatus.OK);
@@ -321,7 +321,7 @@ public class ControllerProducto {
             @ApiResponse(responseCode = "500",description = "Error interno del servidor",content = @Content)
     })
     @GetMapping(value = "/listarComics", produces = {MediaType.APPLICATION_JSON_VALUE})
-    private ResponseEntity<List<Comic>> obtenerComics() {
+    public ResponseEntity<List<Comic>> obtenerComics() {
       try {
           List<Comic> listadoComics = comicService.listarComics();
           return new ResponseEntity<>(listadoComics,HttpStatus.OK);
