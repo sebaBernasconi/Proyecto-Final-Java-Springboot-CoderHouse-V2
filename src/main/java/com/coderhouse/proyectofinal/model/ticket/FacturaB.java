@@ -12,9 +12,9 @@ import java.util.List;
 @Entity
 @Table(name = "factura_b")
 public class FacturaB extends Factura{
-    public FacturaB(int idFactura, int nroFactura, Client client, int cuilCliente,
+    public FacturaB( int nroFactura, Client client, int cuilCliente,
                     int cantidadDeProductos, List<Producto> productos, LocalDate fecha, float total) {
-        super(idFactura, nroFactura, client, cuilCliente, cantidadDeProductos, productos, fecha, total);
+        super( nroFactura, client, cuilCliente, cantidadDeProductos, productos, fecha, total);
     }
 
     //Constructor vacio para persistencia

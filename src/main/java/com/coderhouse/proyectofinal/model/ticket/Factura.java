@@ -56,9 +56,9 @@ public abstract class Factura {
     //Constructor
 
 
-    public Factura(int idFactura, int nroFactura, Client client, int cuilCliente,
+    public Factura( int nroFactura, Client client, int cuilCliente,
                    int cantidadDeProductos, List<Producto> productos, LocalDate fecha, float total) {
-        this.idFactura = idFactura;
+
         this.nroFactura = nroFactura;
         this.client = client;
         this.cuilCliente = cuilCliente;

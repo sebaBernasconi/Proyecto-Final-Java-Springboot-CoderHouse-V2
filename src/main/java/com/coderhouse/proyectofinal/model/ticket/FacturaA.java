@@ -15,9 +15,9 @@ import java.util.List;
 @Table(name = "factura_a")
 public class FacturaA extends Factura{
 
-    public FacturaA(int idFactura, int nroFactura, Client client, int cuilCliente,
+    public FacturaA(int nroFactura, Client client, int cuilCliente,
                     int cantidadDeProductos, List<Producto> productos, LocalDate fecha, float total) {
-        super(idFactura, nroFactura, client, cuilCliente, cantidadDeProductos, productos, fecha, total);
+        super( nroFactura, client, cuilCliente, cantidadDeProductos, productos, fecha, total);
     }
 
     //Constructor vacio para persistencia
