@@ -2,6 +2,9 @@ package com.coderhouse.proyectofinal.model.transactions;
 
 import com.coderhouse.proyectofinal.model.payment.Debito;
 import com.coderhouse.proyectofinal.model.ticket.Factura;
+import com.coderhouse.proyectofinal.model.ticket.FacturaA;
+import com.coderhouse.proyectofinal.model.ticket.FacturaB;
+import com.coderhouse.proyectofinal.model.ticket.FacturaC;
 import com.coderhouse.proyectofinal.model.user.Admin;
 import com.coderhouse.proyectofinal.model.payment.MedioDePago;
 import com.coderhouse.proyectofinal.model.user.Carrito;
@@ -12,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -47,6 +51,21 @@ public class Compra extends Transaccion {
     //Metodos de la clase
     public void verDetalleDeCompra(){
         this.getCarrito().verProductosEnElCarrito();
+    }
+
+    public FacturaA GenerarFacturaA(){
+        return  new FacturaA(getIdTransaccion(),getClient(),getClient().getCuil(),getCarrito().getCantidadDeArticulos(),
+                getCarrito().getProductos(), LocalDate.now(),getTotal());
+    }
+
+    public FacturaB GenerarFacturaB(){
+        return  new FacturaB(getIdTransaccion(),getClient(),getClient().getCuil(),getCarrito().getCantidadDeArticulos(),
+                getCarrito().getProductos(), LocalDate.now(),getTotal());
+    }
+
+    public FacturaC GenerarFacturaC(){
+        return  new FacturaC(getIdTransaccion(),getClient(),getClient().getCuil(),getCarrito().getCantidadDeArticulos(),
+                getCarrito().getProductos(), LocalDate.now(),getTotal());
     }
 
     //Getters y Setters

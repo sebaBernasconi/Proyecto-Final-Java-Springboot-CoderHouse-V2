@@ -2,6 +2,9 @@ package com.coderhouse.proyectofinal.model.transactions;
 
 import com.coderhouse.proyectofinal.model.payment.Debito;
 import com.coderhouse.proyectofinal.model.ticket.Factura;
+import com.coderhouse.proyectofinal.model.ticket.FacturaA;
+import com.coderhouse.proyectofinal.model.ticket.FacturaB;
+import com.coderhouse.proyectofinal.model.ticket.FacturaC;
 import com.coderhouse.proyectofinal.model.user.Admin;
 import com.coderhouse.proyectofinal.model.user.Carrito;
 import com.coderhouse.proyectofinal.model.user.Client;
@@ -9,6 +12,7 @@ import com.coderhouse.proyectofinal.model.payment.MedioDePago;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Schema(description = "Modelo de Venta")
@@ -38,6 +42,22 @@ public class Venta extends Transaccion {
     //Constructor vacio para la persistencia
     public Venta() {
 
+    }
+
+    //Metodos de la clase
+    public FacturaA GenerarFacturaA(){
+        return  new FacturaA(getIdTransaccion(),getClient(),getClient().getCuil(),getCarrito().getCantidadDeArticulos(),
+                getCarrito().getProductos(), LocalDate.now(),getTotal());
+    }
+
+    public FacturaB GenerarFacturaB(){
+        return  new FacturaB(getIdTransaccion(),getClient(),getClient().getCuil(),getCarrito().getCantidadDeArticulos(),
+                getCarrito().getProductos(), LocalDate.now(),getTotal());
+    }
+
+    public FacturaC GenerarFacturaC(){
+        return  new FacturaC(getIdTransaccion(),getClient(),getClient().getCuil(),getCarrito().getCantidadDeArticulos(),
+                getCarrito().getProductos(), LocalDate.now(),getTotal());
     }
 
     //Getters y Setters
