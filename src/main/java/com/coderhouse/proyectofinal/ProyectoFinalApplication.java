@@ -8,14 +8,14 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 @SpringBootApplication
-public class ProyectoFinalApplication implements CommandLineRunner {
+public class ProyectoFinalApplication  {  //implements CommandLineRunner
 
     public static void main(String[] args) {
         SpringApplication.run(ProyectoFinalApplication.class, args);
     }
 
 
-    @Override
+ /*   @Override
     public void run(String...args) throws Exception{
         mostrarMenu();
     }
@@ -62,5 +62,5 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         }catch (Exception e){
             e.getMessage();
         }
-    }
+    }*/
 }

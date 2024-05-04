@@ -1,10 +1,13 @@
 package com.coderhouse.proyectofinal.model.ticket;
 
+import com.coderhouse.proyectofinal.model.product.Producto;
+import com.coderhouse.proyectofinal.model.user.Client;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Schema(description = "Modelo de Factura")
 @Entity
@@ -21,9 +24,26 @@ public abstract class Factura {
     @Column(name = "nro_factura")
     private int nroFactura;
 
+
+    @Schema(description = "Cliente",requiredMode = Schema.RequiredMode.REQUIRED)
+    @ManyToOne
+    @JoinColumn(name = "cuil_cliente")
+    private Client client;
+
     @Schema(description = "Cuil del cliente al cual se le Factura", requiredMode = Schema.RequiredMode.REQUIRED,example = "20123456780")
-    @Column(name = "cuil_cliente")
+    @Column(name = "id_cliente")
     private int cuilCliente;
+
+    @Schema(description = "Cantidad de productos",requiredMode = Schema.RequiredMode.REQUIRED,example = "6")
+    @Column(name = "cantidad_prods")
+    private int cantidadDeProductos;
+
+    @Schema(description = "Listado de Productos a facturar", requiredMode = Schema.RequiredMode.REQUIRED)
+    @ManyToMany
+    @JoinTable(name = "factura_producto",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name ="id_producto"))
+    private List<Producto> productos;
 
     @Schema(description = "Fecha de la Factura",requiredMode = Schema.RequiredMode.REQUIRED, example = "2024-04-15")
     @Column(name = "fecha")
@@ -35,10 +55,15 @@ public abstract class Factura {
 
     //Constructor
 
-    public Factura(int nroFactura,
-                   int cuilCliente, LocalDate fecha, float total) {
+
+    public Factura(int idFactura, int nroFactura, Client client, int cuilCliente,
+                   int cantidadDeProductos, List<Producto> productos, LocalDate fecha, float total) {
+        this.idFactura = idFactura;
         this.nroFactura = nroFactura;
+        this.client = client;
         this.cuilCliente = cuilCliente;
+        this.cantidadDeProductos = cantidadDeProductos;
+        this.productos = productos;
         this.fecha = fecha;
         this.total = total;
     }
