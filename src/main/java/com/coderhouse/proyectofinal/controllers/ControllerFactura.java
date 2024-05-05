@@ -76,7 +76,7 @@ public class ControllerFactura {
     @PostMapping(value = "/agregarFacturaA", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<FacturaA> guardarFacturaA(@RequestBody FacturaA facturaA){
         facturaAService.guardarFacturaA(facturaA);
-        return new ResponseEntity<>(facturaA, HttpStatus.OK);
+        return new ResponseEntity<>(facturaA, HttpStatus.CREATED);
     }
 
     @Operation(summary = "Agregar Factura B")
@@ -91,7 +91,7 @@ public class ControllerFactura {
     @PostMapping(value = "/agregarFacturaB", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<FacturaB>guardarFacturaB(@RequestBody FacturaB facturaB){
         facturaBService.guardarFacuraB(facturaB);
-        return new ResponseEntity<>(facturaB,HttpStatus.OK);
+        return new ResponseEntity<>(facturaB,HttpStatus.CREATED);
     }
 
     @Operation(summary = "Agregar Factura C")
@@ -106,7 +106,7 @@ public class ControllerFactura {
     @PostMapping(value = "/agregarFacturaC", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<FacturaC>guardarFacturaC(@RequestBody FacturaC facturaC){
         facturaCService.guardarFacutraC(facturaC);
-        return new ResponseEntity<>(facturaC,HttpStatus.OK);
+        return new ResponseEntity<>(facturaC,HttpStatus.CREATED);
     }
 
 
