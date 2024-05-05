@@ -4,11 +4,14 @@ import com.coderhouse.proyectofinal.controllers.ControllerProducto;
 import com.coderhouse.proyectofinal.controllers.ControllerUser;
 import com.coderhouse.proyectofinal.model.product.Comic;
 import com.coderhouse.proyectofinal.model.product.FiguraDeAccion;
+import com.coderhouse.proyectofinal.model.transactions.Venta;
+import com.coderhouse.proyectofinal.model.user.Admin;
 import com.coderhouse.proyectofinal.model.user.Client;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -63,8 +66,10 @@ public class ProyectoFinalApplication implements CommandLineRunner {
 
                     switch (opcion){
                         case 1:
+                            subMenuClientes();
                             break;
                         case 2:
+                            subMenuAdmins();
                             break;
                         case 3:
                             subMenuComics();
@@ -215,10 +220,10 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         System.out.println();
 
         System.out.println("Ingrese la nueva password: ");
-        String nuevoMail = scanner.nextLine();
+        String nuevaPass = scanner.nextLine();
         System.out.println();
 
-        controllerUser.modificarPasswordCliente(cuil,nuevoMail);
+        controllerUser.modificarPasswordCliente(cuil,nuevaPass);
     }
 
     public void listarFacturasCliente(){
@@ -253,6 +258,142 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         }
         System.out.println(" }");
     }
+
+    //Metodos de los admins
+    public void subMenuAdmins(){
+        try {
+            Scanner scanner = new Scanner(System.in);
+            int opcion = -1;
+
+            do {
+                try {
+                    System.out.println("Sub Menu Admins: \n" +
+                            "1. Guardar admin \n" +
+                            "2. Modificar mail \n" +
+                            "3. Modificar password \n" +
+                            "4. Eliminar admin \n" +
+                            "5. Listar admin \n" +
+                            "0. Volver al menu principal \n");
+                    System.out.println("Ingrese una opcion: ");
+
+                    if (scanner.hasNextInt()) {
+                        opcion = scanner.nextInt();
+                        scanner.nextLine();
+                    } else {
+                        System.out.println("Entrada invalida." +
+                                "Debe ingresar un numero del Menu");
+                        scanner.nextLine();
+                        continue;
+                    }
+
+                    switch (opcion){
+                        case 1:
+                            guardarAdmin();
+                        case 2:
+                            modificarMailAdmin();
+                        case 3:
+                            modificarPasswordAdmin();
+                        case 4:
+                            elimarAdmin();
+                        case 5:
+                            listarAdmins();
+                        case 0:
+                            mostrarMenu();
+                        default:
+                            System.err.println("Opcion invlida. Ingrese un numero del menu.");
+                            break;
+                    }
+                } catch (InputMismatchException e) {
+                    System.err.println("Error: Ingrese un numero valido");
+                    scanner.nextLine();
+                    opcion = -1;
+                }
+            } while (opcion != 0);
+
+            scanner.close();
+
+        }catch (Exception e){
+            e.getMessage();
+        }
+    }
+
+    public void guardarAdmin(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese por teclado los siguientes datos");
+
+        System.out.println("Cuil del admin: ");
+        int cuil = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Nombre del admin: ");
+        String nombre = scanner.nextLine();
+        System.out.println();
+
+        System.out.println("Mail del admin: ");
+        String mail = scanner.nextLine();
+        System.out.println();
+
+        System.out.println("Password del admin: ");
+        String password = scanner.nextLine();
+        System.out.println();
+
+        List<Venta>ventas = new ArrayList<>();
+        Admin admin = new Admin(cuil,nombre,mail,password,ventas);
+        controllerUser.guardarAdmin(admin);
+    }
+
+    public void modificarMailAdmin(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el cuil del admin cuyo mail desea modificar: ");
+        int cuil = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingrese el nuevo mail: ");
+        String nuevoMail = scanner.nextLine();
+        System.out.println();
+
+        controllerUser.modificarMailAdmin(cuil,nuevoMail);
+    }
+
+    public void modificarPasswordAdmin(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el cuil del admin cuya password desea modificar: ");
+        int cuil = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingrese la nueva password: ");
+        String nuevaPass = scanner.nextLine();
+        System.out.println();
+
+        controllerUser.modificarPasswordAdmin(cuil,nuevaPass);
+    }
+
+    public void elimarAdmin(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el cuil del admin que desea eliminar: ");
+        int cuil = scanner.nextInt();
+        System.out.println();
+
+        controllerUser.borrarAdmin(cuil);
+    }
+
+    public void listarAdmins(){
+        List<Admin>listadoAdmins = controllerUser.listarAdmins().getBody();
+        System.out.println("Listado de admins: { ");
+
+        for (Admin a :
+                listadoAdmins) {
+            System.out.println(" [ ");
+            a.toString();
+            System.out.println(" ], ");
+        }
+        System.out.println(" }");
+    }
+
     //Metodos de los comics
     public void subMenuComics(){
         try {
