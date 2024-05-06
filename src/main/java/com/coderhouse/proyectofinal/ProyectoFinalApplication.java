@@ -1,5 +1,6 @@
 package com.coderhouse.proyectofinal;
 
+import com.coderhouse.proyectofinal.controllers.ControllerFactura;
 import com.coderhouse.proyectofinal.controllers.ControllerPayment;
 import com.coderhouse.proyectofinal.controllers.ControllerProducto;
 import com.coderhouse.proyectofinal.controllers.ControllerUser;
@@ -7,6 +8,10 @@ import com.coderhouse.proyectofinal.model.payment.Debito;
 import com.coderhouse.proyectofinal.model.payment.Tarjeta;
 import com.coderhouse.proyectofinal.model.product.Comic;
 import com.coderhouse.proyectofinal.model.product.FiguraDeAccion;
+import com.coderhouse.proyectofinal.model.ticket.Factura;
+import com.coderhouse.proyectofinal.model.ticket.FacturaA;
+import com.coderhouse.proyectofinal.model.ticket.FacturaB;
+import com.coderhouse.proyectofinal.model.ticket.FacturaC;
 import com.coderhouse.proyectofinal.model.transactions.Venta;
 import com.coderhouse.proyectofinal.model.user.Admin;
 import com.coderhouse.proyectofinal.model.user.Client;
@@ -35,8 +40,8 @@ public class ProyectoFinalApplication implements CommandLineRunner {
     //Instanciando los controllers
     ControllerProducto controllerProducto = ControllerProducto.getIntancia();
     ControllerUser controllerUser = ControllerUser.getInstancia();
-
     ControllerPayment controllerPayment = ControllerPayment.getInstancia();
+    ControllerFactura controllerFactura = ControllerFactura.getInstancia();
 
     public void mostrarMenu(){
         try{
@@ -828,7 +833,6 @@ public class ProyectoFinalApplication implements CommandLineRunner {
     //Metodos debito
 
     public void subMenuDebito(){
-        //guardar,pagar,eliminar,listar
         try {
             Scanner scanner = new Scanner(System.in);
             int opcion = -1;
@@ -952,6 +956,166 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         System.out.println(" } ");
     }
 
+    //Metodos de las facturas
+    public void subMenuFacturas(){
+        try {
+            Scanner scanner = new Scanner(System.in);
+            int opcion = -1;
 
+            do {
+                try {
+                    System.out.println("Sub Menu Factura: \n" +
+                            "1. Crear FacturaA \n" +
+                            "2. Crear FacturaB \n" +
+                            "3. Crear FacturaC \n" +
+                            "4. Listar FacturaA \n" +
+                            "5. Listar FacturaB \n" +
+                            "6. Listar FacturaC \n" +
+                            "0. Volver al menu principal \n");
+                    System.out.println("Ingrese una opcion: ");
 
+                    if (scanner.hasNextInt()) {
+                        opcion = scanner.nextInt();
+                        scanner.nextLine();
+                    } else {
+                        System.out.println("Entrada invalida." +
+                                "Debe ingresar un numero del Menu");
+                        scanner.nextLine();
+                        continue;
+                    }
+
+                    switch (opcion) {
+                        case 1:
+                            crearFacturaA();
+                        case 2:
+                            crearFacturaB();
+                        case 3:
+                            crearFacturaC();
+                        case 4:
+                            listarFacturasA();
+                        case 5:
+                            listarFacturasB();
+                        case 6:
+                            listarFacturasC();
+                        case 0:
+                            mostrarMenu();
+                        default:
+                            System.err.println("Opcion invlida. Ingrese un numero del menu.");
+                            break;
+                    }
+                } catch (InputMismatchException e) {
+                    System.err.println("Error: Ingrese un numero valido");
+                    scanner.nextLine();
+                    opcion = -1;
+                }
+            } while (opcion != 0);
+
+            scanner.close();
+
+        }catch (Exception e){
+            e.getMessage();
+        }
+    }
+
+    public void crearFacturaA(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese un numero para la factura: ");
+        int numeroFactura = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingerese el cuil del cliente al cual le va a facturar: ");
+        int cuilCliente = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingrese el id del carrito para obtner la cantidad de productos, productos y el total: ");
+        int idCarrito = scanner.nextInt();
+
+        Client cliente = controllerUser.buscarClientePorCuil(cuilCliente).getBody();
+
+        //Completar cuando este el de carrito hecho
+        //FacturaA facturaA = new FacturaA(numeroFactura,cliente,cuilCliente);
+    }
+
+    public void crearFacturaB(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese un numero para la factura: ");
+        int numeroFactura = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingerese el cuil del cliente al cual le va a facturar: ");
+        int cuilCliente = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingrese el id del carrito para obtner la cantidad de productos, productos y el total: ");
+        int idCarrito = scanner.nextInt();
+
+        Client cliente = controllerUser.buscarClientePorCuil(cuilCliente).getBody();
+
+        //Completar cuando este el de carrito hecho
+        //FacturaB facturaB = new FacturaB(numeroFactura,cliente,cuilCliente);
+    }
+
+    public void crearFacturaC(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese un numero para la factura: ");
+        int numeroFactura = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingerese el cuil del cliente al cual le va a facturar: ");
+        int cuilCliente = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingrese el id del carrito para obtner la cantidad de productos, productos y el total: ");
+        int idCarrito = scanner.nextInt();
+
+        Client cliente = controllerUser.buscarClientePorCuil(cuilCliente).getBody();
+
+        //Completar cuando este el de carrito hecho
+        //FacturaC facturaC = new FacturaC(numeroFactura,cliente,cuilCliente);
+    }
+
+    public void listarFacturasA(){
+        List<FacturaA>listadoFacturas = controllerFactura.obtnenerFacturasA().getBody();
+
+        System.out.println("Listado de FacturasA: { ");
+        for (FacturaA f :
+            listadoFacturas ) {
+            System.out.println("[ ");
+            f.toString();
+            System.out.println(" ], ");
+
+        }
+        System.out.println(" } ");
+    }
+
+    public void listarFacturasB(){
+        List<FacturaB>listadoFacturas = controllerFactura.obtenerFacturasB().getBody();
+
+        System.out.println("Listado de FacturasB: { ");
+        for (FacturaB f :
+                listadoFacturas ) {
+            System.out.println("[ ");
+            f.toString();
+            System.out.println(" ], ");
+
+        }
+        System.out.println(" } ");
+    }
+
+    public void listarFacturasC(){
+        List<FacturaC>listadoFacturas = controllerFactura.obtenerFacturasC().getBody();
+
+        System.out.println("Listado de FacturasC: { ");
+        for (FacturaC f :
+                listadoFacturas ) {
+            System.out.println("[ ");
+            f.toString();
+            System.out.println(" ], ");
+
+        }
+        System.out.println(" } ");
+    }
 }
