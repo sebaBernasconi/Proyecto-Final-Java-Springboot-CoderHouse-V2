@@ -19,8 +19,15 @@ public class Debito extends Tarjeta{
 
     //Constructor
 
-    public Debito(int nroTarjeta, String titular, int codigoDeSeguridad, float saldo) {
+
+    public Debito(int nroTarjeta, String titular, int codigoDeSeguridad, Client client, float saldo) {
         super(nroTarjeta, titular, codigoDeSeguridad);
+        this.client = client;
+        this.saldo = saldo;
+    }
+
+    public Debito(Client client, float saldo) {
+        this.client = client;
         this.saldo = saldo;
     }
 
