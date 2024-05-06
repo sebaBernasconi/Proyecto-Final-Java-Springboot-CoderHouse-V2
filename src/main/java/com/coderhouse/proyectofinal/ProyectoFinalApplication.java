@@ -848,7 +848,8 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                             "4. Pagar Carrito" +
                             "5. Eliminar Carrito" +
                             "6. Listar Carritos" +
-                            "7. Listar Productos del Carrito \n" +
+                            "7. Buscar Carrito por id" +
+                            "8. Listar Productos del Carrito \n" +
                             "0. Volver al menu principal \n");
                     System.out.println("Ingrese una opcion: ");
 
@@ -876,6 +877,8 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                         case 6:
                             listarCarritos();
                         case 7:
+                            buscarCarritoPorId();
+                        case 8:
                             listarProductosDeUnCarrito();
                         case 0:
                             mostrarMenu();
@@ -973,6 +976,21 @@ public class ProyectoFinalApplication implements CommandLineRunner {
             System.out.println(" ], ");
         }
         System.out.println(" } ");
+    }
+
+    public void buscarCarritoPorId(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el id del carrito que desea buscar: ");
+        int id = scanner.nextInt();
+        System.out.println();
+
+        Carrito carrito = controllerCarrito.buscarCArritoPorId(id).getBody();
+        if (carrito != null) {
+            carrito.toString();
+        }else {
+            System.out.println("No se encontro un carrito con el id " + id);
+        }
     }
 
     public void listarProductosDeUnCarrito(){
