@@ -21,8 +21,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/carrito")
@@ -159,11 +161,33 @@ public class ControllerCarrito {
         }
     }
 
+    @Operation(summary = "Buscar carrito por id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",description = "Devuelve el carrito solicitado",content = {
+                    @Content(mediaType = "application/json",schema = @Schema(implementation = Carrito.class))
+            }),
+            @ApiResponse(responseCode = "404",description = "El carrito con id solicitado no se encuentra en" +
+                    " la base de datos",content = @Content),
+            @ApiResponse(responseCode = "500",description = "Error interno del servidor",content = @Content)
+    })
+    @GetMapping(value = "/buscarCarritoPorId/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Carrito>buscarCArritoPorId(@PathVariable("id") Integer idCarrito){
+        try {
+            Carrito carrito = carritoService.buscarCarritoPorId(idCarrito);
+            if (carrito != null) {
+                return new ResponseEntity<>(carrito,HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>(carrito,HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @Operation(summary = "Listar los Productos de un Carrito")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "Listado de Productos del carrito recuperado",
             content = {
-                    @Content(mediaType = "application/json|", schema = @Schema(implementation = Carrito.class))
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Carrito.class))
             }),
             @ApiResponse(responseCode = "500",description = "Error interno del servidor", content = @Content)
 
