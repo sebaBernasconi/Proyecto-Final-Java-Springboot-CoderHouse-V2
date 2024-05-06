@@ -36,9 +36,9 @@ public class Compra extends Transaccion {
 
     //Constructor
 
-    public Compra(Date fecha, Carrito carrito,
+    public Compra( Carrito carrito,
                   float total, Factura factura, Client client, Admin vendedor) {
-        super(fecha, carrito, total,factura);
+        super( carrito, total,factura);
         this.client = client;
         this.vendedor = vendedor;
     }

@@ -7,6 +7,7 @@ import com.coderhouse.proyectofinal.model.payment.MedioDePago;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Schema(description = "Modelo de Transaccion")
@@ -27,7 +28,7 @@ public abstract class Transaccion {
     @Schema(description = "Fecha de la Transaccion",requiredMode = Schema.RequiredMode.REQUIRED,
     example = "2024-05-30")
     @Column(name = "fecha")
-    private Date fecha;
+    private LocalDate fecha;
 
     @Schema(description = "Total de la Transaccion",requiredMode = Schema.RequiredMode.REQUIRED,
     example = "234.53")
@@ -41,8 +42,8 @@ public abstract class Transaccion {
 
     //Constructor
 
-    public Transaccion(Date fecha, Carrito carrito,float total, Factura factura) {
-        this.fecha = fecha;
+    public Transaccion(Carrito carrito,float total, Factura factura) {
+        this.fecha = LocalDate.now();
         this.carrito = carrito;
         this.total = total;
         this.factura = factura;
@@ -72,11 +73,11 @@ public abstract class Transaccion {
         this.carrito = carrito;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

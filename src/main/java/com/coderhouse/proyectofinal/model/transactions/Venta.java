@@ -32,9 +32,9 @@ public class Venta extends Transaccion {
 
     //Constructor
 
-    public Venta(Date fecha, Carrito carrito,
+    public Venta( Carrito carrito,
                  float total, Factura factura, Client client, Admin vendedor) {
-        super( fecha, carrito, total,factura);
+        super( carrito, total,factura);
         this.client = client;
         this.vendedor = vendedor;
     }
