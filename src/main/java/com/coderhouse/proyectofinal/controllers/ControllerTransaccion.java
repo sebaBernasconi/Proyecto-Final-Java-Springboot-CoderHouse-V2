@@ -51,7 +51,7 @@ public class ControllerTransaccion {
     private static ControllerTransaccion instancia;
 
     //getInstance para que sea singleton
-    public ControllerTransaccion getInstancia(){
+    public static ControllerTransaccion getInstancia(){
         if (instancia == null) {
             return instancia = new ControllerTransaccion();
         }else {
