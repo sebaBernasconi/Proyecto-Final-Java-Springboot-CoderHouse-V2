@@ -38,7 +38,7 @@ public class ControllerPayment {
     private static ControllerPayment instancia;
 
     //Get instance para que sea singleton
-    public ControllerPayment getInstancia(){
+    public static ControllerPayment getInstancia(){
         if (instancia == null){
             return instancia = new ControllerPayment();
         }else {
