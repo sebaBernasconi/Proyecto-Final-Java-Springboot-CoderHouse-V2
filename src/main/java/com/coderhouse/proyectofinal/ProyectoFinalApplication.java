@@ -10,6 +10,7 @@ import com.coderhouse.proyectofinal.model.ticket.Factura;
 import com.coderhouse.proyectofinal.model.ticket.FacturaA;
 import com.coderhouse.proyectofinal.model.ticket.FacturaB;
 import com.coderhouse.proyectofinal.model.ticket.FacturaC;
+import com.coderhouse.proyectofinal.model.transactions.Compra;
 import com.coderhouse.proyectofinal.model.transactions.Venta;
 import com.coderhouse.proyectofinal.model.user.Admin;
 import com.coderhouse.proyectofinal.model.user.Carrito;
@@ -207,7 +208,21 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         System.out.println("Password del cliente: ");
         String password = scanner.nextLine();
         System.out.println();
-        //El resto cuando haga los otros menus y metodos
+
+        List<Compra> compras = new ArrayList<>();
+
+        Client client = new Client(cuil,nombre,mail,password,null,null,compras);
+
+        controllerUser.guardarCliente(client);
+
+        Debito debito = CrearTarjetaParaCliente();
+        Carrito carrito = crearCarritoParaCliente();
+
+        client.settDebito(debito);
+        client.setCarrito(carrito);
+
+        controllerUser.guardarCliente(client);
+
         System.out.println();
     }
 
@@ -272,6 +287,55 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         }
         System.out.println(" }");
     }
+
+    /*Metodos que el cliente necesita pero no son accesibles para todos.
+    * Son como los metodos de creacion individuales solo que devuelven el objeto que crean en lugar
+    * de void*/
+    public Debito CrearTarjetaParaCliente(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese un numero para la tarjeta: ");
+        int numeroTarjeta = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingrese el nombre del titular: ");
+        String nombre = scanner.nextLine();
+        System.out.println();
+
+        System.out.println("Ingrese un codigo de seguridaad para la tarjeta(3 digitos): ");
+        int codigo = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingrese el cuil del cliente para asociarlo a la tarjeta: ");
+        int cuilCliente = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingrese un saldo para la tarjeta: ");
+        float saldo = scanner.nextFloat();
+        System.out.println();
+
+        Client cliente = controllerUser.buscarClientePorCuil(cuilCliente).getBody();
+
+        Debito debito = new Debito(numeroTarjeta,nombre,codigo,cliente,saldo);
+        controllerPayment.guardarTarjeta(debito);
+        return debito;
+    }
+
+    public Carrito crearCarritoParaCliente(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el cuil del cliente para asociar al carrito: ");
+        int cuilCliente = scanner.nextInt();
+        System.out.println();
+
+        Client cliente = controllerUser.buscarClientePorCuil(cuilCliente).getBody();
+        List<Producto>productos = new ArrayList<>();
+        Carrito carrito = new Carrito(cliente,0,productos,false,0);
+        controllerCarrito.agregarCarrito(carrito);
+        return carrito;
+    }
+
+
 
     //Metodos de los admins
     public void subMenuAdmins(){
@@ -407,6 +471,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         }
         System.out.println(" }");
     }
+
 
     //Metodos de los comics
     public void subMenuComics(){
@@ -625,6 +690,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
 
         System.out.println(" }");
     }
+
 
     //Metodo de las figuras de accion
 
@@ -1135,6 +1201,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         }
         System.out.println(" } ");
     }
+
 
     //Metodos de las facturas
     public void subMenuFacturas(){
