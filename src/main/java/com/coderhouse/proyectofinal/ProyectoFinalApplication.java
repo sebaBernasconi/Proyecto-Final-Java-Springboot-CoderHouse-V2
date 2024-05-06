@@ -18,6 +18,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -88,7 +89,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                             subMenuFigurasDeAccion();
                             break;
                         case 5:
-
+                            subMenuCarrito();
                             break;
                         case 6:
                             break;
@@ -833,6 +834,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         System.out.println(" }");
     }
 
+
     //Metodos del carrito
     public void subMenuCarrito(){
         try { //crear,agregarcomic,agregarfigura,pagar,eliminar,listarcarritos,listarproductos
@@ -1101,9 +1103,13 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int idCarrito = scanner.nextInt();
         System.out.println();
 
-        //Buscar Carrito y hacer un get total en el metodo pagar de ahi abajo
+        Carrito carrito = controllerCarrito.buscarCArritoPorId(idCarrito).getBody();
 
-        //controllerPayment.pagar(numeroTarjeta);
+        if (carrito != null) {
+            controllerPayment.pagar(numeroTarjeta, carrito.getTotal());
+        }else {
+            System.out.println("El carrito con id " + idCarrito + " no existe");
+        }
     }
 
     public void eliminarTarjeta(){
@@ -1114,7 +1120,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         System.out.println();
 
         controllerPayment.eliminarTarjetaDebito(numeroTarjeta);
-    } //COMPLETAR
+    }
 
     public void listarTarjetas(){
         List<Debito>listadoTarjetas = controllerPayment.listarTarjetas().getBody();
@@ -1202,13 +1208,17 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int cuilCliente = scanner.nextInt();
         System.out.println();
 
-        System.out.println("Ingrese el id del carrito para obtner la cantidad de productos, productos y el total: ");
-        int idCarrito = scanner.nextInt();
-
         Client cliente = controllerUser.buscarClientePorCuil(cuilCliente).getBody();
 
-        //Completar cuando este el de carrito hecho
-        //FacturaA facturaA = new FacturaA(numeroFactura,cliente,cuilCliente);
+        if (cliente != null){
+            Carrito carrito = cliente.getCarrito();
+
+            FacturaA facturaA = new FacturaA(numeroFactura,cliente,cuilCliente,
+                    carrito.getCantidadDeArticulos(),carrito.getProductos(), LocalDate.now(),carrito.getTotal());
+        }else {
+            System.out.println("No existe un cliente que corresponda con ese cuil");
+        }
+
     }
 
     public void crearFacturaB(){
@@ -1222,13 +1232,14 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int cuilCliente = scanner.nextInt();
         System.out.println();
 
-        System.out.println("Ingrese el id del carrito para obtner la cantidad de productos, productos y el total: ");
-        int idCarrito = scanner.nextInt();
-
         Client cliente = controllerUser.buscarClientePorCuil(cuilCliente).getBody();
 
-        //Completar cuando este el de carrito hecho
-        //FacturaB facturaB = new FacturaB(numeroFactura,cliente,cuilCliente);
+        if (cliente != null){
+            Carrito carrito = cliente.getCarrito();
+
+            FacturaB facturaB = new FacturaB(numeroFactura,cliente,cuilCliente,
+                    carrito.getCantidadDeArticulos(),carrito.getProductos(), LocalDate.now(),carrito.getTotal());
+        }
     }
 
     public void crearFacturaC(){
@@ -1247,8 +1258,15 @@ public class ProyectoFinalApplication implements CommandLineRunner {
 
         Client cliente = controllerUser.buscarClientePorCuil(cuilCliente).getBody();
 
-        //Completar cuando este el de carrito hecho
-        //FacturaC facturaC = new FacturaC(numeroFactura,cliente,cuilCliente);
+        if (cliente != null){
+            Carrito carrito = cliente.getCarrito();
+
+            FacturaC facturaC = new FacturaC(numeroFactura,cliente,cuilCliente,
+                    carrito.getCantidadDeArticulos(),carrito.getProductos(), LocalDate.now(),carrito.getTotal());
+        }else {
+            System.out.println("No existe un cliente que corresponda con ese cuil");
+        }
+
     }
 
     public void listarFacturasA(){
