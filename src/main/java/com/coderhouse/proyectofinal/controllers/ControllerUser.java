@@ -275,4 +275,27 @@ public class ControllerUser {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Operation(summary = "Buscar Admin por cuil")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",description = "Devuelve el Admin con el cuil solicitado",content = {
+                    @Content(mediaType = "application/json",schema = @Schema(implementation = Client.class))
+            }),
+            @ApiResponse(responseCode = "404",description = "No se encontro el Admin con el cuil solicitado",
+                    content = @Content),
+            @ApiResponse(responseCode = "500",description = "Error interno del servidor",content = @Content)
+    })
+    @GetMapping(value = "/buscarAdminPorCuil/{id}",produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Admin>buscarAdminPorCuil(@PathVariable("id")Integer cuil){
+        try {
+            Admin admin = adminService.buscarAdminPorCuil(cuil);
+            if (admin != null) {
+                return new ResponseEntity<>(admin,HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>(admin,HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

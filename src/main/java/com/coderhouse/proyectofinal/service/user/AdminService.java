@@ -1,6 +1,7 @@
 package com.coderhouse.proyectofinal.service.user;
 
 import com.coderhouse.proyectofinal.model.user.Admin;
+import com.coderhouse.proyectofinal.model.user.Client;
 import com.coderhouse.proyectofinal.repository.AdminRepository;
 import jakarta.persistence.Access;
 import org.aspectj.apache.bcel.classfile.Module;
@@ -20,6 +21,12 @@ public class AdminService {
     public List<Admin>listarAdmins(){
         return adminRepository.findAll();
     }
+
+    public Admin buscarAdminPorCuil(int cuil){
+        Optional<Admin>admin = adminRepository.findById(cuil);
+        return admin.orElse(null);
+    }
+
 
     public Admin guardarAdmin(Admin admin){
         return adminRepository.save(admin);
