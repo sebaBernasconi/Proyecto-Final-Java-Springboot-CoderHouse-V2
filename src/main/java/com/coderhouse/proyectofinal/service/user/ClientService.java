@@ -22,6 +22,11 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
+    public Client buscarClientePorCuil(int cuil){
+        Optional<Client>cliente = clientRepository.findById(cuil);
+        return cliente.orElse(null);
+    }
+
     public Client guardarCliente(Client client){
         return clientRepository.save(client);
     }

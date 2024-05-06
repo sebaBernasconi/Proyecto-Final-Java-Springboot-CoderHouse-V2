@@ -252,4 +252,27 @@ public class ControllerUser {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Operation(summary = "Buscar Cliente por cuil")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",description = "Devuelve el cliente con el cuil solicitado",content = {
+                    @Content(mediaType = "application/json",schema = @Schema(implementation = Client.class))
+            }),
+            @ApiResponse(responseCode = "404",description = "No se encontro el cliente con el cuil solicitado",
+            content = @Content),
+            @ApiResponse(responseCode = "500",description = "Error interno del servidor",content = @Content)
+    })
+    @GetMapping(value = "/buscarClientePorCuil/{id}",produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Client>buscarClientePorCuil(@PathVariable("id")Integer cuil){
+        try {
+            Client client = clientService.buscarClientePorCuil(cuil);
+            if (client != null) {
+                return new ResponseEntity<>(client,HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>(client,HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
