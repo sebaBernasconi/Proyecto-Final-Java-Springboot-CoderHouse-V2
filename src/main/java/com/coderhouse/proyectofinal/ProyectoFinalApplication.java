@@ -1,19 +1,18 @@
 package com.coderhouse.proyectofinal;
 
-import com.coderhouse.proyectofinal.controllers.ControllerFactura;
-import com.coderhouse.proyectofinal.controllers.ControllerPayment;
-import com.coderhouse.proyectofinal.controllers.ControllerProducto;
-import com.coderhouse.proyectofinal.controllers.ControllerUser;
+import com.coderhouse.proyectofinal.controllers.*;
 import com.coderhouse.proyectofinal.model.payment.Debito;
 import com.coderhouse.proyectofinal.model.payment.Tarjeta;
 import com.coderhouse.proyectofinal.model.product.Comic;
 import com.coderhouse.proyectofinal.model.product.FiguraDeAccion;
+import com.coderhouse.proyectofinal.model.product.Producto;
 import com.coderhouse.proyectofinal.model.ticket.Factura;
 import com.coderhouse.proyectofinal.model.ticket.FacturaA;
 import com.coderhouse.proyectofinal.model.ticket.FacturaB;
 import com.coderhouse.proyectofinal.model.ticket.FacturaC;
 import com.coderhouse.proyectofinal.model.transactions.Venta;
 import com.coderhouse.proyectofinal.model.user.Admin;
+import com.coderhouse.proyectofinal.model.user.Carrito;
 import com.coderhouse.proyectofinal.model.user.Client;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -42,6 +41,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
     ControllerUser controllerUser = ControllerUser.getInstancia();
     ControllerPayment controllerPayment = ControllerPayment.getInstancia();
     ControllerFactura controllerFactura = ControllerFactura.getInstancia();
+    ControllerCarrito controllerCarrito = ControllerCarrito.getInstancia();
 
     public void mostrarMenu(){
         try{
@@ -88,14 +88,17 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                             subMenuFigurasDeAccion();
                             break;
                         case 5:
+
                             break;
                         case 6:
                             break;
                         case 7:
                             break;
                         case 8:
+                            subMenuDebito();
                             break;
                         case 9:
+                            subMenuFacturas();
                             break;
                         case 0:
                             System.out.println("Fin del programa...");
@@ -829,6 +832,159 @@ public class ProyectoFinalApplication implements CommandLineRunner {
 
         System.out.println(" }");
     }
+
+    //Metodos del carrito
+    public void subMenuCarrito(){
+        try { //crear,agregarcomic,agregarfigura,pagar,eliminar,listarcarritos,listarproductos
+            Scanner scanner = new Scanner(System.in);
+            int opcion = -1;
+
+            do {
+                try {
+                    System.out.println("Sub Menu Carrito: \n" +
+                            "1. Crear un carrito \n" +
+                            "2. Agregar un Comic \n" +
+                            "3. Agregar una FiguraDeAccion \n" +
+                            "4. Pagar Carrito" +
+                            "5. Eliminar Carrito" +
+                            "6. Listar Carritos" +
+                            "7. Listar Productos del Carrito \n" +
+                            "0. Volver al menu principal \n");
+                    System.out.println("Ingrese una opcion: ");
+
+                    if (scanner.hasNextInt()) {
+                        opcion = scanner.nextInt();
+                        scanner.nextLine();
+                    } else {
+                        System.out.println("Entrada invalida." +
+                                "Debe ingresar un numero del Menu");
+                        scanner.nextLine();
+                        continue;
+                    }
+
+                    switch (opcion){
+                        case 1:
+                            crearCarrito();
+                        case 2:
+                            agregarComicAlCarrito();
+                        case 3:
+                            agregarFiguraAlCarrito();
+                        case 4:
+                            pagarUnCarrito();
+                        case 5:
+                            eliminarUnCarrito();
+                        case 6:
+                            listarCarritos();
+                        case 7:
+                            listarProductosDeUnCarrito();
+                        case 0:
+                            mostrarMenu();
+                        default:
+                            System.err.println("Opcion invlida. Ingrese un numero del menu.");
+                            break;
+                    }
+                } catch (InputMismatchException e) {
+                    System.err.println("Error: Ingrese un numero valido");
+                    scanner.nextLine();
+                    opcion = -1;
+                }
+            } while (opcion != 0);
+
+            scanner.close();
+
+        }catch (Exception e){
+            e.getMessage();
+        }
+    }
+
+    public void crearCarrito(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el cuil del cliente para asociar al carrito: ");
+        int cuilCliente = scanner.nextInt();
+        System.out.println();
+
+        Client cliente = controllerUser.buscarClientePorCuil(cuilCliente).getBody();
+        List<Producto>productos = new ArrayList<>();
+        Carrito carrito = new Carrito(cliente,0,productos,false,0);
+        controllerCarrito.agregarCarrito(carrito);
+    }
+
+    public void agregarComicAlCarrito(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el id del carrito al cual desea agregar un comic: ");
+        int idCarrito = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingrese el codigo de producto del comic que desea agregar: ");
+        int codigoDeComic = scanner.nextInt();
+
+        Comic comic = controllerProducto.obtenerComicPorCodigo(codigoDeComic).getBody();
+
+        controllerCarrito.ageregarComic(idCarrito,comic);
+
+    }
+
+    public void agregarFiguraAlCarrito(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el id del carrito al cual desea agregar un comic: ");
+        int idCarrito = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingrese el codigo de producto de la figura que desea agregar: ");
+        int codigoDeFigura = scanner.nextInt();
+        System.out.println();
+
+        FiguraDeAccion figuraDeAccion = controllerProducto.obtenerFiguraPorCodigo(codigoDeFigura).getBody();
+
+        controllerCarrito.agregarFiguraDeAccion(idCarrito,figuraDeAccion);
+    }
+
+    public void pagarUnCarrito(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el id del carrito el cual desea pagar: ");
+        int idCarrito = scanner.nextInt();
+        System.out.println();
+
+        controllerCarrito.pagarCarrito(idCarrito);
+    }
+
+    public void eliminarUnCarrito(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el id del carrito el cual desea eliminar: ");
+        int idCarrito = scanner.nextInt();
+        System.out.println();
+
+        controllerCarrito.eliminarCarrito(idCarrito);
+    }
+
+    public void listarCarritos(){
+        List<Carrito>listadoCarritos = controllerCarrito.listarCarritos().getBody();
+
+        System.out.println("Listadod de Carritos: { ");
+        for (Carrito c :
+                listadoCarritos) {
+            System.out.println(" [ ");
+            c.toString();
+            System.out.println(" ], ");
+        }
+        System.out.println(" } ");
+    }
+
+    public void listarProductosDeUnCarrito(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el codigo del carrito cuyos productos desea ver: ");
+        int idCarrito = scanner.nextInt();
+        System.out.println();
+
+        controllerCarrito.listarProductos(idCarrito);
+    }
+
 
     //Metodos debito
 
