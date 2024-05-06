@@ -1,7 +1,10 @@
 package com.coderhouse.proyectofinal;
 
+import com.coderhouse.proyectofinal.controllers.ControllerPayment;
 import com.coderhouse.proyectofinal.controllers.ControllerProducto;
 import com.coderhouse.proyectofinal.controllers.ControllerUser;
+import com.coderhouse.proyectofinal.model.payment.Debito;
+import com.coderhouse.proyectofinal.model.payment.Tarjeta;
 import com.coderhouse.proyectofinal.model.product.Comic;
 import com.coderhouse.proyectofinal.model.product.FiguraDeAccion;
 import com.coderhouse.proyectofinal.model.transactions.Venta;
@@ -32,6 +35,8 @@ public class ProyectoFinalApplication implements CommandLineRunner {
     //Instanciando los controllers
     ControllerProducto controllerProducto = ControllerProducto.getIntancia();
     ControllerUser controllerUser = ControllerUser.getInstancia();
+
+    ControllerPayment controllerPayment = ControllerPayment.getInstancia();
 
     public void mostrarMenu(){
         try{
@@ -819,4 +824,134 @@ public class ProyectoFinalApplication implements CommandLineRunner {
 
         System.out.println(" }");
     }
+
+    //Metodos debito
+
+    public void subMenuDebito(){
+        //guardar,pagar,eliminar,listar
+        try {
+            Scanner scanner = new Scanner(System.in);
+            int opcion = -1;
+
+            do {
+                try {
+                    System.out.println("Sub Menu Debito: \n" +
+                            "1. Guardar Tarjeta Debito \n" +
+                            "2. Pagar un Carrito \n" +
+                            "3. Eliminar una Tarjeta \n" +
+                            "4. Listar Tarjetas \n" +
+                            "0. Volver al menu principal \n");
+                    System.out.println("Ingrese una opcion: ");
+
+                    if (scanner.hasNextInt()) {
+                        opcion = scanner.nextInt();
+                        scanner.nextLine();
+                    } else {
+                        System.out.println("Entrada invalida." +
+                                "Debe ingresar un numero del Menu");
+                        scanner.nextLine();
+                        continue;
+                    }
+
+                    switch (opcion){
+                        case 1:
+                            guardarTarjeta();
+                        case 2:
+                            pagarCarritoConTarjeta();
+                        case 3:
+                            eliminarTarjeta();
+                        case 4:
+                            listarTarjetas();
+                        case 0:
+                            mostrarMenu();
+                        default:
+                            System.err.println("Opcion invlida. Ingrese un numero del menu.");
+                            break;
+                    }
+                } catch (InputMismatchException e) {
+                    System.err.println("Error: Ingrese un numero valido");
+                    scanner.nextLine();
+                    opcion = -1;
+                }
+            } while (opcion != 0);
+
+            scanner.close();
+
+        }catch (Exception e){
+            e.getMessage();
+        }
+    }
+
+    public void guardarTarjeta(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese un numero para la tarjeta: ");
+        int numeroTarjeta = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingrese el nombre del titular: ");
+        String nombre = scanner.nextLine();
+        System.out.println();
+
+        System.out.println("Ingrese un codigo de seguridaad para la tarjeta(3 digitos): ");
+        int codigo = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingrese el cuil del cliente para asociarlo a la tarjeta: ");
+        int cuilCliente = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingrese un saldo para la tarjeta: ");
+        float saldo = scanner.nextFloat();
+        System.out.println();
+
+        Client cliente = controllerUser.buscarClientePorCuil(cuilCliente).getBody();
+
+        Debito debito = new Debito(numeroTarjeta,nombre,codigo,cliente,saldo);
+        controllerPayment.guardarTarjeta(debito);
+
+    }
+
+    public void pagarCarritoConTarjeta(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el numero de la tarjeta con la que va a pagar: ");
+        int numeroTarjeta = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingrese el id del carrito par poder obtener el total: ");
+        int idCarrito = scanner.nextInt();
+        System.out.println();
+
+        //Buscar Carrito y hacer un get total en el metodo pagar de ahi abajo
+
+        //controllerPayment.pagar(numeroTarjeta);
+    }
+
+    public void eliminarTarjeta(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el numero de la tarjeta que desea eliminar: ");
+        int numeroTarjeta = scanner.nextInt();
+        System.out.println();
+
+        controllerPayment.eliminarTarjetaDebito(numeroTarjeta);
+    } //COMPLETAR
+
+    public void listarTarjetas(){
+        List<Debito>listadoTarjetas = controllerPayment.listarTarjetas().getBody();
+
+        System.out.println("Listado de tarjetas: { ");
+
+        for (Debito tDebito :
+                listadoTarjetas) {
+            System.out.println(" [ ");
+            tDebito.toString();
+            System.out.println(" ], ");
+        }
+        System.out.println(" } ");
+    }
+
+
+
 }
