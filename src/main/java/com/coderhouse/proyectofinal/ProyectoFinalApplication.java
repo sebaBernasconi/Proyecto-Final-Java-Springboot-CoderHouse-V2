@@ -97,6 +97,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                             subMenuCompra();
                             break;
                         case 7:
+                            subMenuVenta();
                             break;
                         case 8:
                             subMenuDebito();
@@ -1035,8 +1036,143 @@ public class ProyectoFinalApplication implements CommandLineRunner {
 
         controllerTransaccion.eliminarCompra(idCompra);
     }
+
+
     //Metodos de la venta
 
+    public void subMenuVenta(){
+        try {
+            Scanner scanner = new Scanner(System.in);
+            int opcion = -1;
+
+            do {
+                try {
+                    System.out.println("Sub Menu Compra: \n" +
+                            "1. Guardar Venta \n" +
+                            "2. Generar Factura A de una Venta \n" +
+                            "3. Generar Factura B de una Venta \n" +
+                            "4. Generar Factura C de una Venta \n" +
+                            "5. Listar Ventas \n" +
+                            "6. Eliminar Venta \n" +
+                            "0. Volver al menu principal \n");
+                    System.out.println("Ingrese una opcion: ");
+
+                    if (scanner.hasNextInt()) {
+                        opcion = scanner.nextInt();
+                        scanner.nextLine();
+                    } else {
+                        System.out.println("Entrada invalida." +
+                                "Debe ingresar un numero del Menu");
+                        scanner.nextLine();
+                        continue;
+                    }
+
+                    switch (opcion){
+                        case 1:
+                            guardarVenta();
+                        case 2:
+                            generarFacturaAParaVenta();
+                        case 3:
+                            generarFacturaBParaVenta();
+                        case 4:
+                            generarFacturaCParaVenta();
+                        case 5:
+                            listarVentas();
+                        case 6:
+                            eliminarVenta();
+                        case 0:
+                            mostrarMenu();
+                        default:
+                            System.err.println("Opcion invlida. Ingrese un numero del menu.");
+                            break;
+                    }
+                } catch (InputMismatchException e) {
+                    System.err.println("Error: Ingrese un numero valido");
+                    scanner.nextLine();
+                    opcion = -1;
+                }
+            } while (opcion != 0);
+
+            scanner.close();
+
+        }catch (Exception e){
+            e.getMessage();
+        }
+    }
+
+    public void guardarVenta(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el cuil del Admin que hizo la venta: ");
+        int cuilAdmin = scanner.nextInt();
+        System.out.println();
+
+        scanner.nextLine();
+
+        System.out.println("Ingrese el cuil del cliente que hizo la compra: ");
+        int cuilCliente = scanner.nextInt();
+        System.out.println();
+
+        Admin admin = controllerUser.buscarAdminPorCuil(cuilAdmin).getBody();
+        Client client = controllerUser.buscarClientePorCuil(cuilCliente).getBody();
+
+        Venta venta = new Venta(client.getCarrito(),client.getCarrito().getTotal(),null,client,admin);
+        controllerTransaccion.guardarVenta(venta);
+
+    }
+
+    public void generarFacturaAParaVenta(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el id de la venta a la cual desea " +
+                "generarle una FacturaA: ");
+        int idVenta = scanner.nextInt();
+
+        controllerTransaccion.generarFacturaADeVenta(idVenta);
+    }
+
+    public void generarFacturaBParaVenta(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el id de la Venta a la cual desea " +
+                "generarle una FacturaB: ");
+        int idVenta = scanner.nextInt();
+
+        controllerTransaccion.generarFacturaBDeCompra(idVenta);
+    }
+
+    public void generarFacturaCParaVenta(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el id de la Venta a la cual desea " +
+                "generarle una FacturaC: ");
+        int idVenta = scanner.nextInt();
+
+        controllerTransaccion.generarFacturaCDeCompra(idVenta);
+    }
+
+    public void listarVentas(){
+        List<Venta>listadoVentas = controllerTransaccion.listarVentas().getBody();
+
+        System.out.println("Listado de ventas: { ");
+        for (Venta v :
+                listadoVentas) {
+            System.out.println(" [ ");
+            v.toString();
+            System.out.println("], ");
+        }
+        System.out.println(" } ");
+    }
+
+    public void eliminarVenta(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el id de la venta que desea borrar: ");
+        int idVenta = scanner.nextInt();
+        System.out.println();
+
+        controllerTransaccion.eliminarCompra(idVenta);
+    }
 
 
     //Metodos del carrito
