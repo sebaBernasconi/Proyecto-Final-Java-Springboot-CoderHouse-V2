@@ -44,6 +44,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
     ControllerPayment controllerPayment = ControllerPayment.getInstancia();
     ControllerFactura controllerFactura = ControllerFactura.getInstancia();
     ControllerCarrito controllerCarrito = ControllerCarrito.getInstancia();
+    ControllerTransaccion controllerTransaccion = ControllerTransaccion.getInstancia();
 
     public void mostrarMenu(){
         try{
@@ -93,6 +94,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                             subMenuCarrito();
                             break;
                         case 6:
+                            subMenuCompra();
                             break;
                         case 7:
                             break;
@@ -152,22 +154,21 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                     switch (opcion){
                         case 1:
                             guardarCliente();
-                            //Hay que completar el metodo cuando esten el resto de los sub menues
-                            break;
+
                         case 2:
                             modificarMailCliente();
-                            break;
+
                         case 3:
                             modificarPasswordCliente();
                         case 4:
                             listarFacturasCliente();
-                            break;
+
                         case 5:
                             eliminarCliente();
-                            break;
+
                         case 6:
                             listarClientes();
-                            break;
+
                         case 0:
                             mostrarMenu();
                         default:
@@ -899,6 +900,143 @@ public class ProyectoFinalApplication implements CommandLineRunner {
 
         System.out.println(" }");
     }
+
+
+    //Metodos de la compra
+
+    public void subMenuCompra(){
+        try {
+            Scanner scanner = new Scanner(System.in);
+            int opcion = -1;
+
+            do {
+                try {
+                    System.out.println("Sub Menu Compra: \n" +
+                            "1. Guardar Compra \n" +
+                            "2. Generar Factura A de una Compra \n" +
+                            "3. Generar Factura B de una Compra \n" +
+                            "4. Generar Factura C de una Compra \n" +
+                            "5. Listar Compras \n" +
+                            "6. Eliminar Compra \n" +
+                            "0. Volver al menu principal \n");
+                    System.out.println("Ingrese una opcion: ");
+
+                    if (scanner.hasNextInt()) {
+                        opcion = scanner.nextInt();
+                        scanner.nextLine();
+                    } else {
+                        System.out.println("Entrada invalida." +
+                                "Debe ingresar un numero del Menu");
+                        scanner.nextLine();
+                        continue;
+                    }
+
+                    switch (opcion){
+                        case 1:
+                            guardarCompra();
+                        case 2:
+                            generarFacturaAParaCompra();
+                        case 3:
+                            generarFacturaBParaCompra();
+                        case 4:
+                            generarFacturaCParaCompra();
+                        case 5:
+                            listarCompras();
+                        case 6:
+                            eliminarCompra();
+                        case 0:
+                            mostrarMenu();
+                        default:
+                            System.err.println("Opcion invlida. Ingrese un numero del menu.");
+                            break;
+                    }
+                } catch (InputMismatchException e) {
+                    System.err.println("Error: Ingrese un numero valido");
+                    scanner.nextLine();
+                    opcion = -1;
+                }
+            } while (opcion != 0);
+
+            scanner.close();
+
+        }catch (Exception e){
+            e.getMessage();
+        }
+    }
+
+    public void guardarCompra(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el cuil del Cliente que hizo la compra: ");
+        int cuilCliente = scanner.nextInt();
+        System.out.println();
+
+        System.out.println("Ingrese el cuil del Admin que hizo la venta");
+        int cuilAdmin = scanner.nextInt();
+
+        Client client = controllerUser.buscarClientePorCuil(cuilCliente).getBody();
+        Admin admin = controllerUser.buscarAdminPorCuil(cuilAdmin).getBody();
+
+        Compra compra = new Compra(client.getCarrito(),client.getCarrito().getTotal(),
+                null,client,admin);
+
+        controllerTransaccion.guardarCompra(compra);
+    }
+
+    public void generarFacturaAParaCompra(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el id de la compra a la cual desea " +
+                "generarle una FacturaA: ");
+        int idCompra = scanner.nextInt();
+
+        controllerTransaccion.generarFacturaADeCompra(idCompra);
+    }
+
+    public void generarFacturaBParaCompra(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el id de la compra a la cual desea " +
+                "generarle una FacturaB: ");
+        int idCompra = scanner.nextInt();
+
+        controllerTransaccion.generarFacturaBDeCompra(idCompra);
+    }
+
+    public void generarFacturaCParaCompra(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el id de la compra a la cual desea " +
+                "generarle una FacturaC: ");
+        int idCompra = scanner.nextInt();
+
+        controllerTransaccion.generarFacturaCDeCompra(idCompra);
+    }
+
+    public void listarCompras(){
+        List<Compra>listadoCompras = controllerTransaccion.listarCompras().getBody();
+
+        System.out.println("Listado de compras: { ");
+        for (Compra c :
+                listadoCompras) {
+            System.out.println(" [ ");
+            c.toString();
+            System.out.println("], ");
+        }
+        System.out.println(" } ");
+    }
+
+    public void eliminarCompra(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el id de la compra que desea borrar: ");
+        int idCompra = scanner.nextInt();
+        System.out.println();
+
+        controllerTransaccion.eliminarCompra(idCompra);
+    }
+    //Metodos de la venta
+
 
 
     //Metodos del carrito
