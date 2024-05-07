@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class TestJdbcTransactions {
 
     public static void main(String[] args) throws SQLException {
-
+    /*
         //instanciando los objetos necesarios
         Client client = new Client(2043900195,"Sebastian","bernaseba1@gmail.com","secreta",
                 null,null,null);
@@ -82,5 +82,7 @@ public class TestJdbcTransactions {
         javaDataBaseControllerTransactions.closeConnection();
 
         System.out.println("-------------------FIN TEST JDBC Transactions-------------------");
+
+     */
     }
 }

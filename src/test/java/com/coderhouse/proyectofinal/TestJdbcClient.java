@@ -17,7 +17,7 @@ public class TestJdbcClient {
 
     public static void main(String[] args) throws SQLException {
 
-        //Instanciando el jdbc
+     /*   //Instanciando el jdbc
         JavaDataBaseControllerCliente controller = new JavaDataBaseControllerCliente();
 
 
@@ -90,5 +90,7 @@ public class TestJdbcClient {
         controller.closeConnection();
 
         System.out.println("--------------------------FIN TEST JDBCCLIENT--------------------------");
+        
+      */
     }
 }

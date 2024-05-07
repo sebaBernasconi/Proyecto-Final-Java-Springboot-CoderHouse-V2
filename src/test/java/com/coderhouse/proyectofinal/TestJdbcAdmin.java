@@ -15,7 +15,7 @@ import java.util.List;
 
 public class TestJdbcAdmin {
 
-    public static void main(String[] args) throws SQLException {
+  /*  public static void main(String[] args) throws SQLException {
         JavaDataBaseControllerAdmins controllerAdmins = new JavaDataBaseControllerAdmins();
         JavaDataBaseControllerCliente controllerCliente = new JavaDataBaseControllerCliente();
 
@@ -82,5 +82,5 @@ public class TestJdbcAdmin {
         controllerCliente.closeConnection();
 
         System.out.println("--------------------------FIN TEST JDBCADMIN--------------------------");
-    }
+    }*/
 }

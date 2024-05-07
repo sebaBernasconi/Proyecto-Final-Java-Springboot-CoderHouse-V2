@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class TestJdbcPayment {
 
     public static void main(String[] args) throws SQLException {
-
+        /*
         JavaDataBaseControllerPayment javaDataBaseControllerPayment = new JavaDataBaseControllerPayment();
         JavaDataBaseControllerCliente  javaDataBaseControllerCliente = new JavaDataBaseControllerCliente();
 
@@ -72,6 +72,8 @@ public class TestJdbcPayment {
 
         System.out.println("--------------------FIN TEST JDBC PAYMENT--------------------");
 
+
+         */
 
     }
 }

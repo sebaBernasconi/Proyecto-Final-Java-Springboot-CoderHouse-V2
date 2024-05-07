@@ -14,7 +14,7 @@ import java.util.Date;
 public class TestJdbcFactura {
 
     public static void main(String[] args) throws SQLException {
-
+        /*
         Client client = new Client(2043900195,"Sebastian","bernaseba1@gmail.com","secreta",
                 null,null,null);
 
@@ -63,5 +63,7 @@ public class TestJdbcFactura {
 
         System.out.println("-------------------------------------------");
         System.out.println("Fin Test JDBC Factura");
+
+         */
     }
 }

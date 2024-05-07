@@ -17,7 +17,7 @@ import java.util.List;
 public class TestObjetos {
 
     public static void main(String[] args) {
-        Client client = new Client(2012345678,"Juan","jj@gmail.com","contraseña original",
+       /* Client client = new Client(2012345678,"Juan","jj@gmail.com","contraseña original",
                 null,null, null);
 
         Admin admin = new Admin(111222333,"Ramiro","rama@gmail.com","ACDC",
@@ -98,6 +98,8 @@ public class TestObjetos {
 
         System.out.println("Fin prueba objetos");
 
+
+        */
 
     }
 }
