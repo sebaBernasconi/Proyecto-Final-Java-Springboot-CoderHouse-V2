@@ -199,13 +199,22 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int cuil = scanner.nextInt();
         System.out.println();
 
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Nombre del Cliente: ");
         String nombre = scanner.nextLine();
         System.out.println();
 
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Mail del cliente: ");
         String mail = scanner.nextLine();
         System.out.println();
+
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Password del cliente: ");
         String password = scanner.nextLine();
@@ -235,6 +244,9 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int cuil = scanner.nextInt();
         System.out.println();
 
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Ingrese el nuevo mail: ");
         String nuevoMail = scanner.nextLine();
         System.out.println();
@@ -249,6 +261,9 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         System.out.println("Ingrese el cuil del cliente cuya password desea modificar: ");
         int cuil = scanner.nextInt();
         System.out.println();
+
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Ingrese la nueva password: ");
         String nuevaPass = scanner.nextLine();
@@ -300,17 +315,30 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int numeroTarjeta = scanner.nextInt();
         System.out.println();
 
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Ingrese el nombre del titular: ");
         String nombre = scanner.nextLine();
         System.out.println();
+
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Ingrese un codigo de seguridaad para la tarjeta(3 digitos): ");
         int codigo = scanner.nextInt();
         System.out.println();
 
+
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Ingrese el cuil del cliente para asociarlo a la tarjeta: ");
         int cuilCliente = scanner.nextInt();
         System.out.println();
+
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Ingrese un saldo para la tarjeta: ");
         float saldo = scanner.nextFloat();
@@ -406,13 +434,22 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int cuil = scanner.nextInt();
         System.out.println();
 
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Nombre del admin: ");
         String nombre = scanner.nextLine();
         System.out.println();
 
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Mail del admin: ");
         String mail = scanner.nextLine();
         System.out.println();
+
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Password del admin: ");
         String password = scanner.nextLine();
@@ -430,6 +467,9 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int cuil = scanner.nextInt();
         System.out.println();
 
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Ingrese el nuevo mail: ");
         String nuevoMail = scanner.nextLine();
         System.out.println();
@@ -443,6 +483,9 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         System.out.println("Ingrese el cuil del admin cuya password desea modificar: ");
         int cuil = scanner.nextInt();
         System.out.println();
+
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Ingrese la nueva password: ");
         String nuevaPass = scanner.nextLine();
@@ -507,25 +550,24 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                     switch (opcion){
                         case 1:
                             guardarComic();
-                            break;
                         case 2:
                             actualizarStockComicPostVenta();
-                            break;
+
                         case 3:
                             editarComic();
-                            break;
+
                         case 4:
                             actualizarPrecioComic();
-                            break;
+
                         case 5:
                             eliminarComic();
-                            break;
+
                         case 6:
                             buscarComic();
-                            break;
+
                         case 7:
                             listarComics();
-                            break;
+
                         case 0:
                             mostrarMenu();
                         default:
@@ -556,29 +598,50 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int codigoDeProducto = sc.nextInt();
         System.out.println();
 
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Nombre del comic: ");
         String nombre = sc.nextLine();
         System.out.println();
+
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Descripcion del comic: ");
         String descripcion = sc.nextLine();
         System.out.println();
 
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Stock del comic: ");
         int stock = sc.nextInt();
         System.out.println();
+
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Precio del comic: ");
         float precio = sc.nextFloat();
         System.out.println();
 
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Autor del comic: ");
         String autor = sc.nextLine();
         System.out.println();
 
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Idioma del comic: ");
         String idioma = sc.nextLine();
         System.out.println();
+
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Tapa dura(boolean): ");
         boolean tapaDura = sc.nextBoolean();
@@ -607,24 +670,43 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int codigo = sc.nextInt();
         System.out.println();
 
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Ingrese los datos que desea modificar del comic: ");
         System.out.println();
+
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Nuevo nombre: ");
         String nuevoNombre = sc.nextLine();
         System.out.println();
 
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Nueva descripcion: ");
         String nuevaDesc = sc.nextLine();
         System.out.println();
+
+
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Nuevo autor: ");
         String nuevoAutor = sc.nextLine();
         System.out.println();
 
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Nuevo idioma: ");
         String nuevoIdioma = sc.nextLine();
         System.out.println();
+
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Nuevo esTapaDura(boolean): ");
         boolean nuevoEsTapaDura = sc.nextBoolean();
@@ -647,6 +729,9 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         System.out.println("Ingrese el codigo de producto del comic cuyo precio desea actualizar: ");
         int codigo = scanner.nextInt();
         System.out.println();
+
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Ingrese el nuevo precio: ");
         float nuevoPrecio = scanner.nextFloat();
@@ -727,25 +812,24 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                     switch (opcion){
                         case 1:
                             guardarFiguraDeAccion();
-                            break;
+
                         case 2:
                             actualizarStockFiguraPostVenta();
-                            break;
+
                         case 3:
                             editarFigura();
-                            break;
+
                         case 4:
                             actualizarPrecioFigura();
-                            break;
                         case 5:
                             eliminarFigura();
-                            break;
+
                         case 6:
                             buscarFigura();
-                            break;
+
                         case 7:
                             listarFiguras();
-                            break;
+
                         case 0:
                             mostrarMenu();
                         default:
@@ -775,29 +859,51 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int codigoDeProducto = sc.nextInt();
         System.out.println();
 
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
+
         System.out.println("Nombre del comic: ");
         String nombre = sc.nextLine();
         System.out.println();
+
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Descripcion de la figura de accion: ");
         String descripcion = sc.nextLine();
         System.out.println();
 
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Stock de la figura de accion: ");
         int stock = sc.nextInt();
         System.out.println();
+
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Precio de la figura de accion: ");
         float precio = sc.nextFloat();
         System.out.println();
 
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Fabricante de la figura de accion: ");
         String fabricante = sc.nextLine();
         System.out.println();
 
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("EsArticulado(boolean): ");
         boolean esArticulado = sc.nextBoolean();
         System.out.println();
+
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         FiguraDeAccion figuraDeAccion = new FiguraDeAccion(codigoDeProducto,nombre,descripcion,stock,precio,
                 fabricante,esArticulado);
@@ -822,20 +928,35 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int codigo = sc.nextInt();
         System.out.println();
 
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Ingrese los datos que desea modificar de la figura: ");
         System.out.println();
+
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Nuevo nombre: ");
         String nuevoNombre = sc.nextLine();
         System.out.println();
 
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Nueva descripcion: ");
         String nuevaDesc = sc.nextLine();
         System.out.println();
 
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Nuevo fabricante: ");
         String nuevoFabricante = sc.nextLine();
         System.out.println();
+
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Nuevo esArticulado(boolean): ");
         boolean nuevoEsArticulado = sc.nextBoolean();
@@ -858,6 +979,9 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         System.out.println("Ingrese el codigo de producto de la figura cuyo precio desea actualizar: ");
         int codigo = sc.nextInt();
         System.out.println();
+
+        sc.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Ingrese el nuevo precio: ");
         float nuevoPrecio = sc.nextFloat();
@@ -971,6 +1095,9 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         System.out.println("Ingrese el cuil del Cliente que hizo la compra: ");
         int cuilCliente = scanner.nextInt();
         System.out.println();
+
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Ingrese el cuil del Admin que hizo la venta");
         int cuilAdmin = scanner.nextInt();
@@ -1107,7 +1234,8 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int cuilAdmin = scanner.nextInt();
         System.out.println();
 
-        scanner.nextLine();
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Ingrese el cuil del cliente que hizo la compra: ");
         int cuilCliente = scanner.nextInt();
@@ -1262,6 +1390,9 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int idCarrito = scanner.nextInt();
         System.out.println();
 
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Ingrese el codigo de producto del comic que desea agregar: ");
         int codigoDeComic = scanner.nextInt();
 
@@ -1277,6 +1408,9 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         System.out.println("Ingrese el id del carrito al cual desea agregar un comic: ");
         int idCarrito = scanner.nextInt();
         System.out.println();
+
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Ingrese el codigo de producto de la figura que desea agregar: ");
         int codigoDeFigura = scanner.nextInt();
@@ -1409,21 +1543,34 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int numeroTarjeta = scanner.nextInt();
         System.out.println();
 
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Ingrese el nombre del titular: ");
         String nombre = scanner.nextLine();
         System.out.println();
+
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Ingrese un codigo de seguridaad para la tarjeta(3 digitos): ");
         int codigo = scanner.nextInt();
         System.out.println();
 
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Ingrese el cuil del cliente para asociarlo a la tarjeta: ");
         int cuilCliente = scanner.nextInt();
         System.out.println();
 
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Ingrese un saldo para la tarjeta: ");
         float saldo = scanner.nextFloat();
         System.out.println();
+
 
         Client cliente = controllerUser.buscarClientePorCuil(cuilCliente).getBody();
 
@@ -1438,6 +1585,9 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         System.out.println("Ingrese el numero de la tarjeta con la que va a pagar: ");
         int numeroTarjeta = scanner.nextInt();
         System.out.println();
+
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Ingrese el id del carrito par poder obtener el total: ");
         int idCarrito = scanner.nextInt();
@@ -1545,6 +1695,9 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int numeroFactura = scanner.nextInt();
         System.out.println();
 
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Ingerese el cuil del cliente al cual le va a facturar: ");
         int cuilCliente = scanner.nextInt();
         System.out.println();
@@ -1569,6 +1722,9 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int numeroFactura = scanner.nextInt();
         System.out.println();
 
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Ingerese el cuil del cliente al cual le va a facturar: ");
         int cuilCliente = scanner.nextInt();
         System.out.println();
@@ -1590,9 +1746,15 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int numeroFactura = scanner.nextInt();
         System.out.println();
 
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
+
         System.out.println("Ingerese el cuil del cliente al cual le va a facturar: ");
         int cuilCliente = scanner.nextInt();
         System.out.println();
+
+        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
+        //llenar bien los datos
 
         System.out.println("Ingrese el id del carrito para obtner la cantidad de productos, productos y el total: ");
         int idCarrito = scanner.nextInt();

@@ -6,6 +6,7 @@ import com.coderhouse.proyectofinal.model.user.Admin;
 import com.coderhouse.proyectofinal.model.user.Client;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class JavaDataBaseControllerTransactions extends JavaDataBaseController{
                 "       VALUES(?,?,?,?,?);";
 
         statement = connection.prepareStatement(query);
-        statement.setDate(1, (Date) compra.getFecha());
+        statement.setDate(1, Date.valueOf((LocalDate) compra.getFecha()));
         statement.setInt(2,compra.getVendedor().getCuil());
         statement.setInt(3,compra.getClient().getCuil());
         statement.setInt(4,controllerCarrito.obtenerIdDeCarritoPorCuil(compra.getClient().getCuil()));
@@ -141,7 +142,7 @@ public class JavaDataBaseControllerTransactions extends JavaDataBaseController{
                 "       VALUES(?,?,?,?,?);";
 
         statement = connection.prepareStatement(query);
-        statement.setDate(1, (Date) venta.getFecha());
+        statement.setDate(1, Date.valueOf((LocalDate) venta.getFecha()));
         statement.setInt(2,venta.getClient().getCuil());
         statement.setInt(3,venta.getVendedor().getCuil());
         statement.setInt(4,controllerCarrito.obtenerIdDeCarritoPorCuil(venta.getClient().getCuil()));
