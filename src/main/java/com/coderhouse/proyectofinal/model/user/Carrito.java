@@ -29,7 +29,7 @@ public class Carrito {
     private int cantidadDeArticulos;
 
     @Schema(description = "Listado de Productos en el Carrito", requiredMode = Schema.RequiredMode.REQUIRED)
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "carrito_producto",
      joinColumns = @JoinColumn(name = "id_carrito"),
     inverseJoinColumns = @JoinColumn(name ="id_producto"))
