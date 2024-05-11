@@ -898,7 +898,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         //llenar bien los datos
 
 
-        System.out.println("Nombre del comic: ");
+        System.out.println("Nombre de la figura: ");
         String nombre = sc.nextLine();
         System.out.println();
 
@@ -953,7 +953,8 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int codigo = scanner.nextInt();
         System.out.println();
 
-        controllerProducto.actualizarStockFiguraDeAccion(codigo);
+        FiguraDeAccion figuraDeAccion = controllerProducto.obtenerFiguraPorCodigo(codigo).getBody();
+        controllerProducto.actualizarStockFiguraDeAccion(figuraDeAccion.getIdProd());
     }
 
     public void editarFigura(){
