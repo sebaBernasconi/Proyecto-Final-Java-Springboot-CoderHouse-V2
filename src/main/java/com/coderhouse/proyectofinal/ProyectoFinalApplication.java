@@ -543,7 +543,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         for (Admin a :
                 listadoAdmins) {
             System.out.println(" [ ");
-            a.toString();
+            a.mostrar();
             System.out.println(" ], ");
         }
         System.out.println(" }");
@@ -693,7 +693,8 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int codigo = scanner.nextInt();
         System.out.println();
 
-        controllerProducto.actualizarStockComic(codigo);
+        Comic comic = controllerProducto.obtenerComicPorCodigo(codigo).getBody();
+        controllerProducto.actualizarStockComic(comic.getIdProd());
     }
 
     public void editarComic(){
