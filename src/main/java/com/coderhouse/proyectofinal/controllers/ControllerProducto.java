@@ -210,9 +210,9 @@ public class ControllerProducto {
                     " borro lo solicitado",content = @Content),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
     })
-    @DeleteMapping(value = "/eliminarComic/{id}")
-    public ResponseEntity<Void>eliminarComic(@PathVariable("id") Integer codigo){
-        boolean comicEliminado = comicService.eliminarComic(codigo);
+    @DeleteMapping(value = "/eliminarComic/{codigoDeProducto}")
+    public ResponseEntity<Void>eliminarComic(@PathVariable("codigoDeProducto") Integer codigoDeProducto){
+        boolean comicEliminado = comicService.eliminarComic(codigoDeProducto);
         if (comicEliminado){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }else {
@@ -279,8 +279,8 @@ public class ControllerProducto {
                     "comic guardado en la base de datos",content = @Content),
             @ApiResponse(responseCode = "500",description = "Error interno del servidor",content = @Content)
     })
-    @GetMapping(value = "/buscarComic/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Comic> obtenerComicPorCodigo(@PathVariable("id") Integer codigoDeProducto) {
+    @GetMapping(value = "/buscarComic/{codigoDeProducto}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Comic> obtenerComicPorCodigo(@PathVariable("codigoDeProducto") Integer codigoDeProducto) {
         try {
             Comic comic = comicService.buscarComicPorCodigo(codigoDeProducto);
             if (comic != null){
