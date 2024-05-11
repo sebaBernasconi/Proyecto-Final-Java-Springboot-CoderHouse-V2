@@ -87,4 +87,16 @@ public class Client extends User {
     public void setCompras(List<Compra> compras) {
         this.compras = compras;
     }
+
+    public void mostrar(){
+        System.out.println(
+
+                " Cuil: " + this.getCuil() +
+                "\n Nombre: " + this.getNombre() +
+                "\n Mail: " + this.getMail() +
+                "\n Contraseña: " + this.getPassword() +
+                "\n tDebito=" + tDebito.getNroTarjeta() +
+                "\n carrito=" + carrito.getIdCarrito() );
+    }
+
 }
