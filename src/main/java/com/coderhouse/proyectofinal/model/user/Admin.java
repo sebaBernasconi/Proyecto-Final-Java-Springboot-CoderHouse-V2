@@ -40,4 +40,13 @@ public class Admin extends User {
     public void setVentas(List<Venta> ventas) {
         this.ventas = ventas;
     }
+
+    public void mostrar(){
+        System.out.println(
+
+                " Cuil: " + this.getCuil() +
+                        "\n Nombre: " + this.getNombre() +
+                        "\n Mail: " + this.getMail() +
+                        "\n Contraseña: " + this.getPassword());
+    }
 }
