@@ -1363,10 +1363,10 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                             "1. Crear un carrito \n" +
                             "2. Agregar un Comic \n" +
                             "3. Agregar una FiguraDeAccion \n" +
-                            "4. Pagar Carrito" +
-                            "5. Eliminar Carrito" +
-                            "6. Listar Carritos" +
-                            "7. Buscar Carrito por id" +
+                            "4. Pagar Carrito \n" +
+                            "5. Eliminar Carrito \n" +
+                            "6. Listar Carritos \n" +
+                            "7. Buscar Carrito por id \n" +
                             "8. Listar Productos del Carrito \n" +
                             "0. Volver al menu principal \n");
                     System.out.println("Ingrese una opcion: ");
