@@ -21,7 +21,7 @@ public class ComicService {
 
     public Comic buscarComicPorCodigo(int codigo){
         try {
-            Optional<Comic> comic =  comicRepository.findById(codigo);
+            Optional<Comic> comic =  comicRepository.findByCodigoDeProducto(codigo);
             return comic.orElse(null);
         }catch (EmptyResultDataAccessException e){
             return null;
@@ -34,7 +34,7 @@ public class ComicService {
 
     public Comic editarComic(int codigo, Comic comic){
         try {
-                Optional<Comic> comicActualizado = comicRepository.findById(codigo);
+                Optional<Comic> comicActualizado = comicRepository.findByCodigoDeProducto(codigo);
                 comicActualizado.orElse(null).editarComic(comic.getNombre(), comic.getDescripcion(),
                         comic.getAutor(),comic.getIdioma(),comic.isTapaDura());
 
@@ -57,7 +57,7 @@ public class ComicService {
 
     public Comic modificarPrecio(int codigoDeProducto, float nuevoPrecio){
         try {
-            Optional<Comic> comic = comicRepository.findById(codigoDeProducto);
+            Optional<Comic> comic = comicRepository.findByCodigoDeProducto(codigoDeProducto);
             comic.orElse(null).modificarPrecio(nuevoPrecio);
             return comicRepository.save(comic.orElse(null));
         }catch (EmptyResultDataAccessException e){
@@ -66,7 +66,8 @@ public class ComicService {
     }
     public boolean eliminarComic(int codigoDeProducto){
         try {
-            comicRepository.deleteById(codigoDeProducto);
+            Optional<Comic> comic = comicRepository.findByCodigoDeProducto(codigoDeProducto);
+            comicRepository.deleteById(comic.orElse(null).getIdProd());
             return true;
         }catch (EmptyResultDataAccessException e){
             return false;
