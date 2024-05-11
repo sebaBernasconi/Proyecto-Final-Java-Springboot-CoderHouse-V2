@@ -15,6 +15,10 @@ import com.coderhouse.proyectofinal.model.transactions.Venta;
 import com.coderhouse.proyectofinal.model.user.Admin;
 import com.coderhouse.proyectofinal.model.user.Carrito;
 import com.coderhouse.proyectofinal.model.user.Client;
+import com.coderhouse.proyectofinal.repository.ClientRepository;
+import com.coderhouse.proyectofinal.service.user.AdminService;
+import com.coderhouse.proyectofinal.service.user.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -38,12 +42,24 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         mostrarMenu();
     }
 
+
     //Instanciando los controllers
+    @Autowired
     ControllerProducto controllerProducto = ControllerProducto.getIntancia();
+
+    @Autowired
     ControllerUser controllerUser = ControllerUser.getInstancia();
+
+    @Autowired
     ControllerPayment controllerPayment = ControllerPayment.getInstancia();
+
+    @Autowired
     ControllerFactura controllerFactura = ControllerFactura.getInstancia();
+
+    @Autowired
     ControllerCarrito controllerCarrito = ControllerCarrito.getInstancia();
+
+    @Autowired
     ControllerTransaccion controllerTransaccion = ControllerTransaccion.getInstancia();
 
     public void mostrarMenu(){
@@ -155,6 +171,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                     switch (opcion){
                         case 1:
                             guardarCliente();
+                            break;
 
                         case 2:
                             modificarMailCliente();
@@ -226,13 +243,13 @@ public class ProyectoFinalApplication implements CommandLineRunner {
 
         controllerUser.guardarCliente(client);
 
-        Debito debito = CrearTarjetaParaCliente();
+       /* Debito debito = CrearTarjetaParaCliente();
         Carrito carrito = crearCarritoParaCliente();
 
         client.settDebito(debito);
         client.setCarrito(carrito);
 
-        controllerUser.guardarCliente(client);
+        controllerUser.guardarCliente(client);*/
 
         System.out.println();
     }
@@ -299,7 +316,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         for (Client c :
                 listadoClientes) {
             System.out.println(" [ ");
-            c.toString();
+            c.mostrar();
             System.out.println(" ], ");
         }
         System.out.println(" }");
