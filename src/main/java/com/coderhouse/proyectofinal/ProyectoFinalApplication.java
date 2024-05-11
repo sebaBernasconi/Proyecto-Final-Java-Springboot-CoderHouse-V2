@@ -175,18 +175,19 @@ public class ProyectoFinalApplication implements CommandLineRunner {
 
                         case 2:
                             modificarMailCliente();
-
+                            break;
                         case 3:
                             modificarPasswordCliente();
+                            break;
                         case 4:
                             listarFacturasCliente();
-
+                            break;
                         case 5:
                             eliminarCliente();
-
+                            break;
                         case 6:
                             listarClientes();
-
+                            break;
                         case 0:
                             mostrarMenu();
                         default:
@@ -241,15 +242,13 @@ public class ProyectoFinalApplication implements CommandLineRunner {
 
         Client client = new Client(cuil,nombre,mail,password,null,null,compras);
 
-        controllerUser.guardarCliente(client);
-
-       /* Debito debito = CrearTarjetaParaCliente();
+        Debito debito = CrearTarjetaParaCliente();
         Carrito carrito = crearCarritoParaCliente();
 
         client.settDebito(debito);
         client.setCarrito(carrito);
 
-        controllerUser.guardarCliente(client);*/
+        controllerUser.guardarCliente(client);
 
         System.out.println();
     }
@@ -296,7 +295,16 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int cuil = scanner.nextInt();
         System.out.println();
 
-        controllerUser.listarFacturasDeUnCliente(cuil);
+        List<Factura>listadoFacturas = controllerUser.listarFacturasDeUnCliente(cuil).getBody();
+
+        System.out.println("Listado de Facturas del cliente con cuil: " + cuil + " { ");
+        for (Factura f :
+                listadoFacturas) {
+            System.out.println("[ ");
+            f.toString();
+            System.out.println(" ], ");
+        }
+        System.out.println(" } ");
     }
 
     public void eliminarCliente(){
@@ -305,6 +313,8 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         System.out.println("Ingrese el cuil del cliente que desea eliminar: ");
         int cuil = scanner.nextInt();
         System.out.println();
+
+
 
         controllerUser.borrarCliente(cuil);
     }
@@ -414,14 +424,19 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                     switch (opcion){
                         case 1:
                             guardarAdmin();
+                            break;
                         case 2:
                             modificarMailAdmin();
+                            break;
                         case 3:
                             modificarPasswordAdmin();
+                            break;
                         case 4:
                             elimarAdmin();
+                            break;
                         case 5:
                             listarAdmins();
+                            break;
                         case 0:
                             mostrarMenu();
                         default:
@@ -567,24 +582,25 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                     switch (opcion){
                         case 1:
                             guardarComic();
+                            break;
                         case 2:
                             actualizarStockComicPostVenta();
-
+                            break;
                         case 3:
                             editarComic();
-
+                            break;
                         case 4:
                             actualizarPrecioComic();
-
+                            break;
                         case 5:
                             eliminarComic();
-
+                            break;
                         case 6:
                             buscarComic();
-
+                            break;
                         case 7:
                             listarComics();
-
+                            break;
                         case 0:
                             mostrarMenu();
                         default:
@@ -829,24 +845,25 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                     switch (opcion){
                         case 1:
                             guardarFiguraDeAccion();
-
+                            break;
                         case 2:
                             actualizarStockFiguraPostVenta();
-
+                            break;
                         case 3:
                             editarFigura();
-
+                            break;
                         case 4:
                             actualizarPrecioFigura();
+                            break;
                         case 5:
                             eliminarFigura();
-
+                            break;
                         case 6:
                             buscarFigura();
-
+                            break;
                         case 7:
                             listarFiguras();
-
+                            break;
                         case 0:
                             mostrarMenu();
                         default:
@@ -1076,16 +1093,22 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                     switch (opcion){
                         case 1:
                             guardarCompra();
+                            break;
                         case 2:
                             generarFacturaAParaCompra();
+                            break;
                         case 3:
                             generarFacturaBParaCompra();
+                            break;
                         case 4:
                             generarFacturaCParaCompra();
+                            break;
                         case 5:
                             listarCompras();
+                            break;
                         case 6:
                             eliminarCompra();
+                            break;
                         case 0:
                             mostrarMenu();
                         default:
@@ -1214,16 +1237,22 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                     switch (opcion){
                         case 1:
                             guardarVenta();
+                            break;
                         case 2:
                             generarFacturaAParaVenta();
+                            break;
                         case 3:
                             generarFacturaBParaVenta();
+                            break;
                         case 4:
                             generarFacturaCParaVenta();
+                            break;
                         case 5:
                             listarVentas();
+                            break;
                         case 6:
                             eliminarVenta();
+                            break;
                         case 0:
                             mostrarMenu();
                         default:
@@ -1353,20 +1382,28 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                     switch (opcion){
                         case 1:
                             crearCarrito();
+                            break;
                         case 2:
                             agregarComicAlCarrito();
+                            break;
                         case 3:
                             agregarFiguraAlCarrito();
+                            break;
                         case 4:
                             pagarUnCarrito();
+                            break;
                         case 5:
                             eliminarUnCarrito();
+                            break;
                         case 6:
                             listarCarritos();
+                            break;
                         case 7:
                             buscarCarritoPorId();
+                            break;
                         case 8:
                             listarProductosDeUnCarrito();
+                            break;
                         case 0:
                             mostrarMenu();
                         default:
@@ -1527,12 +1564,16 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                     switch (opcion){
                         case 1:
                             guardarTarjeta();
+                            break;
                         case 2:
                             pagarCarritoConTarjeta();
+                            break;
                         case 3:
                             eliminarTarjeta();
+                            break;
                         case 4:
                             listarTarjetas();
+                            break;
                         case 0:
                             mostrarMenu();
                         default:
@@ -1675,16 +1716,22 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                     switch (opcion) {
                         case 1:
                             crearFacturaA();
+                            break;
                         case 2:
                             crearFacturaB();
+                            break;
                         case 3:
                             crearFacturaC();
+                            break;
                         case 4:
                             listarFacturasA();
+                            break;
                         case 5:
                             listarFacturasB();
+                            break;
                         case 6:
                             listarFacturasC();
+                            break;
                         case 0:
                             mostrarMenu();
                         default:
