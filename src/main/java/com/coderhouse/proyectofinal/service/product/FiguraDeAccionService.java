@@ -21,7 +21,7 @@ public class FiguraDeAccionService {
 
     public FiguraDeAccion buscarFiguraPorCodigo(int codigo){
         try {
-            Optional<FiguraDeAccion>figuraDeAccion = figuraDeAccionRepository.findById(codigo);
+            Optional<FiguraDeAccion>figuraDeAccion = figuraDeAccionRepository.findByCodigoDeProducto(codigo);
             return figuraDeAccion.orElse(null);
         }catch (EmptyResultDataAccessException e){
             return null;
@@ -35,10 +35,10 @@ public class FiguraDeAccionService {
     public FiguraDeAccion editarFiguraDeAccion(int codigoProducto, FiguraDeAccion figuraDeAccion){
         //Editar: sacar el stock y el objeto. usar optional y que sea solo modificar precio
         try {
-            Optional<FiguraDeAccion> figuraDeAccionActualizada = figuraDeAccionRepository.findById(codigoProducto);
+            Optional<FiguraDeAccion> figuraDeAccionActualizada = figuraDeAccionRepository.findByCodigoDeProducto(codigoProducto);
             figuraDeAccionActualizada.orElse(null).editarFiguraDeAccion(figuraDeAccion.getNombre(),
                     figuraDeAccion.getDescripcion(),figuraDeAccion.getFabricante(),figuraDeAccion.isEsArticulado());
-            return figuraDeAccionActualizada.orElse(null);
+            return figuraDeAccionRepository.save(figuraDeAccionActualizada.orElse(null));
         }catch (EmptyResultDataAccessException e){
             return null;
         }
@@ -56,7 +56,7 @@ public class FiguraDeAccionService {
 
     public FiguraDeAccion modificarPrecio(int codigoDeProducto, float nuevoPrecio){
         try {
-            Optional<FiguraDeAccion> figuraDeAccion = figuraDeAccionRepository.findById(codigoDeProducto);
+            Optional<FiguraDeAccion> figuraDeAccion = figuraDeAccionRepository.findByCodigoDeProducto(codigoDeProducto);
             figuraDeAccion.orElse(null).modificarPrecio(nuevoPrecio);
             return figuraDeAccionRepository.save(figuraDeAccion.orElse(null));
         }catch (EmptyResultDataAccessException e){
@@ -66,7 +66,8 @@ public class FiguraDeAccionService {
 
     public boolean eliminarFiguraDeAccion(int codigoDeProducto){
         try {
-            figuraDeAccionRepository.deleteById(codigoDeProducto);
+            FiguraDeAccion figuraDeAccion = figuraDeAccionRepository.findByCodigoDeProducto(codigoDeProducto).orElse(null);
+            figuraDeAccionRepository.deleteById(figuraDeAccion.getIdProd());
             return true;
         }catch (EmptyResultDataAccessException e){
             return false;
