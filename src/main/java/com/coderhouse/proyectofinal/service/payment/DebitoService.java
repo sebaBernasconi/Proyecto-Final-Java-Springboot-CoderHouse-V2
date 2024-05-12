@@ -1,7 +1,9 @@
 package com.coderhouse.proyectofinal.service.payment;
 
 import com.coderhouse.proyectofinal.model.payment.Debito;
+import com.coderhouse.proyectofinal.model.user.Carrito;
 import com.coderhouse.proyectofinal.repository.DebitoRepository;
+import com.coderhouse.proyectofinal.service.user.CarritoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,10 @@ public class DebitoService {
     @Autowired
     private DebitoRepository tDebitoRepository;
 
+    //Instanciando el carrito service para usar en el pago
+    @Autowired
+    CarritoService carritoService;
+
     public List<Debito> listarTarjetas(){
         return tDebitoRepository.findAll();
     }
@@ -23,11 +29,16 @@ public class DebitoService {
         return tDebitoRepository.save(debito);
     }
 
-    public boolean pagar(int nroTarjeta, float total){
+    public boolean pagar(int nroTarjeta, int idCarrito){
+
+
 
             Optional<Debito>tarjeta = tDebitoRepository.findById(nroTarjeta);
 
-            boolean pagado = tarjeta.orElse(null).pagar(total);
+            Carrito carrito = carritoService.buscarCarritoPorId(idCarrito);
+
+            boolean pagado = tarjeta.orElse(null).pagar(carrito.getTotal());
+            carritoService.pagarCarrito(idCarrito);
 
             tDebitoRepository.save(tarjeta.orElse(null));
 

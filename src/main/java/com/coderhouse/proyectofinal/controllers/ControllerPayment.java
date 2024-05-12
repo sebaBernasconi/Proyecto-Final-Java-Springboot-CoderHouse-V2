@@ -69,10 +69,10 @@ public class ControllerPayment {
             }),
             @ApiResponse(responseCode = "500",description = "Error interno del servidor", content = @Content)
     })
-    @PutMapping(value = "/pagar/{id}/{total}")
+    @PutMapping(value = "/pagar/{id}/{idCarrito}")
     public ResponseEntity<String>pagar(@PathVariable("id")Integer nro,
-                                       @PathVariable("total") float total){
-        boolean pagado = debitoService.pagar(nro,total);
+                                       @PathVariable("idCArrito") Integer idCarrito){
+        boolean pagado = debitoService.pagar(nro,idCarrito);
         if (pagado) {
             return new ResponseEntity<>(HttpStatus.OK);
         }else {
