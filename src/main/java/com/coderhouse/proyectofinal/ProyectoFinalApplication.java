@@ -1653,13 +1653,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int idCarrito = scanner.nextInt();
         System.out.println();
 
-        Carrito carrito = controllerCarrito.buscarCArritoPorId(idCarrito).getBody();
-
-        if (carrito != null) {
-            controllerPayment.pagar(numeroTarjeta, carrito.getTotal());
-        }else {
-            System.out.println("El carrito con id " + idCarrito + " no existe");
-        }
+        controllerPayment.pagar(numeroTarjeta,idCarrito);
     }
 
     public void eliminarTarjeta(){
@@ -1775,6 +1769,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
 
             FacturaA facturaA = new FacturaA(numeroFactura,cliente,cuilCliente,
                     carrito.getCantidadDeArticulos(),carrito.getProductos(), LocalDate.now(),carrito.getTotal());
+            controllerFactura.guardarFacturaA(facturaA);
         }else {
             System.out.println("No existe un cliente que corresponda con ese cuil");
         }
@@ -1802,6 +1797,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
 
             FacturaB facturaB = new FacturaB(numeroFactura,cliente,cuilCliente,
                     carrito.getCantidadDeArticulos(),carrito.getProductos(), LocalDate.now(),carrito.getTotal());
+            controllerFactura.guardarFacturaB(facturaB);
         }
     }
 
@@ -1819,12 +1815,6 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         int cuilCliente = scanner.nextInt();
         System.out.println();
 
-        scanner.nextLine();//Este next line es porque aveces pasa que da un enter solo y no permite
-        //llenar bien los datos
-
-        System.out.println("Ingrese el id del carrito para obtner la cantidad de productos, productos y el total: ");
-        int idCarrito = scanner.nextInt();
-
         Client cliente = controllerUser.buscarClientePorCuil(cuilCliente).getBody();
 
         if (cliente != null){
@@ -1832,6 +1822,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
 
             FacturaC facturaC = new FacturaC(numeroFactura,cliente,cuilCliente,
                     carrito.getCantidadDeArticulos(),carrito.getProductos(), LocalDate.now(),carrito.getTotal());
+            controllerFactura.guardarFacturaC(facturaC);
         }else {
             System.out.println("No existe un cliente que corresponda con ese cuil");
         }
