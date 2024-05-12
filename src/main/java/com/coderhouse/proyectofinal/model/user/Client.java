@@ -25,7 +25,7 @@ public class Client extends User {
     private Carrito carrito;
 
     @Schema(description = "Comrpas asociadas al Cliente", requiredMode = Schema.RequiredMode.REQUIRED)
-    @OneToMany(mappedBy = "client",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Compra> compras;
 
     //Constructor
