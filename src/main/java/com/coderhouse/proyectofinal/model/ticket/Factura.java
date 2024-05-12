@@ -39,7 +39,7 @@ public abstract class Factura {
     private int cantidadDeProductos;
 
     @Schema(description = "Listado de Productos a facturar", requiredMode = Schema.RequiredMode.REQUIRED)
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "factura_producto",
             joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name ="id_producto"))
