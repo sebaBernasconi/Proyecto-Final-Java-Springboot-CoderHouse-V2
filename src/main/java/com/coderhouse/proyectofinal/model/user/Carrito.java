@@ -151,4 +151,16 @@ public class Carrito {
     public void setTotal(float total) {
         this.total = total;
     }
+
+    @Override
+    public String toString() {
+        return "Carrito{" +
+                "idCarrito=" + idCarrito +
+                ", cliente=" + cliente +
+                ", cantidadDeArticulos=" + cantidadDeArticulos +
+                ", productos=" + productos +
+                ", pagado=" + pagado +
+                ", total=" + total +
+                '}';
+    }
 }

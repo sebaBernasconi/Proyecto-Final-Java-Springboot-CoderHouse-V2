@@ -114,4 +114,18 @@ public abstract class Factura {
     public void setTotal(float total) {
         this.total = total;
     }
+
+    @Override
+    public String toString() {
+        return "Factura{" +
+                "idFactura=" + idFactura +
+                ", nroFactura=" + nroFactura +
+                ", client=" + client +
+                ", cuilCliente=" + cuilCliente +
+                ", cantidadDeProductos=" + cantidadDeProductos +
+                ", productos=" + productos +
+                ", fecha=" + fecha +
+                ", total=" + total +
+                '}';
+    }
 }
