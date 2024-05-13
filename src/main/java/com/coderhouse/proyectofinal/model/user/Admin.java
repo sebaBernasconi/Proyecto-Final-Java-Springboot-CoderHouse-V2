@@ -41,12 +41,13 @@ public class Admin extends User {
         this.ventas = ventas;
     }
 
-    public void mostrar(){
-        System.out.println(
-
-                " Cuil: " + this.getCuil() +
-                        "\n Nombre: " + this.getNombre() +
-                        "\n Mail: " + this.getMail() +
-                        "\n Contraseña: " + this.getPassword());
+    @Override
+    public String toString() {
+        return
+                " Cuil: " + getCuil() +
+                "\n Nombre: " + this.getNombre() +
+                "\n Mail: " + this.getMail() +
+                "\n Contraseña: " + this.getPassword() +
+                "\n Ventas=" + this.getVentas().toString();
     }
 }
