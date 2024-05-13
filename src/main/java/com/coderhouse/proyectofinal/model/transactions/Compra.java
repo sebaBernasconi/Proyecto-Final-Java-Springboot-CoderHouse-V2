@@ -91,7 +91,7 @@ public class Compra extends Transaccion {
     public String toString() {
         return
                 super.toString() +
-                "\n client=" + client +
-                "\n vendedor=" + vendedor;
+                "\n client=" + client.getCuil() +
+                "\n vendedor=" + vendedor.getCuil();
     }
 }
