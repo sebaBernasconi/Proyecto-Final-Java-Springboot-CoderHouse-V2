@@ -95,8 +95,8 @@ public class Client extends User {
                 "\n Nombre: " + this.getNombre() +
                 "\n Mail: " + this.getMail() +
                 "\n Contraseña: " + this.getPassword() +
-                "\n tDebito=" + tDebito +
-                "\n carrito=" + carrito.toString() +
-                "\n compras=" + compras.toString();
+                "\n tDebito=" + tDebito.getNroTarjeta() +
+                "\n carrito=" + carrito.getIdCarrito() +
+                "\n compras=" + compras;
     }
 }
