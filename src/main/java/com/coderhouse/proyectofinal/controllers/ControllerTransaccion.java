@@ -99,6 +99,8 @@ public class ControllerTransaccion {
 
         FacturaA facturaA = facturaAService.
                 guardarFacturaA(compraService.buscarCompraPorId(idCompra).GenerarFacturaA());
+        Compra compra =  compraService.buscarCompraPorId(idCompra);
+        compra.setFactura(facturaA);
         return new ResponseEntity<>(facturaA,HttpStatus.CREATED);
     }
 
@@ -114,6 +116,8 @@ public class ControllerTransaccion {
 
         FacturaB facturaB = facturaBService.
                 guardarFacuraB(compraService.buscarCompraPorId(idCompra).GenerarFacturaB());
+        Compra compra =  compraService.buscarCompraPorId(idCompra);
+        compra.setFactura(facturaB);
         return new ResponseEntity<>(facturaB,HttpStatus.CREATED);
     }
 
@@ -129,6 +133,8 @@ public class ControllerTransaccion {
 
         FacturaC facturaC = facturaCService.
                 guardarFacutraC(compraService.buscarCompraPorId(idCompra).GenerarFacturaC());
+        Compra compra =  compraService.buscarCompraPorId(idCompra);
+        compra.setFactura(facturaC);
         return new ResponseEntity<>(facturaC,HttpStatus.CREATED);
     }
 
@@ -144,6 +150,8 @@ public class ControllerTransaccion {
 
         FacturaA facturaA = facturaAService.
                 guardarFacturaA(ventaService.buscarVentaPorId(idCompra).GenerarFacturaA());
+        Venta venta = ventaService.buscarVentaPorId(idCompra);
+        venta.setFactura(facturaA);
         return new ResponseEntity<>(facturaA,HttpStatus.CREATED);
     }
 
@@ -159,6 +167,8 @@ public class ControllerTransaccion {
 
         FacturaB facturaB = facturaBService.
                 guardarFacuraB(ventaService.buscarVentaPorId(idCompra).GenerarFacturaB());
+        Venta venta = ventaService.buscarVentaPorId(idCompra);
+        venta.setFactura(facturaB);
         return new ResponseEntity<>(facturaB,HttpStatus.CREATED);
     }
 
@@ -174,6 +184,8 @@ public class ControllerTransaccion {
 
         FacturaC facturaC = facturaCService.
                 guardarFacutraC(ventaService.buscarVentaPorId(idCompra).GenerarFacturaC());
+        Venta venta = ventaService.buscarVentaPorId(idCompra);
+        venta.setFactura(facturaC);
         return new ResponseEntity<>(facturaC,HttpStatus.CREATED);
     }
 
