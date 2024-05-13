@@ -88,15 +88,15 @@ public class Client extends User {
         this.compras = compras;
     }
 
-    public void mostrar(){
-        System.out.println(
-
+    @Override
+    public String toString() {
+        return
                 " Cuil: " + this.getCuil() +
                 "\n Nombre: " + this.getNombre() +
                 "\n Mail: " + this.getMail() +
                 "\n Contraseña: " + this.getPassword() +
-                "\n tDebito=" + tDebito.getNroTarjeta() +
-                "\n carrito=" + carrito.getIdCarrito() );
+                "\n tDebito=" + tDebito +
+                "\n carrito=" + carrito.toString() +
+                "\n compras=" + compras.toString();
     }
-
 }
