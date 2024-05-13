@@ -156,10 +156,10 @@ public class Carrito {
     public String toString() {
         return
                 "idCarrito=" + idCarrito +
-                ", cliente=" + cliente +
-                ", cantidadDeArticulos=" + cantidadDeArticulos +
-                ", productos=" + productos.toString() +
-                ", pagado=" + pagado +
-                ", total=" + total;
+                "\n cliente=" + cliente +
+                "\n cantidadDeArticulos=" + cantidadDeArticulos +
+                "\n productos=" + productos.toString() +
+                "\n pagado=" + pagado +
+                "\n total=" + total;
     }
 }
