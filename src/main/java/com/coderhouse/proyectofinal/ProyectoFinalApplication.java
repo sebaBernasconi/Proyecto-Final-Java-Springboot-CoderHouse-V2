@@ -1836,7 +1836,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         for (FacturaA f :
             listadoFacturas ) {
             System.out.println("[ ");
-            f.toString();
+            System.out.println(f.toString());
             System.out.println(" ], ");
 
         }
@@ -1864,7 +1864,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         for (FacturaC f :
                 listadoFacturas ) {
             System.out.println("[ ");
-            f.toString();
+            System.out.println(f.toString());
             System.out.println(" ], ");
 
         }
