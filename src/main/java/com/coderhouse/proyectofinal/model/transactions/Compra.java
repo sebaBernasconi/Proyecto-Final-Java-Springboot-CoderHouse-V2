@@ -86,4 +86,12 @@ public class Compra extends Transaccion {
     public void setClient(Client client) {
         this.client = client;
     }
+
+    @Override
+    public String toString() {
+        return
+                super.toString() +
+                "client=" + client +
+                ", vendedor=" + vendedor;
+    }
 }

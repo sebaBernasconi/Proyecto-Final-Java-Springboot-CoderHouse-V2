@@ -78,4 +78,13 @@ public class Venta extends Transaccion {
     public void setVendedor(Admin vendedor) {
         this.vendedor = vendedor;
     }
+
+
+    @Override
+    public String toString() {
+        return
+                super.toString() +
+                        "client=" + client +
+                        ", vendedor=" + vendedor;
+    }
 }

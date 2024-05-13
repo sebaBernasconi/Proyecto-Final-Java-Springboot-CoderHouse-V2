@@ -96,4 +96,14 @@ public abstract class Transaccion {
     public void setFactura(Factura factura) {
         this.factura = factura;
     }
+
+    @Override
+    public String toString() {
+        return
+                "idTransaccion=" + idTransaccion +
+                "\n carrito=" + carrito.toString() +
+                "\n fecha=" + fecha +
+                "\n total=" + total +
+                "\n factura=" + factura.toString();
+    }
 }
