@@ -117,15 +117,14 @@ public abstract class Factura {
 
     @Override
     public String toString() {
-        return "Factura{" +
+        return
                 "idFactura=" + idFactura +
-                ", nroFactura=" + nroFactura +
-                ", client=" + client +
-                ", cuilCliente=" + cuilCliente +
-                ", cantidadDeProductos=" + cantidadDeProductos +
-                ", productos=" + productos +
-                ", fecha=" + fecha +
-                ", total=" + total +
-                '}';
+                "\n nroFactura=" + nroFactura +
+                "\n client=" + client +
+                "\n cuilCliente=" + cuilCliente +
+                "\n cantidadDeProductos=" + cantidadDeProductos +
+                "\n productos=" + productos.toString() +
+                "\n fecha=" + fecha +
+                "\n total=" + total ;
     }
 }
