@@ -119,11 +119,11 @@ public abstract class Factura {
     public String toString() {
         return
                 "idFactura=" + idFactura +
-                "\n nroFactura=" + nroFactura +
-                "\n client=" + client +
+                "\n nroFactura=" + nroFactura + "\n" +
+                "\n client=" + client + "\n" +
                 "\n cuilCliente=" + cuilCliente +
-                "\n cantidadDeProductos=" + cantidadDeProductos +
-                "\n productos=" + productos.toString() +
+                "\n cantidadDeProductos=" + cantidadDeProductos + "\n" +
+                "\n productos=" + productos.toString() + "\n" +
                 "\n fecha=" + fecha +
                 "\n total=" + total ;
     }
