@@ -99,11 +99,20 @@ public abstract class Transaccion {
 
     @Override
     public String toString() {
-        return
-                "idTransaccion=" + idTransaccion +
-                "\n carrito=" + carrito.toString() +
-                "\n fecha=" + fecha +
-                "\n total=" + total +
-                "\n factura=" + factura.toString();
+      if (this.factura != null){
+          return
+                  "idTransaccion=" + idTransaccion +
+                          "\n carrito=" + carrito.getIdCarrito() +
+                          "\n fecha=" + fecha +
+                          "\n total=" + total +
+                          "\n factura=" + factura.getNroFactura();
+      }else {
+          return
+                  "idTransaccion=" + idTransaccion +
+                          "\n carrito=" + carrito.getIdCarrito() +
+                          "\n fecha=" + fecha +
+                          "\n total=" + total +
+                          "\n factura= sin factura";
+      }
     }
 }
