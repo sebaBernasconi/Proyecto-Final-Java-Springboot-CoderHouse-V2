@@ -92,4 +92,13 @@ public class Comic extends Producto{
     public void setTapaDura(boolean tapaDura) {
         this.tapaDura = tapaDura;
     }
+
+    @Override
+    public String toString() {
+        return
+                super.toString() +
+                "\n autor='" + autor  +
+                "\n idioma='" + idioma +
+                "\n tapaDura=" + tapaDura;
+    }
 }

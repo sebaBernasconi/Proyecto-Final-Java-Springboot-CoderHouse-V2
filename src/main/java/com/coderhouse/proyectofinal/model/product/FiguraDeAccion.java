@@ -57,10 +57,10 @@ public class FiguraDeAccion extends Producto {
     @Override
     public String toString() {
 
-        return super.toString() + "\nFiguraDeAccion{" +
-                "fabricante='" + fabricante + '\'' +
-                ", esArticulado=" + esArticulado +
-                '}';
+        return
+                super.toString() +
+                "\nfabricante='" + fabricante +
+                "\n esArticulado=" + esArticulado;
     }
 
     //Getters y Setters

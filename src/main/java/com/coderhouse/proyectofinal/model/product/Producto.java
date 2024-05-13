@@ -118,5 +118,14 @@ public abstract class Producto {
         this.precio = precio;
     }
 
-
+    @Override
+    public String toString() {
+        return
+                "idProd=" + idProd +
+                "\n codigoDeProducto=" + codigoDeProducto +
+                "\n nombre='" + nombre + '\'' +
+                "\n descripcion='" + descripcion + '\'' +
+                "\n stock=" + stock +
+                "\n precio=" + precio;
+    }
 }
