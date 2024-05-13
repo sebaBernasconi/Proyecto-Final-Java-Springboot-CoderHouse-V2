@@ -301,7 +301,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         for (Factura f :
                 listadoFacturas) {
             System.out.println("[ ");
-            f.toString();
+            System.out.println(f.toString());
             System.out.println(" ], ");
         }
         System.out.println(" } ");
@@ -326,7 +326,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         for (Client c :
                 listadoClientes) {
             System.out.println(" [ ");
-            c.mostrar();
+            System.out.println(c.toString());
             System.out.println(" ], ");
         }
         System.out.println(" }");
@@ -543,7 +543,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         for (Admin a :
                 listadoAdmins) {
             System.out.println(" [ ");
-            a.mostrar();
+            System.out.println(a.toString());
             System.out.println(" ], ");
         }
         System.out.println(" }");
@@ -794,7 +794,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
 
         Comic comic = controllerProducto.obtenerComicPorCodigo(codigo).getBody();
 
-        comic.toString();
+        System.out.println(comic.toString());
     }
 
     public void listarComics(){
@@ -805,7 +805,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         for (Comic c :
                 listadoComics) {
             System.out.println("[");
-            c.toString();
+            System.out.println(c.toString());
             System.out.println("],");
         }
 
@@ -1045,7 +1045,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
 
         FiguraDeAccion figuraDeAccion = controllerProducto.obtenerFiguraPorCodigo(codigo).getBody();
 
-        figuraDeAccion.toString();
+        System.out.println(figuraDeAccion.toString());
     }
 
     public void listarFiguras(){
@@ -1055,7 +1055,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         for (FiguraDeAccion f :
                 listadoFiguras) {
             System.out.println("[ ");
-            f.toString();
+            System.out.println(f.toString());
             System.out.println(" ], ");
         }
 
@@ -1190,7 +1190,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         for (Compra c :
                 listadoCompras) {
             System.out.println(" [ ");
-            c.toString();
+            System.out.println(c.toString());
             System.out.println("], ");
         }
         System.out.println(" } ");
@@ -1334,7 +1334,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         for (Venta v :
                 listadoVentas) {
             System.out.println(" [ ");
-            v.toString();
+            System.out.println(v.toString());
             System.out.println("], ");
         }
         System.out.println(" } ");
@@ -1504,7 +1504,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         for (Carrito c :
                 listadoCarritos) {
             System.out.println(" [ ");
-            c.toString();
+            System.out.println(c.toString());
             System.out.println(" ], ");
         }
         System.out.println(" } ");
@@ -1674,7 +1674,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
         for (Debito tDebito :
                 listadoTarjetas) {
             System.out.println(" [ ");
-            tDebito.toString();
+            System.out.println(tDebito.toString());
             System.out.println(" ], ");
         }
         System.out.println(" } ");
