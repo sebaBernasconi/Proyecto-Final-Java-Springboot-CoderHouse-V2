@@ -84,7 +84,7 @@ public class Venta extends Transaccion {
     public String toString() {
         return
                 super.toString() +
-                        "client=" + client +
-                        ", vendedor=" + vendedor;
+                        "\nclient=" + client +
+                        "\n vendedor=" + vendedor;
     }
 }
