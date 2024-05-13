@@ -65,7 +65,7 @@ public class Debito extends Tarjeta{
     public String toString() {
         return
                 super.toString() +
-                "\n client=" + client +
+                "\n client=" + client.getCuil() +
                 "\n saldo=" + saldo;
     }
 }
