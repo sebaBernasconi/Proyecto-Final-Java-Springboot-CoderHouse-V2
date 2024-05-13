@@ -1304,6 +1304,7 @@ public class ProyectoFinalApplication implements CommandLineRunner {
                 "generarle una FacturaA: ");
         int idVenta = scanner.nextInt();
 
+
         controllerTransaccion.generarFacturaADeVenta(idVenta);
     }
 
