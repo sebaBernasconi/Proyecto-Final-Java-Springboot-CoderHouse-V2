@@ -63,4 +63,12 @@ public abstract class Tarjeta extends MedioDePago{
     public void setCodigoDeSeguridad(int codigoDeSeguridad) {
         this.codigoDeSeguridad = codigoDeSeguridad;
     }
+
+    @Override
+    public String toString() {
+        return
+                "nroTarjeta=" + nroTarjeta +
+                "\n titular='" + titular + '\'' +
+                "\n codigoDeSeguridad=" + codigoDeSeguridad;
+    }
 }

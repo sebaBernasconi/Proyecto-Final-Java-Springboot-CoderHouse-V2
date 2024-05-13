@@ -60,4 +60,12 @@ public class Debito extends Tarjeta{
     public void setSaldo(float saldo) {
         this.saldo = saldo;
     }
+
+    @Override
+    public String toString() {
+        return
+                super.toString() +
+                "\n client=" + client +
+                "\n saldo=" + saldo;
+    }
 }
