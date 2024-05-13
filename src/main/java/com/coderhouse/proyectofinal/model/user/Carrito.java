@@ -154,13 +154,12 @@ public class Carrito {
 
     @Override
     public String toString() {
-        return "Carrito{" +
+        return
                 "idCarrito=" + idCarrito +
                 ", cliente=" + cliente +
                 ", cantidadDeArticulos=" + cantidadDeArticulos +
-                ", productos=" + productos +
+                ", productos=" + productos.toString() +
                 ", pagado=" + pagado +
-                ", total=" + total +
-                '}';
+                ", total=" + total;
     }
 }
