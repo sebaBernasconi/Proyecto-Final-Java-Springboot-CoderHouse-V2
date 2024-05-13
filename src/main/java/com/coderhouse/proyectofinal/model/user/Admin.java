@@ -2,10 +2,7 @@ package com.coderhouse.proyectofinal.model.user;
 
 import com.coderhouse.proyectofinal.model.transactions.Venta;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -15,7 +12,7 @@ import java.util.List;
 public class Admin extends User {
 
     @Schema(description = "Ventas asociadas al Admin", requiredMode = Schema.RequiredMode.REQUIRED)
-    @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Venta> ventas;
 
     //Constructor
@@ -48,6 +45,6 @@ public class Admin extends User {
                 "\n Nombre: " + this.getNombre() +
                 "\n Mail: " + this.getMail() +
                 "\n Contraseña: " + this.getPassword() +
-                "\n Ventas=" + this.getVentas().toString();
+                "\n Ventas=" + ventas;
     }
 }
