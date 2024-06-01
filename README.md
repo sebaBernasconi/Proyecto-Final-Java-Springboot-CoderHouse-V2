@@ -30,4 +30,4 @@ Este proyecto es una aplicación de gestión de ventas para un comercio, desarro
     ```
 
 ## Uso
-Accede a la API en `http://localhost:8080` y utiliza Postman o Swagger para interactuar con los endpoints.
+Accede a la API en `http://localhost:8080` y utiliza Postman o Swagger(`http://localhost:8080/swagger-ui/index.html#/`) para interactuar con los endpoints.
